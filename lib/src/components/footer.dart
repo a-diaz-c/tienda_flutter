@@ -47,21 +47,33 @@ Widget _categorias() {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Cemento"),
-              Text("Acero"),
-              Text("Otro Materiales"),
-              Text("Acabados"),
+              InkWell(
+                child: Text("Cemento"),
+                onTap: () {},
+              ),
+              InkWell(
+                child: Text("Acero"),
+                onTap: () {},
+              ),
+              InkWell(
+                child: Text("Otro Materiales"),
+                onTap: () {},
+              ),
+              InkWell(
+                child: Text("Acabados"),
+                onTap: () {},
+              ),
             ],
           ),
           SizedBox(width: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Plomería"),
-              Text("Material Eléctrico"),
-              Text("Herramientas"),
-              Text("Ferretería"),
-              Text("Promociones")
+              InkWell(child: Text("Plomería")),
+              InkWell(child: Text("Material Eléctrico")),
+              InkWell(child: Text("Herramientas")),
+              InkWell(child: Text("Ferretería")),
+              InkWell(child: Text("Promociones"))
             ],
           )
         ],
@@ -81,10 +93,26 @@ Widget _soporte() {
           color: Colors.white,
         ),
       ),
-      Text("Términos y condiciones de uso"),
-      Text("Tickets de Soporte"),
-      Text("Preguntas frecuentes"),
-      Text("Políticas de devoluciones"),
+      SizedBox(height: 10.0),
+      InkWell(
+        child: Text("Términos y condiciones de uso"),
+        onTap: () {},
+      ),
+      SizedBox(height: 5.0),
+      InkWell(
+        child: Text("Tickets de Soporte"),
+        onTap: () {},
+      ),
+      SizedBox(height: 5.0),
+      InkWell(
+        child: Text("Preguntas frecuentes"),
+        onTap: () {},
+      ),
+      SizedBox(height: 5.0),
+      InkWell(
+        child: Text("Políticas de devoluciones"),
+        onTap: () {},
+      ),
     ],
   );
 }
