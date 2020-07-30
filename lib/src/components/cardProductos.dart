@@ -72,14 +72,9 @@ class _CardProductoState extends State<CardProducto> {
   }
 
   Widget _nombre() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: Text(this.nombre),
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      child: Text(this.nombre),
     );
   }
 
@@ -87,10 +82,7 @@ class _CardProductoState extends State<CardProducto> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: Text('\$ $precio'),
-        ),
+        Text('\$ $precio'),
       ],
     );
   }
