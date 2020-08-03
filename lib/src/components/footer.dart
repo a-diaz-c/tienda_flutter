@@ -16,69 +16,15 @@ Widget footer() {
 
 Widget _parteUno() {
   return Container(
+    padding: EdgeInsets.symmetric(horizontal: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          "Nombre de la tienda",
-          style: TextStyle(color: Colors.white),
-        ),
-        _categorias(),
+        Image(image: AssetImage('images/LogotipoPaginaWeb.png')),
         _soporte(),
         _servicioCliente(),
       ],
     ),
-  );
-}
-
-Widget _categorias() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        "Categorías",
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Colors.white,
-        ),
-      ),
-      Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Text("Cemento"),
-                onTap: () {},
-              ),
-              InkWell(
-                child: Text("Acero"),
-                onTap: () {},
-              ),
-              InkWell(
-                child: Text("Otro Materiales"),
-                onTap: () {},
-              ),
-              InkWell(
-                child: Text("Acabados"),
-                onTap: () {},
-              ),
-            ],
-          ),
-          SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(child: Text("Plomería")),
-              InkWell(child: Text("Material Eléctrico")),
-              InkWell(child: Text("Herramientas")),
-              InkWell(child: Text("Ferretería")),
-              InkWell(child: Text("Promociones"))
-            ],
-          )
-        ],
-      )
-    ],
   );
 }
 
@@ -139,7 +85,7 @@ Widget _servicioCliente() {
               color: Colors.white,
             ),
             Text(
-              "01 800 234 88 90",
+              "(744) 484.9493",
               style: TextStyle(color: Colors.white),
             ),
           ],
@@ -148,7 +94,7 @@ Widget _servicioCliente() {
         color: Colors.blue,
       ),
       Text(
-        "compraenlinea@construrama.com",
+        "info@kingo.com.mx",
         style: TextStyle(fontSize: 12.0, color: Colors.white),
       )
     ],
@@ -197,7 +143,7 @@ Widget _parteTres() {
   return Container(
     padding: EdgeInsets.all(20.0),
     child: Text(
-      "Copyright © 2020, CEMEX International Holding AG. Derechos Reservados | Copyright © 2020, de esta versión para México CEMEX S.A.B. de C.V. Derechos Reservados",
+      "Copyright © 2020 Kingo Systems S.A. de C.V.",
       style: TextStyle(fontSize: 12.0, color: Colors.white),
     ),
   );

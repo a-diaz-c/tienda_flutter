@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget navBar() {
   return Container(
+    padding: EdgeInsets.symmetric(horizontal: 10.0),
     color: Colors.blue,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,7 +19,7 @@ Widget _textoNavBar() {
   return Container(
     padding: EdgeInsets.only(top: 10.0),
     child: Text(
-      "¿Tienes alguna duda? Llámanos  722 212 3737?",
+      "¿Tienes alguna duda? Llámanos  (744) 484.9493",
       style: TextStyle(fontSize: 10.0, color: Colors.white),
     ),
   );
@@ -26,14 +27,12 @@ Widget _textoNavBar() {
 
 Widget _fieldBuscar() {
   return Container(
-    padding: EdgeInsets.all(1.0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          child: Text(
-            "Nombre de la tienda",
-            style: TextStyle(color: Colors.white),
+          child: Image(
+            image: AssetImage('images/LogotipoPaginaWeb.png'),
           ),
         ),
         SizedBox(

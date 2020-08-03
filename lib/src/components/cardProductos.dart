@@ -43,8 +43,18 @@ class _CardProductoState extends State<CardProducto> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _imagen(),
-            _nombre(),
+            InkWell(
+              child: _imagen(),
+              onTap: () {
+                Navigator.pushNamed(context, '/producto');
+              },
+            ),
+            InkWell(
+              child: _nombre(),
+              onTap: () {
+                Navigator.pushNamed(context, '/producto');
+              },
+            ),
             _precio(),
             _cantidad(),
             _botonAgregar(),
