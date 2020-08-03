@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 
-class SideBar extends StatelessWidget {
+class SideBar extends StatefulWidget {
   final String titulo;
   final List contenido;
 
-  const SideBar({Key key, @required this.titulo, @required this.contenido})
-      : super(key: key);
+  const SideBar({Key key, this.titulo, this.contenido}) : super(key: key);
+  @override
+  _SideBarState createState() => _SideBarState(this.titulo, this.contenido);
+}
+
+class _SideBarState extends State<SideBar> {
+  final String titulo;
+  final List contenido;
+  List<bool> _checkbox;
+  var _check;
+
+  _SideBarState(this.titulo, this.contenido) {
+    _checkbox = List.filled(this.contenido.length, false);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,14 +48,32 @@ class SideBar extends StatelessWidget {
   List<Widget> _crearElementos() {
     List<Widget> elementos = [];
 
-    for (var item in contenido) {
-      elementos.add(Row(
-        children: [
-          Text(
-            item,
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
+    for (var i = 0; i < contenido.length; i++) {
+      elementos.add(Container(
+        padding: EdgeInsets.all(0),
+        height: 25.0,
+        child: Row(
+          children: [
+            Checkbox(
+                value: _checkbox[i],
+                onChanged: (bool value) {
+                  setState(() {
+                    _checkbox[i] = value;
+                  });
+                }),
+            InkWell(
+              child: Text(
+                contenido[i],
+                style: TextStyle(color: Colors.grey[800]),
+              ),
+              onTap: () {
+                _checkbox[i] = _checkbox[i] == true ? false : true;
+
+                setState(() {});
+              },
+            )
+          ],
+        ),
       ));
     }
 

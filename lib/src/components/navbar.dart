@@ -141,7 +141,7 @@ Widget _cemento() => PopupMenuButton(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Text(
           "Cementos",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       offset: Offset(0, 100),
@@ -163,7 +163,7 @@ Widget _aceros() => PopupMenuButton(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Text(
           "Aceros",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       offset: Offset(0, 100),
@@ -185,7 +185,7 @@ Widget _otrosMateriales() => PopupMenuButton(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Text(
           "Otros Materiales",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       offset: Offset(0, 100),
@@ -207,7 +207,7 @@ Widget _acabado() => PopupMenuButton(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Text(
           "Acabados",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       offset: Offset(0, 100),

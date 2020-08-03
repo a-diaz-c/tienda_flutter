@@ -35,22 +35,20 @@ class _CardProductoState extends State<CardProducto> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Container(
-        width: 250,
-        height: 350,
-        padding: EdgeInsets.all(10.0),
-        child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _imagen(),
-              _nombre(),
-              _precio(),
-              _cantidad(),
-              _botonAgregar(),
-            ],
-          ),
+    return Container(
+      width: 250,
+      height: 350,
+      padding: EdgeInsets.all(10.0),
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _imagen(),
+            _nombre(),
+            _precio(),
+            _cantidad(),
+            _botonAgregar(),
+          ],
         ),
       ),
     );

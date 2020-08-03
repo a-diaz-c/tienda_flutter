@@ -130,19 +130,26 @@ Widget _servicioCliente() {
       ),
       RaisedButton(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
+            borderRadius: BorderRadius.circular(20.0),
+            side: BorderSide(color: Colors.white)),
         child: Row(
           children: [
-            Icon(Icons.phone),
-            Text("01 800 234 88 90"),
+            Icon(
+              Icons.phone,
+              color: Colors.white,
+            ),
+            Text(
+              "01 800 234 88 90",
+              style: TextStyle(color: Colors.white),
+            ),
           ],
         ),
         onPressed: () {},
+        color: Colors.blue,
       ),
       Text(
         "compraenlinea@construrama.com",
-        style: TextStyle(fontSize: 12.0),
+        style: TextStyle(fontSize: 12.0, color: Colors.white),
       )
     ],
   );

@@ -31,36 +31,66 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         children: [
           _menuLateral(),
-          CardProducto(
-            nombre: 'Block 15X20X40 cm, Pieza',
-            precio: 7.75,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3wyMDEwMnxpbWFnZS9qcGVnfGltYWdlcy9oOTUvaDRhLzg4Njc5OTM2MTY0MTQuanBnfDkwZTBlZmNmNjAwYjIyNDkxZTI2MWNlY2Y2Njc2ODA1N2VkYWQ5ZjExMjFlYWNlZTZmMzE3NjE4MzdlOGNhNTU',
-          ),
-          CardProducto(
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-          CardProducto(
-            nombre: 'Block 15X20X40 cm, Pieza',
-            precio: 7.75,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3wyMDEwMnxpbWFnZS9qcGVnfGltYWdlcy9oOTUvaDRhLzg4Njc5OTM2MTY0MTQuanBnfDkwZTBlZmNmNjAwYjIyNDkxZTI2MWNlY2Y2Njc2ODA1N2VkYWQ5ZjExMjFlYWNlZTZmMzE3NjE4MzdlOGNhNTU',
-          ),
-          CardProducto(
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-          CardProducto(
-            nombre: 'Block 15X20X40 cm, Pieza',
-            precio: 7.75,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3wyMDEwMnxpbWFnZS9qcGVnfGltYWdlcy9oOTUvaDRhLzg4Njc5OTM2MTY0MTQuanBnfDkwZTBlZmNmNjAwYjIyNDkxZTI2MWNlY2Y2Njc2ODA1N2VkYWQ5ZjExMjFlYWNlZTZmMzE3NjE4MzdlOGNhNTU',
-          ),
+          Column(
+            children: [
+              LayoutBuilder(builder: (context, constraints) {
+                if (MediaQuery.of(context).size.width < 1178) {
+                  return Row(
+                    children: [
+                      CardProducto(
+                        nombre:
+                            'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                        precio: 36.00,
+                        imagen:
+                            'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+                      ),
+                      CardProducto(
+                        nombre:
+                            'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                        precio: 36.00,
+                        imagen:
+                            'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+                      ),
+                    ],
+                  );
+                } else {
+                  print(MediaQuery.of(context).size.width);
+                  return Row(
+                    children: [
+                      CardProducto(
+                        nombre:
+                            'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                        precio: 36.00,
+                        imagen:
+                            'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+                      ),
+                      CardProducto(
+                        nombre:
+                            'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                        precio: 36.00,
+                        imagen:
+                            'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+                      ),
+                      CardProducto(
+                        nombre:
+                            'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                        precio: 36.00,
+                        imagen:
+                            'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+                      ),
+                      CardProducto(
+                        nombre:
+                            'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                        precio: 36.00,
+                        imagen:
+                            'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+                      ),
+                    ],
+                  );
+                }
+              }),
+            ],
+          )
         ],
       ),
     );
