@@ -14,12 +14,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            navBar(),
-            _cuerpo(),
-            footer(),
-          ],
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              navBar(),
+              _cuerpo(),
+              footer(),
+            ],
+          ),
         ),
       ),
     );
@@ -33,6 +37,7 @@ class _HomePageState extends State<HomePage> {
           _menuLateral(),
           Container(
             width: (MediaQuery.of(context).size.width / 8) * 7,
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
             child: Column(
               children: [
                 LayoutBuilder(builder: (context, constraints) {
@@ -60,42 +65,13 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else {
                     print(MediaQuery.of(context).size.width);
+                    print("Home_page");
                     return Container(
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              CardProducto(
-                                nombre:
-                                    'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-                                precio: 36.00,
-                                imagen:
-                                    'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-                              ),
-                              CardProducto(
-                                nombre:
-                                    'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-                                precio: 36.00,
-                                imagen:
-                                    'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-                              ),
-                              CardProducto(
-                                nombre:
-                                    'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-                                precio: 36.00,
-                                imagen:
-                                    'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-                              ),
-                              CardProducto(
-                                nombre:
-                                    'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-                                precio: 36.00,
-                                imagen:
-                                    'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-                              ),
-                            ],
-                          ),
+                          _filaProducto(),
+                          _filaProducto(),
+                          _filaProducto()
                         ],
                       ),
                     );
@@ -106,6 +82,45 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _filaProducto() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        CardProducto(
+          nombre:
+              'Truper, Clavo Negro 2" Para Concreto, Kilogramos jjdskooroisoidkkoiakslcpwoewriovn',
+          precio: 36.00,
+          imagen:
+              'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+        ),
+        CardProducto(
+          nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+          precio: 36.00,
+          imagen:
+              'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+        ),
+        CardProducto(
+          nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+          precio: 36.00,
+          imagen:
+              'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+        ),
+        CardProducto(
+          nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+          precio: 36.00,
+          imagen:
+              'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+        ),
+        CardProducto(
+          nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+          precio: 36.00,
+          imagen:
+              'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+        ),
+      ],
     );
   }
 
