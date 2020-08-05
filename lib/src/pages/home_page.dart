@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _menuLateral(),
           Container(
-            width: (MediaQuery.of(context).size.width / 8) * 7,
+            width: MediaQuery.of(context).size.width * 0.8,
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
             child: Column(
               children: [
@@ -92,12 +92,6 @@ class _HomePageState extends State<HomePage> {
         CardProducto(
           nombre:
               'Truper, Clavo Negro 2" Para Concreto, Kilogramos jjdskooroisoidkkoiakslcpwoewriovn',
-          precio: 36.00,
-          imagen:
-              'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-        ),
-        CardProducto(
-          nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
           precio: 36.00,
           imagen:
               'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
