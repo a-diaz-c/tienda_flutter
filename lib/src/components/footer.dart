@@ -61,28 +61,26 @@ Widget _soporte(MainAxisAlignment main) {
             ),
           ),
           SizedBox(height: 10.0),
-          InkWell(
-            child: Text("Términos y condiciones de uso"),
-            onTap: () {},
-          ),
+          _textoSoporte("Términos y condiciones de uso"),
           SizedBox(height: 5.0),
-          InkWell(
-            child: Text("Tickets de Soporte"),
-            onTap: () {},
-          ),
+          _textoSoporte("Tickets de Soporte"),
           SizedBox(height: 5.0),
-          InkWell(
-            child: Text("Preguntas frecuentes"),
-            onTap: () {},
-          ),
+          _textoSoporte("Preguntas frecuentes"),
           SizedBox(height: 5.0),
-          InkWell(
-            child: Text("Políticas de devoluciones"),
-            onTap: () {},
-          ),
+          _textoSoporte("Políticas de devoluciones")
         ],
       ),
     ],
+  );
+}
+
+Widget _textoSoporte(String contenido) {
+  return InkWell(
+    child: Text(
+      contenido,
+      style: TextStyle(decoration: TextDecoration.underline),
+    ),
+    onTap: () {},
   );
 }
 
