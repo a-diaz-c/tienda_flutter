@@ -47,30 +47,33 @@ Widget _parteUno() {
 }
 
 Widget _soporte(MainAxisAlignment main) {
-  return Row(
-    mainAxisAlignment: main,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Soporte",
-            style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.white,
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 5.0),
+    child: Row(
+      mainAxisAlignment: main,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Soporte",
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
+              ),
             ),
-          ),
-          SizedBox(height: 10.0),
-          _textoSoporte("Términos y condiciones de uso"),
-          SizedBox(height: 5.0),
-          _textoSoporte("Tickets de Soporte"),
-          SizedBox(height: 5.0),
-          _textoSoporte("Preguntas frecuentes"),
-          SizedBox(height: 5.0),
-          _textoSoporte("Políticas de devoluciones")
-        ],
-      ),
-    ],
+            SizedBox(height: 10.0),
+            _textoSoporte("Términos y condiciones de uso"),
+            SizedBox(height: 5.0),
+            _textoSoporte("Tickets de Soporte"),
+            SizedBox(height: 5.0),
+            _textoSoporte("Preguntas frecuentes"),
+            SizedBox(height: 5.0),
+            _textoSoporte("Políticas de devoluciones")
+          ],
+        ),
+      ],
+    ),
   );
 }
 
