@@ -1,18 +1,48 @@
 import 'package:flutter/material.dart';
 
 Widget navBar() {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10.0),
-    color: Colors.blue,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _textoNavBar(),
-        _fieldBuscar(),
-        _menu(),
-      ],
-    ),
-  );
+  return LayoutBuilder(builder: (context, constraints) {
+    double anchoPantalla = MediaQuery.of(context).size.width;
+    if (anchoPantalla > 900) {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        color: Colors.blue,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _textoNavBar(),
+            _fieldBuscar(anchoPantalla),
+            _menu(),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        color: Colors.blue,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _textoNavBar(),
+            Row(
+              children: [
+                Container(
+                  child: Image(
+                    image: AssetImage('images/LogotipoPaginaWeb.png'),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                _textField(anchoPantalla),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+  });
 }
 
 Widget _textoNavBar() {
@@ -25,7 +55,7 @@ Widget _textoNavBar() {
   );
 }
 
-Widget _fieldBuscar() {
+Widget _fieldBuscar(double anchoPantalla) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,27 +68,32 @@ Widget _fieldBuscar() {
         SizedBox(
           height: 20.0,
         ),
-        Flexible(
-          child: Container(
-            width: 400.0,
-            height: 30.0,
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                labelText: 'Buscar Prodcucto',
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                fillColor: Colors.white,
-                filled: true,
-                contentPadding: EdgeInsetsDirectional.only(
-                    top: 5.0, bottom: 5.0, start: 10.0, end: 10.0),
-              ),
-            ),
-          ),
-        ),
+        _textField(anchoPantalla),
         _carrito(),
       ],
+    ),
+  );
+}
+
+Widget _textField(double anchoPantalla) {
+  double ancho = (anchoPantalla > 900) ? 400 : anchoPantalla * 0.90;
+  return Flexible(
+    child: Container(
+      width: ancho,
+      height: 30.0,
+      child: TextField(
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50.0),
+          ),
+          labelText: 'Buscar Prodcucto',
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: EdgeInsetsDirectional.only(
+              top: 5.0, bottom: 5.0, start: 10.0, end: 10.0),
+        ),
+      ),
     ),
   );
 }
