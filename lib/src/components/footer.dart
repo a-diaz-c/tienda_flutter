@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 
 Widget footer() {
-  return Container(
-    padding: EdgeInsets.only(top: 20.0),
-    color: Colors.blue,
-    child: Column(
-      children: [
-        _parteUno(),
-        SizedBox(height: 15),
-        _parteTres(),
-      ],
-    ),
-  );
+  return LayoutBuilder(builder: (context, constraints) {
+    double anchoPantalla = MediaQuery.of(context).size.width;
+    if (anchoPantalla > 900) {
+      return Container(
+        padding: EdgeInsets.only(top: 20.0),
+        color: Colors.blue,
+        child: Column(
+          children: [
+            _parteUno(),
+            SizedBox(height: 15),
+            _parteTres(),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.only(top: 20.0),
+        color: Colors.blue,
+        child: Column(
+          children: [
+            _soporte(MainAxisAlignment.start),
+            SizedBox(height: 10.0),
+            _servicioCliente(),
+            _parteTres(),
+          ],
+        ),
+      );
+    }
+  });
 }
 
 Widget _parteUno() {
@@ -21,83 +39,91 @@ Widget _parteUno() {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Image(image: AssetImage('images/LogotipoPaginaWeb.png')),
-        _soporte(),
+        _soporte(MainAxisAlignment.start),
         _servicioCliente(),
       ],
     ),
   );
 }
 
-Widget _soporte() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+Widget _soporte(MainAxisAlignment main) {
+  return Row(
+    mainAxisAlignment: main,
     children: [
-      Text(
-        "Soporte",
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Colors.white,
-        ),
-      ),
-      SizedBox(height: 10.0),
-      InkWell(
-        child: Text("Términos y condiciones de uso"),
-        onTap: () {},
-      ),
-      SizedBox(height: 5.0),
-      InkWell(
-        child: Text("Tickets de Soporte"),
-        onTap: () {},
-      ),
-      SizedBox(height: 5.0),
-      InkWell(
-        child: Text("Preguntas frecuentes"),
-        onTap: () {},
-      ),
-      SizedBox(height: 5.0),
-      InkWell(
-        child: Text("Políticas de devoluciones"),
-        onTap: () {},
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Soporte",
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          InkWell(
+            child: Text("Términos y condiciones de uso"),
+            onTap: () {},
+          ),
+          SizedBox(height: 5.0),
+          InkWell(
+            child: Text("Tickets de Soporte"),
+            onTap: () {},
+          ),
+          SizedBox(height: 5.0),
+          InkWell(
+            child: Text("Preguntas frecuentes"),
+            onTap: () {},
+          ),
+          SizedBox(height: 5.0),
+          InkWell(
+            child: Text("Políticas de devoluciones"),
+            onTap: () {},
+          ),
+        ],
       ),
     ],
   );
 }
 
 Widget _servicioCliente() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        "Servicio al cliente",
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Colors.white,
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 5.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Servicio al cliente",
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
         ),
-      ),
-      RaisedButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            side: BorderSide(color: Colors.white)),
-        child: Row(
-          children: [
-            Icon(
-              Icons.phone,
-              color: Colors.white,
-            ),
-            Text(
-              "(744) 484.9493",
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
+        RaisedButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(color: Colors.white)),
+          child: Row(
+            children: [
+              Icon(
+                Icons.phone,
+                color: Colors.white,
+              ),
+              Text(
+                "(744) 484.9493",
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          onPressed: () {},
+          color: Colors.blue,
         ),
-        onPressed: () {},
-        color: Colors.blue,
-      ),
-      Text(
-        "info@kingo.com.mx",
-        style: TextStyle(fontSize: 12.0, color: Colors.white),
-      )
-    ],
+        Text(
+          "info@kingo.com.mx",
+          style: TextStyle(fontSize: 12.0, color: Colors.white),
+        )
+      ],
+    ),
   );
 }
 
