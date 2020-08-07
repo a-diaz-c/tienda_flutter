@@ -5,12 +5,14 @@ class CardProducto extends StatefulWidget {
   String imagen;
   String nombre;
   double precio;
+  double ancho;
 
   CardProducto(
       {Key key,
       @required this.imagen,
       @required this.nombre,
-      @required this.precio});
+      @required this.precio,
+      this.ancho = 250});
 
   @override
   _CardProductoState createState() =>
@@ -21,6 +23,7 @@ class _CardProductoState extends State<CardProducto> {
   String imagen;
   String nombre;
   double precio;
+  double ancho;
   int _conteo = 1;
   double _total = 0;
   TextEditingController _myController = TextEditingController()..text = "1";
@@ -29,14 +32,15 @@ class _CardProductoState extends State<CardProducto> {
       {Key key,
       @required this.imagen,
       @required this.nombre,
-      @required this.precio}) {
+      @required this.precio,
+      this.ancho = 250}) {
     _total = precio;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250,
+      width: ancho,
       height: 350,
       padding: EdgeInsets.all(10.0),
       child: Card(
