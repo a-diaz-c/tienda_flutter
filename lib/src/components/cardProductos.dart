@@ -15,8 +15,8 @@ class CardProducto extends StatefulWidget {
       this.ancho = 250});
 
   @override
-  _CardProductoState createState() =>
-      _CardProductoState(imagen: imagen, nombre: nombre, precio: precio);
+  _CardProductoState createState() => _CardProductoState(
+      imagen: imagen, nombre: nombre, precio: precio, ancho: ancho);
 }
 
 class _CardProductoState extends State<CardProducto> {
@@ -40,15 +40,15 @@ class _CardProductoState extends State<CardProducto> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ancho,
-      height: 350,
+      width: ancho - 10,
+      height: ancho * 1.4,
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InkWell(
-              child: _imagen(),
+              child: _imagen(ancho - 10),
               onTap: () {
                 Navigator.pushNamed(context, '/producto');
               },
@@ -68,15 +68,15 @@ class _CardProductoState extends State<CardProducto> {
     );
   }
 
-  Widget _imagen() {
+  Widget _imagen(double ancho) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           child: Image(
             image: NetworkImage(this.imagen),
-            height: 150,
-            width: 100,
+            height: ancho * 0.60,
+            width: ancho * 0.40,
           ),
         ),
       ],

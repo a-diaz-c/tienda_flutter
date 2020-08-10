@@ -33,26 +33,33 @@ class _HomePageState extends State<HomePage> {
     return LayoutBuilder(builder: (context, constraints) {
       print(MediaQuery.of(context).size.width);
       double ancho = MediaQuery.of(context).size.width;
-      if (ancho > 1024) {
+      if (ancho > 1250) {
+        double anchoContendorProductos =
+            MediaQuery.of(context).size.width * 0.85;
         return Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _menuLateral(),
               Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+                width: anchoContendorProductos,
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15.0),
                 child: Column(
                   children: [
-                    _filaProducto(),
+                    _filaProductoLargo(anchoContendorProductos),
+                    _filaProductoLargo(anchoContendorProductos),
+                    _filaProductoLargo(anchoContendorProductos),
+                    _filaProductoLargo(anchoContendorProductos),
                   ],
                 ),
               )
             ],
           ),
         );
-      } else if (ancho > 500 && ancho <= 1024) {
-        print("500 - 1024");
+      } else if (ancho > 825 && ancho <= 1250) {
+        double anchoContendorProductos =
+            MediaQuery.of(context).size.width * 0.85;
+        print("500 - 1250");
         return Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,9 +68,30 @@ class _HomePageState extends State<HomePage> {
               Container(
                 child: Column(
                   children: [
-                    _filaProductoTablet(400),
-                    _filaProductoTablet(400),
-                    _filaProductoTablet(400),
+                    _filaProductoMediana(anchoContendorProductos),
+                    _filaProductoMediana(anchoContendorProductos),
+                    _filaProductoMediana(anchoContendorProductos),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      } else if (ancho > 500 && ancho <= 825) {
+        double anchoContendorProductos =
+            MediaQuery.of(context).size.width * 0.85;
+        print("500 - 825");
+        return Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    _filaProductoChica(anchoContendorProductos),
+                    _filaProductoChica(anchoContendorProductos),
+                    _filaProductoChica(anchoContendorProductos),
                   ],
                 ),
               )
@@ -71,6 +99,8 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       } else if (ancho <= 500) {
+        double anchoContendorProductos =
+            MediaQuery.of(context).size.width * 0.70;
         return Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,10 +109,10 @@ class _HomePageState extends State<HomePage> {
               Container(
                 child: Column(
                   children: [
-                    _filaProductoMovil(400),
-                    _filaProductoMovil(400),
-                    _filaProductoMovil(400),
-                    _filaProductoMovil(400),
+                    _filaProductoExtraChica(anchoContendorProductos),
+                    _filaProductoExtraChica(anchoContendorProductos),
+                    _filaProductoExtraChica(anchoContendorProductos),
+                    _filaProductoExtraChica(anchoContendorProductos),
                   ],
                 ),
               )
@@ -93,30 +123,35 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget _filaProducto() {
+  Widget _filaProductoLargo(double ancho) {
+    double anchoCard = ancho / 4;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CardProducto(
+            ancho: anchoCard,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
             imagen:
                 'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
           ),
           CardProducto(
+            ancho: anchoCard,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
             imagen:
                 'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
           ),
           CardProducto(
+            ancho: anchoCard,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
             imagen:
                 'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
           ),
           CardProducto(
+            ancho: anchoCard,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
             imagen:
@@ -127,17 +162,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _filaProductoMovil(double ancho) {
+  Widget _filaProductoExtraChica(double ancho) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.90,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CardProducto(
+            ancho: ancho,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
-            ancho: ancho,
             imagen:
                 'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
           ),
@@ -146,24 +180,57 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _filaProductoTablet(double ancho) {
+  Widget _filaProductoMediana(double ancho) {
+    double anchoCard = ancho / 3;
     return Container(
-      width: MediaQuery.of(context).size.width * 0.90,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CardProducto(
+            ancho: anchoCard,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
-            ancho: ancho,
             imagen:
                 'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
           ),
           CardProducto(
+            ancho: anchoCard,
             nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
             precio: 36.00,
-            ancho: ancho,
+            imagen:
+                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+          ),
+          CardProducto(
+            ancho: anchoCard,
+            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+            precio: 36.00,
+            imagen:
+                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _filaProductoChica(double ancho) {
+    double anchoCard = ancho / 2;
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CardProducto(
+            ancho: anchoCard,
+            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+            precio: 36.00,
+            imagen:
+                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+          ),
+          CardProducto(
+            ancho: anchoCard,
+            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+            precio: 36.00,
             imagen:
                 'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
           ),
@@ -174,6 +241,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _menuLateral() {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
