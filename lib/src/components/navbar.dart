@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 Widget navBar(BuildContext context) {
@@ -145,110 +147,60 @@ Widget _menu() {
     child: Row(
       children: [
         Container(
-          child: _cemento(),
+          child: _itemMenu({
+            "Cemento Blaco": "Cemento Blanco",
+            "Cemento Extra": "Cemento Extra"
+          }, "Cemento"),
           padding: EdgeInsets.all(10.0),
         ),
         Container(
-          child: _aceros(),
+          child: _itemMenu({
+            "Alambre y Alambron": "Alambre y Alambron",
+            "Castillos": "Castillos",
+            "Malla Electrosoldada": "Malla Electrosoldada",
+          }, "Aceros"),
           padding: EdgeInsets.all(10.0),
         ),
         Container(
-          child: _otrosMateriales(),
+          child: _itemMenu({
+            "Cemento Blaco": "Cemento Blanco",
+            "Cemento Extra": "Cemento Extra"
+          }, "Otro Materiales"),
           padding: EdgeInsets.all(10.0),
         ),
         Container(
-          child: _acabado(),
+          child: _itemMenu({
+            "Cemento Blaco": "Cemento Blanco",
+            "Cemento Extra": "Cemento Extra"
+          }, "Acabados"),
           padding: EdgeInsets.all(10.0),
-        )
+        ),
       ],
     ),
   );
 }
 
-Widget _cemento() => PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: "Cemento Blaco",
-          child: Text("Cemento Blanco"),
-        ),
-        PopupMenuItem(
-          value: "Cemento Extra",
-          child: Text("Cemento Extra"),
-        )
-      ],
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Text(
-          "Cementos",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-      offset: Offset(0, 100),
-      tooltip: 'Mostrar Menu',
-    );
+Widget _itemMenu(Map<String, String> datos, String titulo) {
+  List<PopupMenuEntry<String>> items = [];
 
-Widget _aceros() => PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: "Cemento Blaco",
-          child: Text("Cemento Blanco"),
-        ),
-        PopupMenuItem(
-          value: "Cemento Extra",
-          child: Text("Cemento Extra"),
-        )
-      ],
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Text(
-          "Aceros",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+  datos.forEach((key, value) {
+    items.add(
+      PopupMenuItem(
+        value: key,
+        child: Text(value),
       ),
-      offset: Offset(0, 100),
-      tooltip: 'Mostrar Menu',
     );
-
-Widget _otrosMateriales() => PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: "Cemento Blaco",
-          child: Text("Cemento Blanco"),
-        ),
-        PopupMenuItem(
-          value: "Cemento Extra",
-          child: Text("Cemento Extra"),
-        )
-      ],
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Text(
-          "Otros Materiales",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+  });
+  return PopupMenuButton(
+    itemBuilder: (context) => [...items],
+    child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Text(
+        titulo,
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
-      offset: Offset(0, 100),
-      tooltip: 'Mostrar Menu',
-    );
-
-Widget _acabado() => PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: "Cemento Blaco",
-          child: Text("Cemento Blanco"),
-        ),
-        PopupMenuItem(
-          value: "Cemento Extra",
-          child: Text("Cemento Extra"),
-        )
-      ],
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Text(
-          "Acabados",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-      offset: Offset(0, 100),
-      tooltip: 'Mostrar Menu',
-    );
+    ),
+    offset: Offset(0, 100),
+    tooltip: 'Mostrar Menu',
+  );
+}
