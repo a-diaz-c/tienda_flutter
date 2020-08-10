@@ -23,7 +23,7 @@ class _ProductoPageState extends State<ProductoPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          navBar(),
+          navBar(context),
           LayoutBuilder(builder: (context, constraints) {
             if (MediaQuery.of(context).size.width > 900) {
               return _cardProducto(_anchoPantalla * 0.75);
@@ -107,7 +107,8 @@ class _ProductoPageState extends State<ProductoPage> {
                   children: [
                     _textosProducto(20.0),
                   ],
-                )
+                ),
+                _tablaTecnicaMovil(),
               ],
             ),
           ),
@@ -291,6 +292,38 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
+  Widget _tablaTecnicaMovil() {
+    return Table(
+      border: TableBorder(
+        horizontalInside:
+            BorderSide(width: 1, color: Colors.grey, style: BorderStyle.solid),
+      ),
+      children: [
+        TableRow(children: [
+          ..._textTabla(
+            "Usos",
+            "Para la construcción de muros y paredes.",
+          ),
+        ]),
+        TableRow(children: [
+          ..._textTabla("Altura", "15 cm"),
+        ]),
+        TableRow(children: [
+          ..._textTabla("Ancho", "20 cm"),
+        ]),
+        TableRow(children: [
+          ..._textTabla("Longitud", "40 cm"),
+        ]),
+        TableRow(children: [
+          ..._textTabla("Material", "Concreto"),
+        ]),
+        TableRow(children: [
+          ..._textTabla("Material", "Concreto"),
+        ])
+      ],
+    );
+  }
+
   List<Widget> _textTabla(String titulo, String contenido) {
     return [
       Container(
@@ -358,7 +391,6 @@ class _ProductoPageState extends State<ProductoPage> {
                       ],
                     );
                   } else {
-                    print('ancho $ancho');
                     return Column(
                       children: [
                         _puntiacion(MainAxisAlignment.center, 25.0),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget navBar() {
+Widget navBar(BuildContext context) {
   return LayoutBuilder(builder: (context, constraints) {
     double anchoPantalla = MediaQuery.of(context).size.width;
     if (anchoPantalla > 900) {
@@ -11,7 +11,7 @@ Widget navBar() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _textoNavBar(),
-            _fieldBuscar(anchoPantalla),
+            _fieldBuscar(anchoPantalla, context),
             _menu(),
           ],
         ),
@@ -55,14 +55,19 @@ Widget _textoNavBar() {
   );
 }
 
-Widget _fieldBuscar(double anchoPantalla) {
+Widget _fieldBuscar(double anchoPantalla, BuildContext context) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          child: Image(
-            image: AssetImage('images/LogotipoPaginaWeb.png'),
+          child: InkWell(
+            child: Image(
+              image: AssetImage('images/LogotipoPaginaWeb.png'),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/');
+            },
           ),
         ),
         SizedBox(
