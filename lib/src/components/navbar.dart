@@ -76,7 +76,7 @@ Widget _fieldBuscar(double anchoPantalla, BuildContext context) {
           height: 20.0,
         ),
         _textField(anchoPantalla),
-        _carrito(),
+        _carrito(context),
       ],
     ),
   );
@@ -105,7 +105,7 @@ Widget _textField(double anchoPantalla) {
   );
 }
 
-Widget _carrito() {
+Widget _carrito(BuildContext context) {
   return Container(
     child: Row(
       children: [
@@ -135,7 +135,9 @@ Widget _carrito() {
               )
             ],
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, '/carrito');
+          },
         )
       ],
     ),
