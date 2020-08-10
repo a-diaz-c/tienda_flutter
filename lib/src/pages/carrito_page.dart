@@ -22,13 +22,32 @@ class _CarritoPageState extends State<CarritoPage> {
             children: [
               navBar(context),
               LayoutBuilder(builder: (context, constraints) {
-                double anchoTabla = MediaQuery.of(context).size.width * 0.70;
                 if (MediaQuery.of(context).size.width > 900) {
-                  return Center(
-                      child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: _tablaProductos(anchoTabla),
-                  ));
+                  return Container(
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Text(
+                                "Carrito",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        _producto()
+                      ],
+                    ),
+                  );
                 } else {
                   return Container();
                 }
@@ -41,106 +60,40 @@ class _CarritoPageState extends State<CarritoPage> {
     );
   }
 
-  Widget _tablaProductos(double ancho) {
-    return Table(
-      columnWidths: {
-        0: FixedColumnWidth(ancho * 0.05),
-        1: FixedColumnWidth(ancho * 0.10),
-        2: FixedColumnWidth(ancho * 0.30),
-        3: FixedColumnWidth(ancho * 0.20),
-        4: FixedColumnWidth(ancho * 0.10),
-        5: FixedColumnWidth(ancho * 0.15),
-      },
-      border: TableBorder.all(),
+  Widget _producto() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _cabeceraTabla(),
-        ..._cuerpoTabla(),
-      ],
-    );
-  }
-
-  TableRow _cabeceraTabla() {
-    return TableRow(
-      children: [
-        Text(""),
-        Text(""),
         Container(
-          padding: EdgeInsets.all(5.0),
-          child: Text(
-            "Producto",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          width: 300,
+          height: 300,
+          child: Image(
+            image: NetworkImage(
+                "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE"),
           ),
         ),
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: Text(
-            "Precio",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: Text(
-            "Cantidad",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(5.0),
-          child: Text(
-            "Subtotal",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ],
-    );
-  }
-
-  List<TableRow> _cuerpoTabla() {
-    return [
-      _filaTabla(
-          '', 'Truper, Clavo Negro 2" Para Concreto, Kilogramos', 36.00, 1),
-      _filaTabla(
-          '', 'Truper, Clavo Negro 2" Para Concreto, Kilogramos', 36.00, 1),
-    ];
-  }
-
-  TableRow _filaTabla(
-      String imagen, String producto, double precio, int cantidad) {
-    return TableRow(
-      children: [
-        Text("X"),
-        Text(""),
-        Text(producto),
-        Text('\$ ' + precio.toString()),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 40,
-              height: 30,
-              padding: EdgeInsets.all(2.5),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 5.0,
-                    horizontal: 5.0,
-                  ),
-                  counterText: '',
+        SizedBox(width: 10.0),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+                  style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
                 ),
-                style: TextStyle(
-                  fontSize: 12.0,
-                ),
-                inputFormatters: [
-                  WhitelistingTextInputFormatter.digitsOnly,
-                ],
               ),
-            ),
-          ],
+              Container(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'Precio  \$ 36.00',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
         ),
-        Text("36.00"),
       ],
     );
   }
