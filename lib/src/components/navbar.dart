@@ -112,7 +112,9 @@ Widget _carrito(BuildContext context) {
       children: [
         IconButton(
           icon: Icon(Icons.account_circle),
-          onPressed: null,
+          onPressed: () {
+            _mostrarFormulario(context);
+          },
         ),
         InkWell(
           child: Row(
@@ -205,5 +207,109 @@ Widget _itemMenu(Map<String, String> datos, String titulo) {
     ),
     offset: Offset(0, 100),
     tooltip: 'Mostrar Menu',
+  );
+}
+
+_mostrarFormulario(BuildContext context) {
+  final _formKey = GlobalKey<FormState>();
+  String _usuario = '';
+  String _password = '';
+  String _empresa = '';
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: Stack(
+          overflow: Overflow.visible,
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        labelText: 'Usuario',
+                        contentPadding: EdgeInsetsDirectional.only(
+                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                      ),
+                      onChanged: (value) {
+                        _usuario = value;
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Usuario';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        labelText: 'Contraseña',
+                        contentPadding: EdgeInsetsDirectional.only(
+                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                      ),
+                      onChanged: (value) {
+                        _password = value;
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Password';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        labelText: '',
+                        contentPadding: EdgeInsetsDirectional.only(
+                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                      ),
+                      onChanged: (value) {
+                        _empresa = value;
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Empresa ';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      child: Text("Login"),
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          print("Datos: " + _usuario + _password + _empresa);
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
   );
 }
