@@ -11,6 +11,29 @@ class CarritoPage extends StatefulWidget {
 }
 
 class _CarritoPageState extends State<CarritoPage> {
+  List<Map<String, dynamic>> datos = [
+    {
+      "imagen":
+          "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
+      "nombre": 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+      "precio": 36.00,
+      "cantidad": 2,
+    },
+    {
+      "imagen":
+          "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
+      "nombre": 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+      "precio": 36.00,
+      "cantidad": 2,
+    },
+    {
+      "imagen":
+          "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
+      "nombre": 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+      "precio": 36.00,
+      "cantidad": 2,
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +67,7 @@ class _CarritoPageState extends State<CarritoPage> {
                             ),
                           ],
                         ),
-                        _producto()
+                        ...cargarProductos(),
                       ],
                     ),
                   );
@@ -60,13 +83,21 @@ class _CarritoPageState extends State<CarritoPage> {
     );
   }
 
+  List<Widget> cargarProductos() {
+    List<Widget> filas = [];
+    for (var dato in datos) {
+      filas.add(_producto());
+    }
+    return filas;
+  }
+
   Widget _producto() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 300,
-          height: 300,
+          width: 250,
+          height: 250,
           child: Image(
             image: NetworkImage(
                 "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE"),
@@ -81,7 +112,7 @@ class _CarritoPageState extends State<CarritoPage> {
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
                   'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-                  style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
@@ -90,7 +121,37 @@ class _CarritoPageState extends State<CarritoPage> {
                   'Precio  \$ 36.00',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
-              )
+              ),
+              Row(
+                children: [
+                  Text("Cantidad "),
+                  IconButton(icon: Icon(Icons.add), onPressed: null),
+                  Container(
+                    width: 40,
+                    height: 25,
+                    child: TextField(
+                      maxLength: 5,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 5.0,
+                          horizontal: 5.0,
+                        ),
+                        counterText: '',
+                      ),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12.0,
+                      ),
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                    ),
+                  ),
+                  IconButton(icon: Icon(Icons.remove), onPressed: null),
+                ],
+              ),
             ],
           ),
         ),
