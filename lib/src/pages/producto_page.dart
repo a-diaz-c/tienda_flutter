@@ -196,8 +196,12 @@ class _ProductoPageState extends State<ProductoPage> {
               "Click & Pick up",
               "Compra en línea y recoge tu pedido en tienda",
               sizeTitulo * 1.42),
-          SizedBox(height: 40.0),
+          SizedBox(height: sizeTitulo * 1.14),
           _caracteristicasProducto(sizeTitulo),
+          SizedBox(height: sizeTitulo * 1.14),
+          _botonCarrito(),
+          SizedBox(height: 10.0),
+          //_botonComprar()
         ],
       ),
     );
@@ -261,6 +265,34 @@ class _ProductoPageState extends State<ProductoPage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _botonCarrito() {
+    return RaisedButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          side: BorderSide(color: Colors.blue)),
+      child: Text(
+        "Agregar al carrito",
+        style: TextStyle(color: Colors.blue, fontSize: 15.0),
+      ),
+      color: Colors.white,
+      onPressed: () {},
+    );
+  }
+
+  Widget _botonComprar() {
+    return RaisedButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          side: BorderSide(color: Colors.blue)),
+      child: Text(
+        "Comprar",
+        style: TextStyle(color: Colors.blue, fontSize: 15.0),
+      ),
+      color: Colors.white,
+      onPressed: () {},
     );
   }
 
