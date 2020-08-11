@@ -4,6 +4,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+
 class ProductoPage extends StatefulWidget {
   ProductoPage({Key key}) : super(key: key);
 
@@ -12,27 +14,37 @@ class ProductoPage extends StatefulWidget {
 }
 
 class _ProductoPageState extends State<ProductoPage> {
+  ScrollController _rrectController = ScrollController();
   @override
   Widget build(BuildContext context) {
     double _anchoPantalla = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          navBar(context),
-          LayoutBuilder(builder: (context, constraints) {
-            if (MediaQuery.of(context).size.width > 900) {
-              return _cardProducto(_anchoPantalla * 0.75);
-            } else {
-              return _cardProductoMovil(_anchoPantalla * 0.90);
-            }
-          }),
-          _cardCalificacion(_anchoPantalla * 0.75),
-          footer(),
-        ],
-      )),
+      body: DraggableScrollbar.rrect(
+        alwaysVisibleScrollThumb: true,
+        controller: _rrectController,
+        backgroundColor: Colors.grey[300],
+        child: ListView(
+          controller: _rrectController,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                navBar(context),
+                LayoutBuilder(builder: (context, constraints) {
+                  if (MediaQuery.of(context).size.width > 900) {
+                    return _cardProducto(_anchoPantalla * 0.75);
+                  } else {
+                    return _cardProductoMovil(_anchoPantalla * 0.90);
+                  }
+                }),
+                _cardCalificacion(_anchoPantalla * 0.75),
+                footer(),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 

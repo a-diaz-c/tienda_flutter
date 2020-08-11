@@ -4,26 +4,37 @@ import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 import 'package:tienda/src/components/sideBar.dart';
 
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController _rrectController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              navBar(context),
-              _cuerpo(),
-              footer(),
-            ],
-          ),
+      body: DraggableScrollbar.rrect(
+        alwaysVisibleScrollThumb: true,
+        controller: _rrectController,
+        backgroundColor: Colors.grey[300],
+        child: ListView(
+          controller: _rrectController,
+          children: [
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  navBar(context),
+                  _cuerpo(),
+                  footer(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

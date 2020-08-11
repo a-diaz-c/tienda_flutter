@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 
 Widget navBar(BuildContext context) {
@@ -27,12 +25,14 @@ Widget navBar(BuildContext context) {
           children: [
             _textoNavBar(),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   child: Image(
                     image: AssetImage('images/LogotipoPaginaWeb.png'),
                   ),
                 ),
+                _carrito(context),
               ],
             ),
             Row(
@@ -107,6 +107,7 @@ Widget _textField(double anchoPantalla) {
 
 Widget _carrito(BuildContext context) {
   return Container(
+    padding: EdgeInsets.only(right: 10.0),
     child: Row(
       children: [
         IconButton(
