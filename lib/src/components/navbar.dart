@@ -219,6 +219,22 @@ _mostrarFormulario(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: Colors.grey[100],
+        useMaterialBorderRadius: true,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Text(
+                "Login",
+                style: TextStyle(
+                    color: Colors.blue[900], fontWeight: FontWeight.bold),
+              ),
+            ),
+            Icon(Icons.account_box, color: Colors.blue[900])
+          ],
+        ),
         content: Stack(
           overflow: Overflow.visible,
           children: [
@@ -260,6 +276,7 @@ _mostrarFormulario(BuildContext context) {
                         contentPadding: EdgeInsetsDirectional.only(
                             top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
                       ),
+                      obscureText: true,
                       onChanged: (value) {
                         _password = value;
                       },
@@ -278,10 +295,11 @@ _mostrarFormulario(BuildContext context) {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        labelText: '',
+                        labelText: 'No Empresa',
                         contentPadding: EdgeInsetsDirectional.only(
                             top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
                       ),
+                      obscureText: true,
                       onChanged: (value) {
                         _empresa = value;
                       },
@@ -296,10 +314,20 @@ _mostrarFormulario(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RaisedButton(
-                      child: Text("Login"),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      color: Colors.blue,
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          print("Datos: " + _usuario + _password + _empresa);
+                          print("Inicio sesion");
+                          Navigator.pop(context);
                         }
                       },
                     ),
