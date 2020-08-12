@@ -12,43 +12,41 @@ class CardProducto extends StatefulWidget {
       @required this.imagen,
       @required this.nombre,
       @required this.precio,
-      this.ancho = 250});
+      this.ancho = 250}) {}
 
   @override
-  _CardProductoState createState() => _CardProductoState(
-      imagen: imagen, nombre: nombre, precio: precio, ancho: ancho);
+  _CardProductoState createState() => _CardProductoState();
 }
 
 class _CardProductoState extends State<CardProducto> {
-  String imagen;
+  /*String imagen;
   String nombre;
   double precio;
-  double ancho;
+  double ancho;*/
   int _conteo = 1;
   double _total = 0;
   TextEditingController _myController = TextEditingController()..text = "1";
 
-  _CardProductoState(
-      {Key key,
-      @required this.imagen,
+  _CardProductoState({
+    Key key,
+    /*@required this.imagen,
       @required this.nombre,
       @required this.precio,
-      this.ancho = 250}) {
-    _total = precio;
-  }
+      this.ancho = 250*/
+  }) {}
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ancho - 10,
-      height: ancho * 1.4,
+      width: widget.ancho - 10,
+      height: widget.ancho * 1.4,
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InkWell(
-              child: _imagen(ancho - 10),
+              child: _imagen(widget.ancho - 10),
               onTap: () {
                 Navigator.pushNamed(context, '/producto');
               },
@@ -74,7 +72,7 @@ class _CardProductoState extends State<CardProducto> {
       children: [
         Container(
           child: Image(
-            image: NetworkImage(this.imagen),
+            image: NetworkImage(widget.imagen),
             height: ancho * 0.60,
             width: ancho * 0.40,
           ),
@@ -86,7 +84,7 @@ class _CardProductoState extends State<CardProducto> {
   Widget _nombre() {
     return Container(
       padding: EdgeInsets.all(5.0),
-      child: Text(this.nombre),
+      child: Text(widget.nombre),
     );
   }
 
@@ -94,7 +92,7 @@ class _CardProductoState extends State<CardProducto> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('\$ $precio'),
+        Text('\$ ' + widget.precio.toString()),
       ],
     );
   }
@@ -110,7 +108,7 @@ class _CardProductoState extends State<CardProducto> {
             onPressed: () {
               _conteo++;
               _myController.text = _conteo.toString();
-              _total = precio * _conteo;
+              _total = widget.precio * _conteo;
               print(_total);
               setState(() {});
             },
@@ -140,7 +138,7 @@ class _CardProductoState extends State<CardProducto> {
                 ],
                 onChanged: (texto) {
                   _conteo = int.parse(texto);
-                  _total = precio * _conteo;
+                  _total = widget.precio * _conteo;
                   setState(() {});
                 },
               ),
@@ -154,7 +152,7 @@ class _CardProductoState extends State<CardProducto> {
               }
 
               _myController.text = _conteo.toString();
-              _total = precio * _conteo;
+              _total = widget.precio * _conteo;
               print(_total);
 
               setState(() {});
