@@ -19,7 +19,6 @@ class UsuariosProviders {
       body: json.encode(auth),
     );
     final Map decodedData = json.decode(resp.body);
-    print(decodedData);
     return decodedData;
   }
 }

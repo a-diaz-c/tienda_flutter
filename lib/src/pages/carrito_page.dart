@@ -64,27 +64,7 @@ class _CarritoPageState extends State<CarritoPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    "Carrito",
-                                    style: TextStyle(
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              height: 10,
-                              thickness: 2.5,
-                              indent: 20,
-                            ),
+                            ..._titulo(),
                             ...cargarProductos(35.0),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -92,35 +72,8 @@ class _CarritoPageState extends State<CarritoPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Subtotal ($cantidadProductos Productos) ",
-                                        style: TextStyle(fontSize: 18.0),
-                                      ),
-                                      Text(
-                                        '\$' + subTotal.toStringAsFixed(2),
-                                        style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
-                                  RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        side: BorderSide(color: Colors.black)),
-                                    child: Text(
-                                      "Proceder al pago",
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 12.0),
-                                    ),
-                                    color: Colors.amber[400],
-                                    onPressed: () {
-                                      setState(() {});
-                                    },
-                                  ),
+                                  _subtotal(),
+                                  _botonPago(),
                                 ],
                               ),
                             )
@@ -135,27 +88,7 @@ class _CarritoPageState extends State<CarritoPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    "Carrito",
-                                    style: TextStyle(
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              height: 10,
-                              thickness: 2.5,
-                              indent: 20,
-                            ),
+                            ..._titulo(),
                             ...cargarProductos(20.0),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -163,37 +96,11 @@ class _CarritoPageState extends State<CarritoPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Subtotal ($cantidadProductos Productos) ",
-                                        style: TextStyle(fontSize: 18.0),
-                                      ),
-                                      Text(
-                                        '\$' + subTotal.toStringAsFixed(2),
-                                        style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
+                                  _subtotal(),
                                 ],
                               ),
                             ),
-                            RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(color: Colors.black)),
-                              child: Text(
-                                "Proceder al pago",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12.0),
-                              ),
-                              color: Colors.amber[400],
-                              onPressed: () {
-                                setState(() {});
-                              },
-                            ),
+                            _botonPago(),
                           ],
                         ),
                       );
@@ -206,6 +113,63 @@ class _CarritoPageState extends State<CarritoPage> {
           ),
         ),
       ),
+    );
+  }
+
+  List<Widget> _titulo() {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              "Carrito",
+              style: TextStyle(
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+      Divider(
+        color: Colors.grey,
+        height: 10,
+        thickness: 2.5,
+        indent: 20,
+      ),
+    ];
+  }
+
+  Widget _subtotal() {
+    return Row(
+      children: [
+        Text(
+          "Subtotal ($cantidadProductos Productos) ",
+          style: TextStyle(fontSize: 18.0),
+        ),
+        Text(
+          '\$' + subTotal.toStringAsFixed(2),
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        )
+      ],
+    );
+  }
+
+  Widget _botonPago() {
+    return RaisedButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(color: Colors.black)),
+      child: Text(
+        "Proceder al pago",
+        style: TextStyle(color: Colors.black, fontSize: 12.0),
+      ),
+      color: Colors.amber[400],
+      onPressed: () {
+        setState(() {});
+      },
     );
   }
 

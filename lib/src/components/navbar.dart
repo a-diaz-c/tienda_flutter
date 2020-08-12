@@ -226,7 +226,7 @@ _mostrarFormulario(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.grey[200],
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -340,6 +340,7 @@ _mostrarFormulario(BuildContext context) {
                               _usuario, _password, _empresa);
 
                           if (res['resp']) {
+                            print(res['msg']);
                             Navigator.pop(context);
                           } else {
                             print(res['msg']);
