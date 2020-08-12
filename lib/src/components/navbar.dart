@@ -1,375 +1,395 @@
 import 'package:flutter/material.dart';
+import 'package:tienda/src/Preferences/Preferences.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
-Widget navBar(BuildContext context) {
-  return LayoutBuilder(builder: (context, constraints) {
-    double anchoPantalla = MediaQuery.of(context).size.width;
-    if (anchoPantalla > 900) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        color: Colors.blue,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _textoNavBar(),
-            _fieldBuscar(anchoPantalla, context),
-            _menu(),
-          ],
-        ),
-      );
-    } else {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        color: Colors.blue,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _textoNavBar(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: InkWell(
-                    child: Image(
-                      image: AssetImage('images/LogotipoPaginaWeb.png'),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/');
-                    },
-                  ),
-                ),
-                _carrito(context),
-              ],
-            ),
-            Row(
-              children: [
-                _textField(anchoPantalla),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
-  });
+class Navbar extends StatefulWidget {
+  Navbar({Key key}) : super(key: key);
+
+  @override
+  _NavbarState createState() => _NavbarState();
 }
 
-Widget _textoNavBar() {
-  return Container(
-    padding: EdgeInsets.only(top: 10.0),
-    child: Text(
-      "¿Tienes alguna duda? Llámanos  (744) 484.9493",
-      style: TextStyle(fontSize: 10.0, color: Colors.white),
-    ),
-  );
-}
+class _NavbarState extends State<Navbar> {
+  final _prefs = new PreferenciasUsuario();
+  String _usuario = "usuario";
 
-Widget _fieldBuscar(double anchoPantalla, BuildContext context) {
-  return Container(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          child: InkWell(
-            child: Image(
-              image: AssetImage('images/LogotipoPaginaWeb.png'),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/');
-            },
-          ),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        _textField(anchoPantalla),
-        _carrito(context),
-      ],
-    ),
-  );
-}
-
-Widget _textField(double anchoPantalla) {
-  double ancho = (anchoPantalla > 900) ? 400 : anchoPantalla * 0.90;
-  return Flexible(
-    child: Container(
-      width: ancho,
-      height: 30.0,
-      child: TextField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          labelText: 'Buscar Prodcucto',
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          fillColor: Colors.white,
-          filled: true,
-          contentPadding: EdgeInsetsDirectional.only(
-              top: 5.0, bottom: 5.0, start: 10.0, end: 10.0),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _carrito(BuildContext context) {
-  return Container(
-    padding: EdgeInsets.only(right: 10.0),
-    child: Row(
-      children: [
-        IconButton(
-          icon: Icon(Icons.account_circle),
-          onPressed: () {
-            _mostrarFormulario(context);
-          },
-        ),
-        InkWell(
-          child: Row(
+  _NavbarState() {}
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      double anchoPantalla = MediaQuery.of(context).size.width;
+      if (anchoPantalla > 900) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          color: Colors.blue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "0 Artículos",
-                    style: TextStyle(fontSize: 10.0, color: Colors.white),
-                  ),
-                  Text(
-                    "\$ 0.00",
-                    style: TextStyle(fontSize: 15.0, color: Colors.white),
-                  ),
-                ],
-              )
+              _textoNavBar(),
+              _fieldBuscar(anchoPantalla, context),
+              _menu(),
             ],
           ),
-          onTap: () {
-            Navigator.pushNamed(context, '/carrito');
-          },
-        )
-      ],
-    ),
-  );
-}
-
-Widget _menu() {
-  return Container(
-    child: Row(
-      children: [
-        Container(
-          child: _itemMenu({
-            "Cemento Blaco": "Cemento Blanco",
-            "Cemento Extra": "Cemento Extra"
-          }, "Cemento"),
-          padding: EdgeInsets.all(10.0),
-        ),
-        Container(
-          child: _itemMenu({
-            "Alambre y Alambron": "Alambre y Alambron",
-            "Castillos": "Castillos",
-            "Malla Electrosoldada": "Malla Electrosoldada",
-          }, "Aceros"),
-          padding: EdgeInsets.all(10.0),
-        ),
-        Container(
-          child: _itemMenu({
-            "Cemento Blaco": "Cemento Blanco",
-            "Cemento Extra": "Cemento Extra"
-          }, "Otro Materiales"),
-          padding: EdgeInsets.all(10.0),
-        ),
-        Container(
-          child: _itemMenu({
-            "Cemento Blaco": "Cemento Blanco",
-            "Cemento Extra": "Cemento Extra"
-          }, "Acabados"),
-          padding: EdgeInsets.all(10.0),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _itemMenu(Map<String, String> datos, String titulo) {
-  List<PopupMenuEntry<String>> items = [];
-
-  datos.forEach((key, value) {
-    items.add(
-      PopupMenuItem(
-        value: key,
-        child: Text(value),
-      ),
-    );
-  });
-  return PopupMenuButton(
-    itemBuilder: (context) => [...items],
-    child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
-      child: Text(
-        titulo,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-      ),
-    ),
-    offset: Offset(0, 100),
-    tooltip: 'Mostrar Menu',
-  );
-}
-
-_mostrarFormulario(BuildContext context) {
-  final _formKey = GlobalKey<FormState>();
-  final usuariosProviders = UsuariosProviders();
-  String _usuario = '';
-  String _password = '';
-  String _empresa = '';
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.grey[200],
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              child: Text(
-                "Login",
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(width: 20.0),
-            Icon(Icons.account_box, color: Colors.blue)
-          ],
-        ),
-        content: Stack(
-          overflow: Overflow.visible,
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        prefixIcon: Icon(Icons.account_circle),
-                        labelText: 'Usuario',
-                        contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+        );
+      } else {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+          color: Colors.blue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _textoNavBar(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: InkWell(
+                      child: Image(
+                        image: AssetImage('images/LogotipoPaginaWeb.png'),
                       ),
-                      onChanged: (value) {
-                        _usuario = value;
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Usuario';
-                        }
-                        return null;
+                      onTap: () {
+                        Navigator.pushNamed(context, '/');
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        prefixIcon: Icon(Icons.lock),
-                        labelText: 'Contraseña',
-                        contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
-                      ),
-                      obscureText: true,
-                      onChanged: (value) {
-                        _password = value;
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Password';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        prefixIcon: Icon(Icons.business),
-                        labelText: 'No Empresa',
-                        contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
-                      ),
-                      obscureText: true,
-                      onChanged: (value) {
-                        _empresa = value;
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Empresa ';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RaisedButton(
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      color: Colors.blue,
-                      onPressed: () async {
-                        if (_formKey.currentState.validate()) {
-                          final res = await usuariosProviders.login(
-                              _usuario, _password, _empresa);
-
-                          if (res['resp']) {
-                            print(res['msg']);
-                            Navigator.pop(context);
-                          } else {
-                            print(res['msg']);
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text('Informacion incorrecta'),
-                                    content: Text(res['msg']),
-                                    actions: [
-                                      FlatButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text("Ok"),
-                                      )
-                                    ],
-                                  );
-                                });
-                          }
-                        }
-                      },
-                    ),
-                  )
+                  _carrito(context),
                 ],
               ),
+              Row(
+                children: [
+                  _textField(anchoPantalla),
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+    });
+  }
+
+  Widget _textoNavBar() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Text(
+        "¿Tienes alguna duda? Llámanos  (744) 484.9493",
+        style: TextStyle(fontSize: 10.0, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _fieldBuscar(double anchoPantalla, BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: InkWell(
+              child: Image(
+                image: AssetImage('images/LogotipoPaginaWeb.png'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/');
+              },
             ),
-          ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          _textField(anchoPantalla),
+          _carrito(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _textField(double anchoPantalla) {
+    double ancho = (anchoPantalla > 900) ? 400 : anchoPantalla * 0.90;
+    return Flexible(
+      child: Container(
+        width: ancho,
+        height: 30.0,
+        child: TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            labelText: 'Buscar Prodcucto',
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            fillColor: Colors.white,
+            filled: true,
+            contentPadding: EdgeInsetsDirectional.only(
+                top: 5.0, bottom: 5.0, start: 10.0, end: 10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _carrito(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(right: 10.0),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: () {
+              _mostrarFormulario(context);
+            },
+          ),
+          Text(_usuario),
+          InkWell(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "0 Artículos",
+                      style: TextStyle(fontSize: 10.0, color: Colors.white),
+                    ),
+                    Text(
+                      "\$ 0.00",
+                      style: TextStyle(fontSize: 15.0, color: Colors.white),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/carrito');
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _menu() {
+    return Container(
+      child: Row(
+        children: [
+          Container(
+            child: _itemMenu({
+              "Cemento Blaco": "Cemento Blanco",
+              "Cemento Extra": "Cemento Extra"
+            }, "Cemento"),
+            padding: EdgeInsets.all(10.0),
+          ),
+          Container(
+            child: _itemMenu({
+              "Alambre y Alambron": "Alambre y Alambron",
+              "Castillos": "Castillos",
+              "Malla Electrosoldada": "Malla Electrosoldada",
+            }, "Aceros"),
+            padding: EdgeInsets.all(10.0),
+          ),
+          Container(
+            child: _itemMenu({
+              "Cemento Blaco": "Cemento Blanco",
+              "Cemento Extra": "Cemento Extra"
+            }, "Otro Materiales"),
+            padding: EdgeInsets.all(10.0),
+          ),
+          Container(
+            child: _itemMenu({
+              "Cemento Blaco": "Cemento Blanco",
+              "Cemento Extra": "Cemento Extra"
+            }, "Acabados"),
+            padding: EdgeInsets.all(10.0),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _itemMenu(Map<String, String> datos, String titulo) {
+    List<PopupMenuEntry<String>> items = [];
+
+    datos.forEach((key, value) {
+      items.add(
+        PopupMenuItem(
+          value: key,
+          child: Text(value),
         ),
       );
-    },
-  );
+    });
+    return PopupMenuButton(
+      itemBuilder: (context) => [...items],
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        child: Text(
+          titulo,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+      offset: Offset(0, 100),
+      tooltip: 'Mostrar Menu',
+    );
+  }
+
+  _mostrarFormulario(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    final usuariosProviders = UsuariosProviders();
+    String _usuario = '';
+    String _password = '';
+    String _empresa = '';
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey[200],
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Text(
+                  "Login",
+                  style: TextStyle(
+                      color: Colors.blue, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(width: 20.0),
+              Icon(Icons.account_box, color: Colors.blue)
+            ],
+          ),
+          content: Stack(
+            overflow: Overflow.visible,
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          prefixIcon: Icon(Icons.account_circle),
+                          labelText: 'Usuario',
+                          contentPadding: EdgeInsetsDirectional.only(
+                              top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                        ),
+                        onChanged: (value) {
+                          _usuario = value;
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Usuario';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          prefixIcon: Icon(Icons.lock),
+                          labelText: 'Contraseña',
+                          contentPadding: EdgeInsetsDirectional.only(
+                              top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                        ),
+                        obscureText: true,
+                        onChanged: (value) {
+                          _password = value;
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Password';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          prefixIcon: Icon(Icons.business),
+                          labelText: 'No Empresa',
+                          contentPadding: EdgeInsetsDirectional.only(
+                              top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                        ),
+                        obscureText: true,
+                        onChanged: (value) {
+                          _empresa = value;
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Empresa ';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RaisedButton(
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        color: Colors.blue,
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            final res = await usuariosProviders.login(
+                                _usuario, _password, _empresa);
+
+                            if (res['resp']) {
+                              var nombre = res['msg'].toString().split(' ');
+                              _prefs.nombreUsuario = nombre[1];
+
+                              Navigator.pop(context);
+                            } else {
+                              print(res['msg']);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Informacion incorrecta'),
+                                      content: Text(res['msg']),
+                                      actions: [
+                                        FlatButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: Text("Ok"),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            }
+
+                            setState(() {});
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

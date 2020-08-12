@@ -54,7 +54,7 @@ class _CarritoPageState extends State<CarritoPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  navBar(context),
+                  Navbar(),
                   LayoutBuilder(builder: (context, constraints) {
                     if (MediaQuery.of(context).size.width > 900) {
                       return Container(

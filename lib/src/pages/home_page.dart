@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  navBar(context),
+                  Navbar(),
                   _cuerpo(),
                   footer(),
                 ],

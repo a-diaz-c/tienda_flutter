@@ -30,7 +30,7 @@ class _ProductoPageState extends State<ProductoPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                navBar(context),
+                Navbar(),
                 LayoutBuilder(builder: (context, constraints) {
                   if (MediaQuery.of(context).size.width > 900) {
                     return _cardProducto(_anchoPantalla * 0.75);
