@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tienda/src/providers/usuarios_providers.dart';
 
 Widget navBar(BuildContext context) {
   return LayoutBuilder(builder: (context, constraints) {
@@ -28,8 +29,13 @@ Widget navBar(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  child: Image(
-                    image: AssetImage('images/LogotipoPaginaWeb.png'),
+                  child: InkWell(
+                    child: Image(
+                      image: AssetImage('images/LogotipoPaginaWeb.png'),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/');
+                    },
                   ),
                 ),
                 _carrito(context),
@@ -212,6 +218,7 @@ Widget _itemMenu(Map<String, String> datos, String titulo) {
 
 _mostrarFormulario(BuildContext context) {
   final _formKey = GlobalKey<FormState>();
+  final usuariosProviders = UsuariosProviders();
   String _usuario = '';
   String _password = '';
   String _empresa = '';
@@ -220,7 +227,6 @@ _mostrarFormulario(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: Colors.grey[100],
-        useMaterialBorderRadius: true,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -228,11 +234,12 @@ _mostrarFormulario(BuildContext context) {
             Container(
               child: Text(
                 "Login",
-                style: TextStyle(
-                    color: Colors.blue[900], fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
               ),
             ),
-            Icon(Icons.account_box, color: Colors.blue[900])
+            SizedBox(width: 20.0),
+            Icon(Icons.account_box, color: Colors.blue)
           ],
         ),
         content: Stack(
@@ -250,6 +257,7 @@ _mostrarFormulario(BuildContext context) {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        prefixIcon: Icon(Icons.account_circle),
                         labelText: 'Usuario',
                         contentPadding: EdgeInsetsDirectional.only(
                             top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
@@ -272,6 +280,7 @@ _mostrarFormulario(BuildContext context) {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        prefixIcon: Icon(Icons.lock),
                         labelText: 'Contraseña',
                         contentPadding: EdgeInsetsDirectional.only(
                             top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
@@ -295,6 +304,7 @@ _mostrarFormulario(BuildContext context) {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        prefixIcon: Icon(Icons.business),
                         labelText: 'No Empresa',
                         contentPadding: EdgeInsetsDirectional.only(
                             top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
@@ -324,10 +334,31 @@ _mostrarFormulario(BuildContext context) {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       color: Colors.blue,
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          print("Inicio sesion");
-                          Navigator.pop(context);
+                          final res = await usuariosProviders.login(
+                              _usuario, _password, _empresa);
+
+                          if (res['resp']) {
+                            Navigator.pop(context);
+                          } else {
+                            print(res['msg']);
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Informacion incorrecta'),
+                                    content: Text(res['msg']),
+                                    actions: [
+                                      FlatButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text("Ok"),
+                                      )
+                                    ],
+                                  );
+                                });
+                          }
                         }
                       },
                     ),
