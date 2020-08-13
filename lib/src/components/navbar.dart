@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tienda/src/Preferences/Preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
 class Navbar extends StatefulWidget {
@@ -10,10 +10,13 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  final _prefs = new PreferenciasUsuario();
-  String _usuario = "usuario";
+  String _usuario = '';
+  @override
+  void initState() {
+    super.initState();
+    _nombreUsuario();
+  }
 
-  _NavbarState() {}
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -136,7 +139,7 @@ class _NavbarState extends State<Navbar> {
               _mostrarFormulario(context);
             },
           ),
-          Text(_usuario),
+          _usuario == 'Iniciar Sesion' ? _textoUsuario() : _menuUsuario(),
           InkWell(
             child: Row(
               children: [
@@ -165,6 +168,34 @@ class _NavbarState extends State<Navbar> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _menuUsuario() {
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 'Perfil',
+          child: Text('Perfil'),
+        ),
+        PopupMenuItem(
+          value: 'Cerrar',
+          child: Text('Cerrar Sesion'),
+        ),
+      ],
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        child: _textoUsuario(),
+      ),
+      offset: Offset(0, 100),
+      tooltip: 'Mostrar Menu',
+    );
+  }
+
+  Widget _textoUsuario() {
+    return Text(
+      _usuario,
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     );
   }
 
@@ -356,8 +387,8 @@ class _NavbarState extends State<Navbar> {
 
                             if (res['resp']) {
                               var nombre = res['msg'].toString().split(' ');
-                              _prefs.nombreUsuario = nombre[1];
-
+                              _guardarUsuario(nombre[1]);
+                              setState(() {});
                               Navigator.pop(context);
                             } else {
                               print(res['msg']);
@@ -391,5 +422,27 @@ class _NavbarState extends State<Navbar> {
         );
       },
     );
+  }
+
+  _nombreUsuario() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _usuario = prefs.getString('usuario');
+    if (_usuario == null) {
+      _usuario = 'Iniciar Sesion';
+    }
+    setState(() {});
+    print(_usuario);
+  }
+
+  _guardarUsuario(String usuario) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('usuario', usuario);
+    _nombreUsuario();
+  }
+
+  _borrarUsuario() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('usuario');
+    _nombreUsuario();
   }
 }
