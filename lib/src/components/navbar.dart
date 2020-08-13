@@ -34,7 +34,7 @@ class _NavbarState extends State<Navbar> {
             ],
           ),
         );
-      } else {
+      } else if (anchoPantalla > 500 && anchoPantalla <= 900) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           color: Colors.blue,
@@ -45,17 +45,42 @@ class _NavbarState extends State<Navbar> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    child: InkWell(
-                      child: Image(
-                        image: AssetImage('images/LogotipoPaginaWeb.png'),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                    ),
-                  ),
+                  _logoTienda(),
                   _carrito(context),
+                ],
+              ),
+              Row(
+                children: [
+                  _textField(anchoPantalla),
+                ],
+              ),
+            ],
+          ),
+        );
+      } else {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+          color: Colors.blue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _textoNavBar(),
+                  _usuario == 'Iniciar Sesion'
+                      ? InkWell(
+                          child: _textoUsuario(),
+                          onTap: () => _mostrarFormulario(context),
+                        )
+                      : _menuUsuario(),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _logoTienda(),
+                  _logoCarrito(),
                 ],
               ),
               Row(
@@ -85,22 +110,26 @@ class _NavbarState extends State<Navbar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            child: InkWell(
-              child: Image(
-                image: AssetImage('images/LogotipoPaginaWeb.png'),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-          ),
+          _logoTienda(),
           SizedBox(
             height: 20.0,
           ),
           _textField(anchoPantalla),
           _carrito(context),
         ],
+      ),
+    );
+  }
+
+  Widget _logoTienda() {
+    return Container(
+      child: InkWell(
+        child: Image(
+          image: AssetImage('images/LogotipoPaginaWeb.png'),
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, '/');
+        },
       ),
     );
   }
@@ -133,53 +162,70 @@ class _NavbarState extends State<Navbar> {
       padding: EdgeInsets.only(right: 10.0),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () {
-              _mostrarFormulario(context);
-            },
-          ),
-          _usuario == 'Iniciar Sesion' ? _textoUsuario() : _menuUsuario(),
-          InkWell(
-            child: Row(
-              children: [
-                Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "0 Artículos",
-                      style: TextStyle(fontSize: 10.0, color: Colors.white),
-                    ),
-                    Text(
-                      "\$ 0.00",
-                      style: TextStyle(fontSize: 15.0, color: Colors.white),
-                    ),
-                  ],
+          _iconoUsuario(),
+          _usuario == 'Iniciar Sesion'
+              ? InkWell(
+                  child: _textoUsuario(),
+                  onTap: () => _mostrarFormulario(context),
                 )
-              ],
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/carrito');
-            },
-          )
+              : _menuUsuario(),
+          SizedBox(width: 10.0),
+          _logoCarrito()
         ],
       ),
     );
   }
 
+  Widget _iconoUsuario() {
+    return IconButton(
+      icon: Icon(Icons.account_circle),
+      onPressed: () {
+        _mostrarFormulario(context);
+      },
+    );
+  }
+
+  Widget _logoCarrito() {
+    return InkWell(
+      child: Row(
+        children: [
+          Icon(
+            Icons.shopping_cart,
+            color: Colors.white,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "0 Artículos",
+                style: TextStyle(fontSize: 10.0, color: Colors.white),
+              ),
+              Text(
+                "\$ 0.00",
+                style: TextStyle(fontSize: 15.0, color: Colors.white),
+              ),
+            ],
+          )
+        ],
+      ),
+      onTap: () {
+        Navigator.pushNamed(context, '/carrito');
+      },
+    );
+  }
+
   Widget _menuUsuario() {
     return PopupMenuButton(
+      onSelected: (value) {
+        value == 'cerrar' ? _borrarUsuario() : print("Perfil del usuario");
+      },
       itemBuilder: (context) => [
         PopupMenuItem(
           value: 'Perfil',
           child: Text('Perfil'),
         ),
         PopupMenuItem(
-          value: 'Cerrar',
+          value: 'cerrar',
           child: Text('Cerrar Sesion'),
         ),
       ],
@@ -193,9 +239,12 @@ class _NavbarState extends State<Navbar> {
   }
 
   Widget _textoUsuario() {
-    return Text(
-      _usuario,
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return Container(
+      padding: EdgeInsets.all(2.0),
+      child: Text(
+        _usuario,
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
