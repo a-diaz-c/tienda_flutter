@@ -1,20 +1,24 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenciasUsuario {
-  SharedPreferences _prefs;
-
-  PreferenciasUsuario() {
-    _loadCounter();
-  }
-  _loadCounter() async {
-    _prefs = await SharedPreferences.getInstance();
-  }
-
-  get nombreUsuario {
-    return _prefs.getString('nombreUsuario');
+  nombreUsuario() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var usuario = prefs.getString('usuario');
+    if (usuario == null) {
+      return usuario = 'Iniciar Sesion';
+    }
+    return usuario;
   }
 
-  set nombreUsuario(String value) {
-    _prefs.setString('nombreUsuario', value);
+  guardarUsuario(String usuario) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('usuario', usuario);
+    //_nombreUsuario();
+  }
+
+  borrarUsuario() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('usuario');
+    //nombreUsuario();
   }
 }

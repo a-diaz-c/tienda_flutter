@@ -80,7 +80,12 @@ class _NavbarState extends State<Navbar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _logoTienda(),
-                  _logoCarrito(),
+                  IconButton(
+                    icon: Icon(Icons.menu),
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  ),
                 ],
               ),
               Row(
@@ -303,7 +308,7 @@ class _NavbarState extends State<Navbar> {
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Text(
           titulo,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
         ),
       ),
       offset: Offset(0, 100),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tienda/src/components/cardProductos.dart';
+import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 import 'package:tienda/src/components/sideBar.dart';
@@ -16,6 +17,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: DrawerComponent(
+        lista: contenidoMenu(),
+      ),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,
