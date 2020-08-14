@@ -32,9 +32,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ..._textoUsuario(),
-        ],
+        children: [..._textoUsuario(), _logoCarrito()],
       ),
     );
   }
@@ -79,6 +77,25 @@ class _DrawerComponentState extends State<DrawerComponent> {
     }
   }
 
+  ExpansionTile _itemCategoria(String categoria, List<String> subcategorias) {
+    return ExpansionTile(
+      title: Text(categoria),
+      children: _itemsSubcategoria(subcategorias),
+    );
+  }
+
+  List<Widget> _itemsSubcategoria(List<String> subcategorias) {
+    List<Widget> lista = [];
+
+    subcategorias.forEach((element) {
+      lista.add(ListTile(
+        title: Text(element),
+      ));
+    });
+
+    return lista;
+  }
+
   ListTile _itemDrawer(String texto, IconData icono, {Function ontap}) {
     return ListTile(
       leading: Icon(icono),
@@ -90,10 +107,44 @@ class _DrawerComponentState extends State<DrawerComponent> {
   List<Widget> _crearItemsMenu() {
     return [
       _headerDrawer(),
-      _itemDrawer('Iniciar Sesion', Icons.perm_identity),
+      /*_itemDrawer('Iniciar Sesion', Icons.perm_identity),
       _itemDrawer('Profile', Icons.account_circle),
-      _itemDrawer('Settings', Icons.settings),
+      _itemDrawer('Settings', Icons.settings),*/
+      _itemCategoria('Cemento', ['Cemento Blanco', 'Cemento Extra']),
+      _itemCategoria(
+          'Acero', ['Alambre y alambron', 'Castillo', 'Malla Electrosoldada']),
+      _itemCategoria('Otro Materiales', ['Cemento Blanco', 'Cemento Extra']),
+      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra'])
     ];
+  }
+
+  Widget _logoCarrito() {
+    return InkWell(
+      child: Row(
+        children: [
+          Icon(
+            Icons.shopping_cart,
+            color: Colors.white,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "0 Artículos",
+                style: TextStyle(fontSize: 10.0, color: Colors.white),
+              ),
+              Text(
+                "\$ 0.00",
+                style: TextStyle(fontSize: 15.0, color: Colors.white),
+              ),
+            ],
+          )
+        ],
+      ),
+      onTap: () {
+        Navigator.pushNamed(context, '/carrito');
+      },
+    );
   }
 
   _mostrarFormulario(BuildContext context) {
