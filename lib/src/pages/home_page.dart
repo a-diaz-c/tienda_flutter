@@ -17,9 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: DrawerComponent(
-        lista: contenidoMenu(),
-      ),
+      endDrawer: DrawerComponent(),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,

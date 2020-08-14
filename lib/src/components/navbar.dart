@@ -34,7 +34,7 @@ class _NavbarState extends State<Navbar> {
             ],
           ),
         );
-      } else if (anchoPantalla > 500 && anchoPantalla <= 900) {
+      } /*else if (anchoPantalla > 500 && anchoPantalla <= 900) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           color: Colors.blue,
@@ -57,25 +57,15 @@ class _NavbarState extends State<Navbar> {
             ],
           ),
         );
-      } else {
+      } */
+      else {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           color: Colors.blue,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _textoNavBar(),
-                  _usuario == 'Iniciar Sesion'
-                      ? InkWell(
-                          child: _textoUsuario(),
-                          onTap: () => _mostrarFormulario(context),
-                        )
-                      : _menuUsuario(),
-                ],
-              ),
+              _textoNavBar(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
