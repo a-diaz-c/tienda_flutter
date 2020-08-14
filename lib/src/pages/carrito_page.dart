@@ -44,7 +44,7 @@ class _CarritoPageState extends State<CarritoPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        endDrawer: DrawerComponent(),
+        drawer: DrawerComponent(),
         body: DraggableScrollbar.rrect(
           alwaysVisibleScrollThumb: true,
           controller: _rrectController,

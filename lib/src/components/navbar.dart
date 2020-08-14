@@ -10,6 +10,18 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
+  Map<String, String> categorias = {
+    '10': 'Alimento',
+    '1010': 'Carnes',
+    '1020': 'Verduras',
+    '20': 'Refrescos',
+    '2010': 'Vinos',
+    '30': 'Ferreteria',
+    '3010': 'Tornillos',
+    '3020': 'Herramientas',
+    '302010': 'Taladros',
+    '302020': 'Mecanicos',
+  };
   String _usuario = '';
   @override
   void initState() {
@@ -67,15 +79,15 @@ class _NavbarState extends State<Navbar> {
             children: [
               _textoNavBar(),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _logoTienda(),
                   IconButton(
                     icon: Icon(Icons.menu),
                     onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
+                      Scaffold.of(context).openDrawer();
                     },
                   ),
+                  _logoTienda(),
                 ],
               ),
               Row(

@@ -20,7 +20,7 @@ class _ProductoPageState extends State<ProductoPage> {
   Widget build(BuildContext context) {
     double _anchoPantalla = MediaQuery.of(context).size.width;
     return Scaffold(
-      endDrawer: DrawerComponent(),
+      drawer: DrawerComponent(),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,

@@ -8,11 +8,23 @@ class DrawerComponent extends StatefulWidget {
 }
 
 class _DrawerComponentState extends State<DrawerComponent> {
+  Map<String, String> categorias = {
+    '10': 'Alimento',
+    '20': 'Refrescos',
+    '1010': 'Carnes',
+    '30': 'Ferreteria',
+    '3010': 'Tornillos',
+    '3020': 'Herramientas',
+    '2010': 'Vinos',
+    '302010': 'Taladros',
+    '302020': 'Mecanicos',
+  };
   String _usuario = '';
   @override
   void initState() {
     super.initState();
     _nombreUsuario();
+    _listaCategorias();
   }
 
   @override
@@ -114,7 +126,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
       _itemCategoria(
           'Acero', ['Alambre y alambron', 'Castillo', 'Malla Electrosoldada']),
       _itemCategoria('Otro Materiales', ['Cemento Blanco', 'Cemento Extra']),
-      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra'])
+      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra']),
     ];
   }
 
@@ -307,6 +319,24 @@ class _DrawerComponentState extends State<DrawerComponent> {
         );
       },
     );
+  }
+
+  _listaCategorias() {
+    Map<dynamic, dynamic> datos = {};
+    List<Widget> items = [];
+    categorias.forEach((key, value) {
+      switch (key.length) {
+        case 2:
+          datos[key] = value;
+          break;
+        case 4:
+          {}
+          break;
+        case 6:
+          break;
+      }
+    });
+    print(datos);
   }
 
   _nombreUsuario() async {
