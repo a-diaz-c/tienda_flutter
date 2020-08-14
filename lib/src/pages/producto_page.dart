@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:tienda/src/components/drawer.dart';
 
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
@@ -19,6 +20,7 @@ class _ProductoPageState extends State<ProductoPage> {
   Widget build(BuildContext context) {
     double _anchoPantalla = MediaQuery.of(context).size.width;
     return Scaffold(
+      endDrawer: DrawerComponent(),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,

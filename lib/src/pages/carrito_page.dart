@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
@@ -43,6 +44,7 @@ class _CarritoPageState extends State<CarritoPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        endDrawer: DrawerComponent(),
         body: DraggableScrollbar.rrect(
           alwaysVisibleScrollThumb: true,
           controller: _rrectController,
