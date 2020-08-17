@@ -14,7 +14,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
     {'id': '10', 'nombre': 'Alimento'},
     {'id': '20', 'nombre': 'Bedidas'},
     {'id': '1010', 'nombre': 'Carnes'},
-    {'id': '1010', 'nombre': 'Verduras'},
+    {'id': '1020', 'nombre': 'Verduras'},
     {'id': '2010', 'nombre': 'Vinos'},
     {'id': '30', 'nombre': 'Ferreteria'},
     {'id': '3010', 'nombre': 'Tornillos'},
@@ -148,7 +148,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
       } else {
         todo.add(ListTile(
           title: Text(element.nombre),
-          onTap: () => print(element.nombre),
+          onTap: () => print(element.id),
         ));
       }
     });
@@ -159,21 +159,27 @@ class _DrawerComponentState extends State<DrawerComponent> {
     categorias.forEach((element) {
       var profundidadCategoria = element['id'].toString().split('0');
       if (profundidadCategoria.length > 2) {
-        _agregarHijo(0, profundidadCategoria, lista, element);
+        _agregarHijo(
+            0, profundidadCategoria, lista, element, profundidadCategoria[0]);
       } else {
         lista.add(new Categoria.fromJson(element));
       }
     });
   }
 
-  _agregarHijo(int sub, List division, List categoria, Map nuevaCategoria) {
-    var index = categoria.indexWhere((e) => e.id == division[sub] + '0');
+  _agregarHijo(
+      int sub, List division, List categoria, Map nuevaCategoria, String id) {
+    id = id + '0';
+    var index = categoria.indexWhere((e) => e.id == id);
     print(index);
     print(nuevaCategoria['nombre']);
     print('---');
 
     if (index != -1) {
-      _agregarHijo(sub++, division, categoria[index].hijos, nuevaCategoria);
+      print('SubCategoria ' + categoria[index].nombre);
+
+      _agregarHijo(sub + 1, division, categoria[index].hijos, nuevaCategoria,
+          id + division[sub + 1]);
     } else {
       categoria.add(new Categoria.fromJson(nuevaCategoria));
     }

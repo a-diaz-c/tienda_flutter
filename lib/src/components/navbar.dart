@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tienda/src/models/categoria.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
 class Navbar extends StatefulWidget {
@@ -10,23 +11,28 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  Map<String, String> categorias = {
-    '10': 'Alimento',
-    '1010': 'Carnes',
-    '1020': 'Verduras',
-    '20': 'Refrescos',
-    '2010': 'Vinos',
-    '30': 'Ferreteria',
-    '3010': 'Tornillos',
-    '3020': 'Herramientas',
-    '302010': 'Taladros',
-    '302020': 'Mecanicos',
-  };
+  List<Categoria> lista = [];
+  List<Map<String, dynamic>> categorias = [
+    {'id': '10', 'nombre': 'Alimento'},
+    {'id': '20', 'nombre': 'Bedidas'},
+    {'id': '1010', 'nombre': 'Carnes'},
+    {'id': '1020', 'nombre': 'Verduras'},
+    {'id': '2010', 'nombre': 'Vinos'},
+    {'id': '30', 'nombre': 'Ferreteria'},
+    {'id': '3010', 'nombre': 'Tornillos'},
+    {'id': '3020', 'nombre': 'Herramientas'},
+    {'id': '2020', 'nombre': 'Refresco'},
+    {'id': '202010', 'nombre': 'Azucar'},
+    {'id': '202020', 'nombre': 'Sin Azucar'},
+    {'id': '302010', 'nombre': 'Taladros'},
+    {'id': '302020', 'nombre': 'Mecanicos'},
+  ];
   String _usuario = '';
   @override
   void initState() {
     super.initState();
     _nombreUsuario();
+    _ordenarCategorias();
   }
 
   @override
@@ -255,66 +261,73 @@ class _NavbarState extends State<Navbar> {
     );
   }
 
+  _ordenarCategorias() {
+    categorias.forEach((element) {
+      var profundidadCategoria = element['id'].toString().split('0');
+      if (profundidadCategoria.length > 2) {
+        _agregarHijo(
+            0, profundidadCategoria, lista, element, profundidadCategoria[0]);
+      } else {
+        lista.add(new Categoria.fromJson(element));
+      }
+    });
+  }
+
+  _agregarHijo(
+      int sub, List division, List categoria, Map nuevaCategoria, String id) {
+    id = id + '0';
+    var index = categoria.indexWhere((e) => e.id == id);
+
+    if (index != -1) {
+      _agregarHijo(sub + 1, division, categoria[index].hijos, nuevaCategoria,
+          id + division[sub + 1]);
+    } else {
+      categoria.add(new Categoria.fromJson(nuevaCategoria));
+    }
+  }
+
   Widget _menu() {
     return Container(
       child: Row(
-        children: [
-          Container(
-            child: _itemMenu({
-              "Cemento Blaco": "Cemento Blanco",
-              "Cemento Extra": "Cemento Extra"
-            }, "Cemento"),
-            padding: EdgeInsets.all(10.0),
-          ),
-          Container(
-            child: _itemMenu({
-              "Alambre y Alambron": "Alambre y Alambron",
-              "Castillos": "Castillos",
-              "Malla Electrosoldada": "Malla Electrosoldada",
-            }, "Aceros"),
-            padding: EdgeInsets.all(10.0),
-          ),
-          Container(
-            child: _itemMenu({
-              "Cemento Blaco": "Cemento Blanco",
-              "Cemento Extra": "Cemento Extra"
-            }, "Otro Materiales"),
-            padding: EdgeInsets.all(10.0),
-          ),
-          Container(
-            child: _itemMenu({
-              "Cemento Blaco": "Cemento Blanco",
-              "Cemento Extra": "Cemento Extra"
-            }, "Acabados"),
-            padding: EdgeInsets.all(10.0),
-          ),
-        ],
+        children: _addCategoriasMenu(),
       ),
     );
   }
 
-  Widget _itemMenu(Map<String, String> datos, String titulo) {
+  List<Widget> _addCategoriasMenu() {
+    List<Widget> salida = [];
+    lista.forEach((element) {
+      salida.add(_itemMenu(element.nombre, element.hijos));
+    });
+    return salida;
+  }
+
+  Widget _itemMenu(String titulo, List datos) {
     List<PopupMenuEntry<String>> items = [];
 
-    datos.forEach((key, value) {
+    datos.forEach((element) {
       items.add(
         PopupMenuItem(
-          value: key,
-          child: Text(value),
+          value: element.id,
+          child: Text(element.nombre),
         ),
       );
     });
-    return PopupMenuButton(
-      itemBuilder: (context) => [...items],
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Text(
-          titulo,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: PopupMenuButton(
+        itemBuilder: (context) => [...items],
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Text(
+            titulo,
+            style:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+          ),
         ),
+        offset: Offset(0, 100),
+        tooltip: 'Mostrar Menu',
       ),
-      offset: Offset(0, 100),
-      tooltip: 'Mostrar Menu',
     );
   }
 
