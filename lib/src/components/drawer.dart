@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tienda/src/models/categoria.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
 class DrawerComponent extends StatefulWidget {
@@ -8,17 +9,23 @@ class DrawerComponent extends StatefulWidget {
 }
 
 class _DrawerComponentState extends State<DrawerComponent> {
-  Map<String, String> categorias = {
-    '10': 'Alimento',
-    '20': 'Refrescos',
-    '1010': 'Carnes',
-    '30': 'Ferreteria',
-    '3010': 'Tornillos',
-    '3020': 'Herramientas',
-    '2010': 'Vinos',
-    '302010': 'Taladros',
-    '302020': 'Mecanicos',
-  };
+  List<Categoria> lista = [];
+  List<Map<String, dynamic>> categorias = [
+    {'id': '10', 'nombre': 'Alimento'},
+    {'id': '20', 'nombre': 'Bedidas'},
+    {'id': '1010', 'nombre': 'Carnes'},
+    {'id': '1010', 'nombre': 'Cecina'},
+    {'id': '1010', 'nombre': 'Verduras'},
+    {'id': '2010', 'nombre': 'Vinos'},
+    {'id': '30', 'nombre': 'Ferreteria'},
+    {'id': '3010', 'nombre': 'Tornillos'},
+    {'id': '3020', 'nombre': 'Herramientas'},
+    {'id': '2020', 'nombre': 'Refresco'},
+    {'id': '202010', 'nombre': 'Azucar'},
+    {'id': '202020', 'nombre': 'Sin Azucar'},
+    {'id': '302010', 'nombre': 'Taladros'},
+    {'id': '302020', 'nombre': 'Mecanicos'},
+  ];
   String _usuario = '';
   @override
   void initState() {
@@ -89,19 +96,19 @@ class _DrawerComponentState extends State<DrawerComponent> {
     }
   }
 
-  ExpansionTile _itemCategoria(String categoria, List<String> subcategorias) {
+  ExpansionTile _itemCategoria(String categoria, List<dynamic> subcategorias) {
     return ExpansionTile(
       title: Text(categoria),
       children: _itemsSubcategoria(subcategorias),
     );
   }
 
-  List<Widget> _itemsSubcategoria(List<String> subcategorias) {
+  List<Widget> _itemsSubcategoria(List<Categoria> subcategorias) {
     List<Widget> lista = [];
 
     subcategorias.forEach((element) {
       lista.add(ListTile(
-        title: Text(element),
+        title: Text(element.nombre),
       ));
     });
 
@@ -122,12 +129,38 @@ class _DrawerComponentState extends State<DrawerComponent> {
       /*_itemDrawer('Iniciar Sesion', Icons.perm_identity),
       _itemDrawer('Profile', Icons.account_circle),
       _itemDrawer('Settings', Icons.settings),*/
-      _itemCategoria('Cemento', ['Cemento Blanco', 'Cemento Extra']),
+      /* _itemCategoria('Cemento', ['Cemento Blanco', 'Cemento Extra']),
       _itemCategoria(
           'Acero', ['Alambre y alambron', 'Castillo', 'Malla Electrosoldada']),
       _itemCategoria('Otro Materiales', ['Cemento Blanco', 'Cemento Extra']),
-      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra']),
+      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra']),*/
+      ..._listarCategorias(lista),
     ];
+  }
+
+  List<Widget> _listarCategorias(List datos) {
+    List<Widget> todo = [];
+    datos.forEach((element) {
+      if (element.hijos.length != 0) {
+        todo.add(ExpansionTile(
+          title: Text(element.nombre),
+          children: _listarCategorias(element.hijos),
+        ));
+      } else {
+        todo.add(ListTile(
+          title: Text(element.nombre),
+          onTap: () => print(element.nombre),
+        ));
+      }
+    });
+    return todo;
+  }
+
+  _ordenarCategorias() {
+    categorias.forEach((element) {
+      var profundidadCategoria = element['id'].toString().split('0');
+      if (profundidadCategoria.length >= 2) {}
+    });
   }
 
   Widget _logoCarrito() {
@@ -322,21 +355,62 @@ class _DrawerComponentState extends State<DrawerComponent> {
   }
 
   _listaCategorias() {
-    Map<dynamic, dynamic> datos = {};
+    List<Map<dynamic, dynamic>> datos = [];
+
     List<Widget> items = [];
-    categorias.forEach((key, value) {
-      switch (key.length) {
-        case 2:
-          datos[key] = value;
-          break;
-        case 4:
-          {}
-          break;
-        case 6:
-          break;
+    categorias.forEach((element) {
+      var division = element['id'].toString().split('0');
+      if (division.length <= 2)
+        lista.add(new Categoria.fromJson(element));
+      else {
+        switch (division.length) {
+          case 3:
+            {
+              var index = lista.indexWhere((e) => e.id == division[0] + '0');
+
+              if (index != -1) {
+                print('Encontro ' + lista[index].nombre);
+                print('hijo ' + element['nombre']);
+                lista[index].addHijo(new Categoria.fromJson(element));
+              }
+            }
+            break;
+          case 4:
+            {
+              var index = lista.indexWhere((e) => e.id == division[0] + '0');
+              var index2 = lista.indexWhere((e) => e.id == division[1] + '0');
+
+              if (index != -1 && index2 != -1) {
+                print('Encontro ' + lista[index].nombre);
+                print('Hijo de ' + lista[index].hijos[index2].nombre);
+                print('hijo ' + element['nombre']);
+                lista[index]
+                    .hijos[index2]
+                    .addHijo(new Categoria.fromJson(element));
+              }
+            }
+            break;
+          default:
+        }
+
+        /*var index = lista.indexWhere((e) => e.id == division[0] + '0');
+
+        if (index != -1) {
+          print('Encontro ' + lista[index].nombre);
+          print('hijo ' + element['nombre']);
+          lista[index].addHijo(new Categoria.fromJson(element));
+        }*/
       }
     });
-    print(datos);
+    _mostrarElementos(lista);
+  }
+
+  _mostrarElementos(List<Categoria> lista) {
+    lista.forEach((element) {
+      print(element.nombre);
+
+      _mostrarElementos(element.hijos);
+    });
   }
 
   _nombreUsuario() async {
