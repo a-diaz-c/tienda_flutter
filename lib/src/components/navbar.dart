@@ -327,6 +327,11 @@ class _NavbarState extends State<Navbar> {
         ),
         offset: Offset(0, 100),
         tooltip: 'Mostrar Menu',
+        onSelected: (result) {
+          if (result != '') {
+            print(result);
+          }
+        },
       ),
     );
   }
