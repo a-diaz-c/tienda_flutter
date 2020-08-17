@@ -14,7 +14,6 @@ class _DrawerComponentState extends State<DrawerComponent> {
     {'id': '10', 'nombre': 'Alimento'},
     {'id': '20', 'nombre': 'Bedidas'},
     {'id': '1010', 'nombre': 'Carnes'},
-    {'id': '1010', 'nombre': 'Cecina'},
     {'id': '1010', 'nombre': 'Verduras'},
     {'id': '2010', 'nombre': 'Vinos'},
     {'id': '30', 'nombre': 'Ferreteria'},
@@ -31,7 +30,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
   void initState() {
     super.initState();
     _nombreUsuario();
-    _listaCategorias();
+    _ordenarCategorias();
   }
 
   @override
@@ -159,8 +158,25 @@ class _DrawerComponentState extends State<DrawerComponent> {
   _ordenarCategorias() {
     categorias.forEach((element) {
       var profundidadCategoria = element['id'].toString().split('0');
-      if (profundidadCategoria.length >= 2) {}
+      if (profundidadCategoria.length > 2) {
+        _agregarHijo(0, profundidadCategoria, lista, element);
+      } else {
+        lista.add(new Categoria.fromJson(element));
+      }
     });
+  }
+
+  _agregarHijo(int sub, List division, List categoria, Map nuevaCategoria) {
+    var index = categoria.indexWhere((e) => e.id == division[sub] + '0');
+    print(index);
+    print(nuevaCategoria['nombre']);
+    print('---');
+
+    if (index != -1) {
+      _agregarHijo(sub++, division, categoria[index].hijos, nuevaCategoria);
+    } else {
+      categoria.add(new Categoria.fromJson(nuevaCategoria));
+    }
   }
 
   Widget _logoCarrito() {
