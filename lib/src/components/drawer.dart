@@ -171,13 +171,8 @@ class _DrawerComponentState extends State<DrawerComponent> {
       int sub, List division, List categoria, Map nuevaCategoria, String id) {
     id = id + '0';
     var index = categoria.indexWhere((e) => e.id == id);
-    print(index);
-    print(nuevaCategoria['nombre']);
-    print('---');
 
     if (index != -1) {
-      print('SubCategoria ' + categoria[index].nombre);
-
       _agregarHijo(sub + 1, division, categoria[index].hijos, nuevaCategoria,
           id + division[sub + 1]);
     } else {
