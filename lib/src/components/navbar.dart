@@ -23,6 +23,8 @@ class _NavbarState extends State<Navbar> {
     {'id': '3020', 'nombre': 'Herramientas'},
     {'id': '2020', 'nombre': 'Refresco'},
     {'id': '202010', 'nombre': 'Azucar'},
+    {'id': '20201010', 'nombre': 'Naranja'},
+    {'id': '20201020', 'nombre': 'Manzana'},
     {'id': '202020', 'nombre': 'Sin Azucar'},
     {'id': '302010', 'nombre': 'Taladros'},
     {'id': '302020', 'nombre': 'Mecanicos'},
@@ -289,6 +291,7 @@ class _NavbarState extends State<Navbar> {
   Widget _menu() {
     return Container(
       child: Row(
+        //children: _addCategoriasMenu(),
         children: _addCategoriasMenu(),
       ),
     );
@@ -297,7 +300,12 @@ class _NavbarState extends State<Navbar> {
   List<Widget> _addCategoriasMenu() {
     List<Widget> salida = [];
     lista.forEach((element) {
-      salida.add(_itemMenu(element.nombre, element.hijos));
+      //salida.add(_itemMenu(element.nombre, element.hijos));
+      salida.add(ListarMenu(
+        title: element.nombre,
+        hijos: element.hijos,
+        rootMenu: true,
+      ));
     });
     return salida;
   }
@@ -518,5 +526,108 @@ class _NavbarState extends State<Navbar> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('usuario');
     _nombreUsuario();
+  }
+}
+
+class ListarMenu extends StatefulWidget {
+  final String title;
+  final bool rootMenu;
+  final List<Categoria> hijos;
+  const ListarMenu({Key key, this.title, this.rootMenu = false, this.hijos})
+      : super(key: key);
+
+  @override
+  _ListarMenuState createState() => _ListarMenuState();
+}
+
+class _ListarMenuState extends State<ListarMenu> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: GestureDetector(
+          onTap: () {
+            Offset offset = widget.rootMenu ? Offset(0, -30) : Offset(-150, 0);
+
+            final RenderBox button = context.findRenderObject();
+            final RenderBox overlay =
+                Overlay.of(context).context.findRenderObject();
+            final RelativeRect position = RelativeRect.fromRect(
+              Rect.fromPoints(
+                button.localToGlobal(Offset.zero, ancestor: overlay),
+                button.localToGlobal(button.size.bottomRight(Offset.zero),
+                    ancestor: overlay),
+              ),
+              offset & overlay.size,
+            );
+            showMenu(
+                    color: Colors.blue,
+                    context: context,
+                    position: position,
+                    items: _generarItem())
+                .then((selectedValue) {
+              // do something with the value
+              if (Navigator.canPop(context)) Navigator.pop(context);
+            });
+          },
+          child: Material(
+            color: Colors.blue,
+            textStyle: Theme.of(context).textTheme.subtitle1,
+            elevation: widget.rootMenu ? 2.0 : 0.0,
+            child: Padding(
+              padding:
+                  widget.rootMenu ? EdgeInsets.all(8.0) : EdgeInsets.all(0.0),
+              child: Container(
+                color: Colors.blue,
+                child: Row(
+                  children: [
+                    Container(
+                      child: Text(
+                        widget.title,
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                    if (!widget.rootMenu) Spacer(),
+                    if (!widget.rootMenu)
+                      Icon(Icons.arrow_right, color: Colors.white)
+                    else
+                      Icon(Icons.arrow_drop_down, color: Colors.white),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List _generarItem() {
+    List<PopupMenuEntry> items = [];
+
+    widget.hijos.forEach((element) {
+      if (element.hijos.length == 0) {
+        print(element.id + ' - ' + element.nombre);
+        items.add(PopupMenuItem(
+          value: element.id,
+          child: Text(
+            element.nombre,
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ));
+      } else {
+        print(element.id + ' - ' + element.nombre);
+        items.add(PopupMenuItem(
+          value: element.id,
+          child: ListarMenu(
+            title: element.nombre,
+            hijos: element.hijos,
+          ),
+        ));
+      }
+    });
+
+    return items;
   }
 }
