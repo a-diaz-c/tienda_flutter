@@ -608,16 +608,17 @@ class _ListarMenuState extends State<ListarMenu> {
 
     widget.hijos.forEach((element) {
       if (element.hijos.length == 0) {
-        print(element.id + ' - ' + element.nombre);
         items.add(PopupMenuItem(
           value: element.id,
-          child: Text(
-            element.nombre,
-            style: TextStyle(color: Colors.white, fontSize: 18),
+          child: InkWell(
+            child: Text(
+              element.nombre,
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            onTap: () => print(element.id),
           ),
         ));
       } else {
-        print(element.id + ' - ' + element.nombre);
         items.add(PopupMenuItem(
           value: element.id,
           child: ListarMenu(
