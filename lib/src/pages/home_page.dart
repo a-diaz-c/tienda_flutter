@@ -6,6 +6,7 @@ import 'package:tienda/src/components/navbar.dart';
 import 'package:tienda/src/components/sideBar.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,7 +14,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List productos;
+  ProductosProviders providers = ProductosProviders();
   ScrollController _rrectController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    productos = providers.jsonProductos();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,24 +153,21 @@ class _HomePageState extends State<HomePage> {
         children: [
           CardProducto(
             ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+            nombre: productos[0]['nombre'],
+            precio: double.parse(productos[0]['precio']),
+            imagen: productos[0]['imagen'],
           ),
           CardProducto(
             ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+            nombre: productos[1]['nombre'],
+            precio: double.parse(productos[1]['precio']),
+            imagen: productos[1]['imagen'],
           ),
           CardProducto(
             ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
+            nombre: productos[2]['nombre'],
+            precio: double.parse(productos[2]['precio']),
+            imagen: productos[2]['imagen'],
           ),
           CardProducto(
             ancho: anchoCard,

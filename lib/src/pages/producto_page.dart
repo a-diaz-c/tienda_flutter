@@ -6,6 +6,7 @@ import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 
 class ProductoPage extends StatefulWidget {
   ProductoPage({Key key}) : super(key: key);
@@ -16,6 +17,7 @@ class ProductoPage extends StatefulWidget {
 
 class _ProductoPageState extends State<ProductoPage> {
   ScrollController _rrectController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     double _anchoPantalla = MediaQuery.of(context).size.width;

@@ -21,13 +21,9 @@ class _NavbarState extends State<Navbar> {
     {'id': '30', 'nombre': 'Ferreteria'},
     {'id': '3010', 'nombre': 'Tornillos'},
     {'id': '3020', 'nombre': 'Herramientas'},
+    {'id': '302010', 'nombre': 'Electricidad'},
+    {'id': '302020', 'nombre': 'Accesorio de Herramientas'},
     {'id': '2020', 'nombre': 'Refresco'},
-    {'id': '202010', 'nombre': 'Azucar'},
-    {'id': '20201010', 'nombre': 'Naranja'},
-    {'id': '20201020', 'nombre': 'Manzana'},
-    {'id': '202020', 'nombre': 'Sin Azucar'},
-    {'id': '302010', 'nombre': 'Taladros'},
-    {'id': '302020', 'nombre': 'Mecanicos'},
   ];
   String _usuario = '';
   @override
