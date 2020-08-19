@@ -177,9 +177,9 @@ class _NavbarState extends State<Navbar> {
         children: [
           _iconoUsuario(),
           _usuario == 'Iniciar Sesion'
-              ? InkWell(
+              ? FlatButton(
                   child: _textoUsuario(),
-                  onTap: () => _mostrarFormulario(context),
+                  onPressed: () => _mostrarFormulario(context),
                 )
               : _menuUsuario(),
           SizedBox(width: 10.0),

@@ -58,7 +58,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
   List<Widget> _textoUsuario() {
     if (_usuario == 'Iniciar Sesion') {
       return [
-        InkWell(
+        FlatButton(
           child: Text(
             _usuario,
             style: TextStyle(
@@ -66,7 +66,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
               fontSize: 24,
             ),
           ),
-          onTap: () => _mostrarFormulario(context),
+          onPressed: () => _mostrarFormulario(context),
         )
       ];
     } else {
