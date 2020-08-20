@@ -36,6 +36,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   draggable_scrollbar: 0.0.4
+  fluro: "^1.6.3"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

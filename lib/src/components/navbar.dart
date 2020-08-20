@@ -603,6 +603,7 @@ class _ListarMenuState extends State<ListarMenu> {
     List<PopupMenuEntry> items = [];
 
     widget.hijos.forEach((element) {
+      var familia = element.id;
       if (element.hijos.length == 0) {
         items.add(PopupMenuItem(
           value: element.id,
@@ -611,7 +612,10 @@ class _ListarMenuState extends State<ListarMenu> {
               element.nombre,
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
-            onTap: () => print(element.id),
+            onTap: () {
+              Navigator.pushNamed(context, '/$familia');
+              setState(() {});
+            },
           ),
         ));
       } else {

@@ -9,6 +9,8 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
 
 class HomePage extends StatefulWidget {
+  String familia;
+  HomePage({Key key, this.familia}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -20,7 +22,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    productos = providers.jsonProductos();
+    var familia = widget.familia;
+    familia == "/"
+        ? productos = providers.jsonProductos()
+        : productos = providers.buscarFamilia(familia);
+    print(' Familia es: ' + familia);
   }
 
   @override
@@ -67,12 +73,7 @@ class _HomePageState extends State<HomePage> {
                 width: anchoContendorProductos,
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15.0),
                 child: Column(
-                  children: [
-                    _filaProductoLargo(anchoContendorProductos),
-                    _filaProductoLargo(anchoContendorProductos),
-                    _filaProductoLargo(anchoContendorProductos),
-                    _filaProductoLargo(anchoContendorProductos),
-                  ],
+                  children: _mostrarProductos(anchoContendorProductos, 4),
                 ),
               )
             ],
@@ -89,11 +90,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 child: Column(
-                  children: [
-                    _filaProductoMediana(anchoContendorProductos),
-                    _filaProductoMediana(anchoContendorProductos),
-                    _filaProductoMediana(anchoContendorProductos),
-                  ],
+                  children: _mostrarProductos(anchoContendorProductos, 3),
                 ),
               )
             ],
@@ -110,11 +107,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 child: Column(
-                  children: [
-                    _filaProductoChica(anchoContendorProductos),
-                    _filaProductoChica(anchoContendorProductos),
-                    _filaProductoChica(anchoContendorProductos),
-                  ],
+                  children: _mostrarProductos(anchoContendorProductos, 2),
                 ),
               )
             ],
@@ -130,12 +123,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 child: Column(
-                  children: [
-                    _filaProductoExtraChica(anchoContendorProductos),
-                    _filaProductoExtraChica(anchoContendorProductos),
-                    _filaProductoExtraChica(anchoContendorProductos),
-                    _filaProductoExtraChica(anchoContendorProductos),
-                  ],
+                  children: _filaProductoExtraChica(anchoContendorProductos),
                 ),
               )
             ],
@@ -145,117 +133,75 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget _filaProductoLargo(double ancho) {
+  List<Widget> _mostrarProductos(double ancho, int cantidadFila) {
     double anchoCard = ancho / 4;
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
+    List<Widget> widgetProductos = [];
+    List<Widget> row = [];
+    for (int i = 0; i < productos.length; i++) {
+      if ((i + 1) % cantidadFila == 0) {
+        row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: productos[0]['nombre'],
-            precio: double.parse(productos[0]['precio']),
-            imagen: productos[0]['imagen'],
+            nombre: productos[i]['nombre'],
+            precio: double.parse(productos[i]['precio']),
+            imagen: productos[i]['imagen'],
+            id: productos[i]['clave_producto'],
           ),
-          CardProducto(
-            ancho: anchoCard,
-            nombre: productos[1]['nombre'],
-            precio: double.parse(productos[1]['precio']),
-            imagen: productos[1]['imagen'],
+        );
+        widgetProductos.add(
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: row,
+            ),
           ),
+        );
+        row = [];
+      } else {
+        row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: productos[2]['nombre'],
-            precio: double.parse(productos[2]['precio']),
-            imagen: productos[2]['imagen'],
+            nombre: productos[i]['nombre'],
+            precio: double.parse(productos[i]['precio']),
+            imagen: productos[i]['imagen'],
+            id: productos[i]['clave_producto'],
           ),
-          CardProducto(
-            ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          )
-        ],
-      ),
-    );
+        );
+      }
+    }
+    if (row.length != 0) {
+      widgetProductos.add(
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: row,
+          ),
+        ),
+      );
+    }
+    return widgetProductos;
   }
 
-  Widget _filaProductoExtraChica(double ancho) {
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CardProducto(
-            ancho: ancho,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _filaProductoMediana(double ancho) {
-    double anchoCard = ancho / 3;
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CardProducto(
-            ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-          CardProducto(
-            ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-          CardProducto(
-            ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _filaProductoChica(double ancho) {
-    double anchoCard = ancho / 2;
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CardProducto(
-            ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-          CardProducto(
-            ancho: anchoCard,
-            nombre: 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-            precio: 36.00,
-            imagen:
-                'https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE',
-          ),
-        ],
-      ),
-    );
+  List<Widget> _filaProductoExtraChica(double ancho) {
+    List<Widget> widgetProductos = [];
+    productos.forEach((element) {
+      widgetProductos.add(Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CardProducto(
+              ancho: ancho,
+              nombre: element['nombre'],
+              precio: double.parse(element['precio']),
+              imagen: element['imagen'],
+              id: element['id'],
+            ),
+          ],
+        ),
+      ));
+    });
+    return widgetProductos;
   }
 
   Widget _menuLateral() {

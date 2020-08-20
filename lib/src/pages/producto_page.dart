@@ -9,7 +9,8 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
 
 class ProductoPage extends StatefulWidget {
-  ProductoPage({Key key}) : super(key: key);
+  String id;
+  ProductoPage({Key key, this.id = ' '}) : super(key: key);
 
   @override
   _ProductoPageState createState() => _ProductoPageState();
@@ -17,6 +18,14 @@ class ProductoPage extends StatefulWidget {
 
 class _ProductoPageState extends State<ProductoPage> {
   ScrollController _rrectController = ScrollController();
+  ProductosProviders providers = ProductosProviders();
+  dynamic producto;
+
+  @override
+  void initState() {
+    super.initState();
+    producto = providers.buscarProducto(widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +62,8 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   Widget _cardProducto(double ancho) {
-    double anchoImagen = ancho * 0.60;
+    double anchoImagen = ancho * 0.50;
+    double altoIamgen = ancho * 0.50;
     return Center(
       child: Container(
         width: ancho,
@@ -67,7 +77,7 @@ class _ProductoPageState extends State<ProductoPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _imagenProducto(anchoImagen),
+                    _imagenProducto(anchoImagen, altoIamgen),
                     _textosProducto(35.0),
                   ],
                 ),
@@ -114,7 +124,7 @@ class _ProductoPageState extends State<ProductoPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _imagenProducto(ancho * 0.80),
+                    _imagenProducto(ancho * 0.80, ancho * 0.80),
                   ],
                 ),
                 Row(
@@ -131,11 +141,12 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  Widget _imagenProducto(double ancho) {
+  Widget _imagenProducto(double ancho, double alto) {
     return Container(
       child: Image.network(
-        "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
+        producto['imagen'],
         width: ancho,
+        height: alto,
       ),
     );
   }
@@ -147,7 +158,24 @@ class _ProductoPageState extends State<ProductoPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _nombreProducto(sizeTitulo),
-          SizedBox(height: 20.0),
+          SizedBox(height: 10.0),
+          Container(
+            child: Row(
+              children: [
+                Text(
+                  "Precio: ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: textDatosProductos),
+                ),
+                Text(
+                  producto['precio'],
+                  style: TextStyle(fontSize: textDatosProductos),
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 10.0),
           Container(
             child: Row(
               children: [
@@ -227,7 +255,7 @@ class _ProductoPageState extends State<ProductoPage> {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       child: Text(
-        'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
+        producto['nombre'],
         style: TextStyle(fontSize: size, fontWeight: FontWeight.bold),
       ),
     );

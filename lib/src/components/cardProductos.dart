@@ -1,42 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tienda/src/pages/producto_page.dart';
 
 class CardProducto extends StatefulWidget {
   String imagen;
   String nombre;
   double precio;
   double ancho;
+  String id;
 
-  CardProducto(
-      {Key key,
-      @required this.imagen,
-      @required this.nombre,
-      @required this.precio,
-      this.ancho = 250}) {}
+  CardProducto({
+    Key key,
+    @required this.imagen,
+    @required this.nombre,
+    @required this.precio,
+    @required this.id,
+    this.ancho = 250,
+  });
 
   @override
   _CardProductoState createState() => _CardProductoState();
 }
 
 class _CardProductoState extends State<CardProducto> {
-  /*String imagen;
-  String nombre;
-  double precio;
-  double ancho;*/
   int _conteo = 1;
   double _total = 0;
   TextEditingController _myController = TextEditingController()..text = "1";
 
   _CardProductoState({
     Key key,
-    /*@required this.imagen,
-      @required this.nombre,
-      @required this.precio,
-      this.ancho = 250*/
-  }) {}
+  });
 
   @override
   Widget build(BuildContext context) {
+    var calve = widget.id;
     return Container(
       width: widget.ancho - 10,
       height: widget.ancho * 1.4,
@@ -48,13 +45,13 @@ class _CardProductoState extends State<CardProducto> {
             InkWell(
               child: _imagen(widget.ancho - 10),
               onTap: () {
-                Navigator.pushNamed(context, '/producto');
+                Navigator.pushNamed(context, 'producto/$calve');
               },
             ),
             InkWell(
               child: _nombre(),
               onTap: () {
-                Navigator.pushNamed(context, '/producto');
+                Navigator.pushNamed(context, 'producto/$calve');
               },
             ),
             _precio(),
