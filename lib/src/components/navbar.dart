@@ -306,40 +306,6 @@ class _NavbarState extends State<Navbar> {
     return salida;
   }
 
-  Widget _itemMenu(String titulo, List datos) {
-    List<PopupMenuEntry<String>> items = [];
-
-    datos.forEach((element) {
-      items.add(
-        PopupMenuItem(
-          value: element.id,
-          child: Text(element.nombre),
-        ),
-      );
-    });
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      child: PopupMenuButton(
-        itemBuilder: (context) => [...items],
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text(
-            titulo,
-            style:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
-          ),
-        ),
-        offset: Offset(0, 100),
-        tooltip: 'Mostrar Menu',
-        onSelected: (result) {
-          if (result != '') {
-            print(result);
-          }
-        },
-      ),
-    );
-  }
-
   _mostrarFormulario(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final usuariosProviders = UsuariosProviders();
@@ -509,7 +475,6 @@ class _NavbarState extends State<Navbar> {
       _usuario = 'Iniciar Sesion';
     }
     setState(() {});
-    print(_usuario);
   }
 
   _guardarUsuario(String usuario) async {

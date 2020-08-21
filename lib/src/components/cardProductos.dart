@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tienda/src/pages/producto_page.dart';
 
 class CardProducto extends StatefulWidget {
   String imagen;
@@ -33,10 +32,11 @@ class _CardProductoState extends State<CardProducto> {
 
   @override
   Widget build(BuildContext context) {
-    var calve = widget.id;
+    var clave = widget.id;
+
     return Container(
       width: widget.ancho - 10,
-      height: widget.ancho * 1.4,
+      height: widget.ancho * 1.2,
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(
@@ -45,13 +45,13 @@ class _CardProductoState extends State<CardProducto> {
             InkWell(
               child: _imagen(widget.ancho - 10),
               onTap: () {
-                Navigator.pushNamed(context, 'producto/$calve');
+                Navigator.pushNamed(context, 'producto/$clave');
               },
             ),
             InkWell(
               child: _nombre(),
               onTap: () {
-                Navigator.pushNamed(context, 'producto/$calve');
+                Navigator.pushNamed(context, 'producto/$clave');
               },
             ),
             _precio(),
@@ -70,8 +70,8 @@ class _CardProductoState extends State<CardProducto> {
         Container(
           child: Image(
             image: NetworkImage(widget.imagen),
-            height: ancho * 0.60,
-            width: ancho * 0.40,
+            height: ancho * 0.50,
+            width: ancho * 0.50,
           ),
         ),
       ],
@@ -81,7 +81,11 @@ class _CardProductoState extends State<CardProducto> {
   Widget _nombre() {
     return Container(
       padding: EdgeInsets.all(5.0),
-      child: Text(widget.nombre),
+      child: Text(
+        widget.nombre,
+        style:
+            TextStyle(fontWeight: FontWeight.normal, color: Colors.blue[800]),
+      ),
     );
   }
 

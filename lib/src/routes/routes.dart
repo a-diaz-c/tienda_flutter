@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:tienda/src/pages/carrito_page.dart';
 import 'package:tienda/src/pages/home_page.dart';

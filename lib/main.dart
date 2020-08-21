@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tienda/src/routes/fluro.dart';
-import 'package:tienda/src/routes/routes.dart';
 import 'package:fluro/fluro.dart';
 
 void main() {

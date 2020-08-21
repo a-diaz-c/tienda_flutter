@@ -6,10 +6,6 @@ class FormularioLogin extends StatefulWidget {
 }
 
 class _FormularioLoginState extends State<FormularioLogin> {
-  final _formKey = GlobalKey<FormState>();
-  String _usuario = '';
-  String _password = '';
-  String _empresa = '';
   @override
   Widget build(BuildContext context) {
     return Container();

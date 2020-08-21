@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 width: anchoContendorProductos,
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15.0),
                 child: Column(
-                  children: _mostrarProductos(anchoContendorProductos, 4),
+                  children: _mostrarProductos(anchoContendorProductos, 5),
                 ),
               )
             ],
@@ -129,15 +129,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _mostrarProductos(double ancho, int cantidadFila) {
-    double anchoCard = ancho / 4;
+    Map<int, int> maxNombre = {
+      5: 120,
+      3: 100,
+      2: 100,
+    };
+    double anchoCard = ancho / cantidadFila;
     List<Widget> widgetProductos = [];
     List<Widget> row = [];
     for (int i = 0; i < productos.length; i++) {
+      String nuevoNombre =
+          _recortarTexto(productos[i]['nombre'], maxNombre[cantidadFila]);
       if ((i + 1) % cantidadFila == 0) {
         row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: productos[i]['nombre'],
+            nombre: nuevoNombre,
             precio: double.parse(productos[i]['precio']),
             imagen: productos[i]['imagen'],
             id: productos[i]['clave_producto'],
@@ -146,7 +153,7 @@ class _HomePageState extends State<HomePage> {
         widgetProductos.add(
           Container(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: row,
             ),
           ),
@@ -156,7 +163,7 @@ class _HomePageState extends State<HomePage> {
         row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: productos[i]['nombre'],
+            nombre: nuevoNombre,
             precio: double.parse(productos[i]['precio']),
             imagen: productos[i]['imagen'],
             id: productos[i]['clave_producto'],
@@ -180,6 +187,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _filaProductoExtraChica(double ancho) {
     List<Widget> widgetProductos = [];
     productos.forEach((element) {
+      String nuevoNombre = _recortarTexto(element['nombre'], 120);
       widgetProductos.add(Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,7 +195,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             CardProducto(
               ancho: ancho,
-              nombre: element['nombre'],
+              nombre: nuevoNombre,
               precio: double.parse(element['precio']),
               imagen: element['imagen'],
               id: element['id'],
@@ -197,6 +205,15 @@ class _HomePageState extends State<HomePage> {
       ));
     });
     return widgetProductos;
+  }
+
+  String _recortarTexto(String texto, int maximo) {
+    String nuevoTexto;
+    if (texto.length > maximo) {
+      nuevoTexto = texto.substring(0, maximo) + '...';
+      return nuevoTexto;
+    }
+    return texto;
   }
 
   Widget _menuLateral() {

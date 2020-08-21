@@ -128,44 +128,6 @@ Widget _servicioCliente() {
   );
 }
 
-Widget _parteDos() {
-  return Container(
-    child: Row(
-      children: [
-        InkWell(
-          child: Row(
-            children: [
-              Icon(Icons.payment),
-              SizedBox(width: 5.0),
-              Text(
-                "Promociones",
-                style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ],
-          ),
-          onTap: () {},
-        ),
-        Row(
-          children: [
-            Icon(Icons.payment),
-            SizedBox(width: 5.0),
-            Text(
-              "Centro de Ayuda",
-              style: TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ],
-        )
-      ],
-    ),
-  );
-}
-
 Widget _parteTres() {
   return Container(
     padding: EdgeInsets.all(20.0),

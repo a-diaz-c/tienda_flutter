@@ -326,20 +326,6 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  Widget _botonComprar() {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          side: BorderSide(color: Colors.blue)),
-      child: Text(
-        "Comprar",
-        style: TextStyle(color: Colors.blue, fontSize: 15.0),
-      ),
-      color: Colors.white,
-      onPressed: () {},
-    );
-  }
-
   Widget _tablaTecnica() {
     return Table(
       border: TableBorder(

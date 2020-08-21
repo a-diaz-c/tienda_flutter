@@ -13,7 +13,6 @@ class _SideBarState extends State<SideBar> {
   final String titulo;
   final List contenido;
   List<bool> _checkbox;
-  var _check;
 
   _SideBarState(this.titulo, this.contenido) {
     _checkbox = List.filled(this.contenido.length, false);
