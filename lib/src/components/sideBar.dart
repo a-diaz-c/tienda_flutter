@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
 class SideBar extends StatefulWidget {
-  final String titulo;
-  final List contenido;
+  String titulo;
+  List contenido;
 
-  const SideBar({Key key, this.titulo, this.contenido}) : super(key: key);
+  SideBar({Key key, @required this.titulo, @required this.contenido})
+      : super(key: key);
   @override
-  _SideBarState createState() => _SideBarState(this.titulo, this.contenido);
+  _SideBarState createState() => _SideBarState();
 }
 
 class _SideBarState extends State<SideBar> {
-  final String titulo;
-  final List contenido;
   List<bool> _checkbox;
 
-  _SideBarState(this.titulo, this.contenido) {
-    _checkbox = List.filled(this.contenido.length, false);
+  @override
+  void initState() {
+    super.initState();
+    _checkbox = List.filled(widget.contenido.length, false);
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +29,7 @@ class _SideBarState extends State<SideBar> {
           Row(
             children: [
               Text(
-                "$titulo",
+                widget.titulo,
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
             ],
@@ -47,7 +49,7 @@ class _SideBarState extends State<SideBar> {
   List<Widget> _crearElementos() {
     List<Widget> elementos = [];
 
-    for (var i = 0; i < contenido.length; i++) {
+    for (var i = 0; i < widget.contenido.length; i++) {
       elementos.add(Container(
         padding: EdgeInsets.all(0),
         height: 25.0,
@@ -62,7 +64,7 @@ class _SideBarState extends State<SideBar> {
                 }),
             InkWell(
               child: Text(
-                contenido[i],
+                widget.contenido[i],
                 style: TextStyle(color: Colors.grey[800]),
               ),
               onTap: () {

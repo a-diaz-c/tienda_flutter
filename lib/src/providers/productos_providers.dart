@@ -6,7 +6,8 @@ class ProductosProviders {
       'precio': '1419.00',
       'familia_prod': '302020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/71RznGesePL._AC_SL1399_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/71RznGesePL._AC_SL1399_.jpg',
+      'marca': 'Wal front'
     },
     {
       'clave_producto': '102',
@@ -15,7 +16,8 @@ class ProductosProviders {
       'precio': '430',
       'familia_prod': '302020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/51KszPCXBQL._AC_SL1000_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/51KszPCXBQL._AC_SL1000_.jpg',
+      'marca': 'Sonoff'
     },
     {
       'clave_producto': '103',
@@ -23,7 +25,8 @@ class ProductosProviders {
       'precio': '430.00',
       'familia_prod': '302020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/7126oDJhzZL._AC_SL1500_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/7126oDJhzZL._AC_SL1500_.jpg',
+      'marca': 'Black & Decker'
     },
     {
       'clave_producto': '104',
@@ -31,7 +34,8 @@ class ProductosProviders {
       'precio': '1735.00',
       'familia_prod': '302020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/71bk35sq65L._AC_SL1500_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/71bk35sq65L._AC_SL1500_.jpg',
+      'marca': 'Koblenz'
     },
     {
       'clave_producto': '105',
@@ -39,7 +43,8 @@ class ProductosProviders {
       'precio': '1097.00',
       'familia_prod': '302010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/61Is%2Bb3s-PL._AC_SL1000_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/61Is%2Bb3s-PL._AC_SL1000_.jpg',
+      'marca': 'Klein Tools'
     },
     {
       'clave_producto': '106',
@@ -47,7 +52,8 @@ class ProductosProviders {
       'precio': '2717.00',
       'familia_prod': '302010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/51WSJq7fSoL._AC_SL1000_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/51WSJq7fSoL._AC_SL1000_.jpg',
+      'marca': 'Sonoff'
     },
     {
       'clave_producto': '107',
@@ -56,7 +62,8 @@ class ProductosProviders {
       'precio': '261.95',
       'familia_prod': '302010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/51E%2BuIQJfzL._AC_SL1000_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/51E%2BuIQJfzL._AC_SL1000_.jpg',
+      'marca': 'Pyle'
     },
     {
       'clave_producto': '108',
@@ -65,7 +72,8 @@ class ProductosProviders {
       'precio': '967.00',
       'familia_prod': '302020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/81IaAPXDYDL._AC_SL1500_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/81IaAPXDYDL._AC_SL1500_.jpg',
+      'marca': 'Koblenz'
     },
     {
       'clave_producto': '109',
@@ -74,7 +82,8 @@ class ProductosProviders {
       'precio': '8208.85',
       'familia_prod': '302020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/51ndoEOn9XL._AC_SL1001_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/51ndoEOn9XL._AC_SL1001_.jpg',
+      'marca': 'Wal front'
     },
     {
       'clave_producto': '110',
@@ -82,7 +91,8 @@ class ProductosProviders {
       'precio': '2140.34',
       'familia_prod': '302010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/81aGRoTjhWL._SL1500_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/81aGRoTjhWL._SL1500_.jpg',
+      'marca': 'Wal front'
     },
     {
       'clave_producto': '111',
@@ -91,7 +101,8 @@ class ProductosProviders {
       'precio': '389',
       'familia_prod': '2010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/516AQ85fNhL._AC_SL1000_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/516AQ85fNhL._AC_SL1000_.jpg',
+      'marca': 'Madero'
     },
     {
       'clave_producto': '112',
@@ -99,7 +110,8 @@ class ProductosProviders {
       'precio': '205',
       'familia_prod': '2010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/31TtJlrMbTL._AC_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/31TtJlrMbTL._AC_.jpg',
+      'marca': 'Woodbridge'
     },
     {
       'clave_producto': '113',
@@ -107,7 +119,8 @@ class ProductosProviders {
       'precio': '195',
       'familia_prod': '2010',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/31GCCR3Q5EL._AC_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/31GCCR3Q5EL._AC_.jpg',
+      'marca': 'Portillo'
     },
     {
       'clave_producto': '114',
@@ -115,7 +128,8 @@ class ProductosProviders {
       'precio': '194.36',
       'familia_prod': '2020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/61Iv7I2CSmL._AC_SL1500_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/61Iv7I2CSmL._AC_SL1500_.jpg',
+      'marca': 'Coca-Cola'
     },
     {
       'clave_producto': '115',
@@ -123,7 +137,8 @@ class ProductosProviders {
       'precio': '96.00',
       'familia_prod': '2020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/51jKU3VRBFL._AC_SL1080_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/51jKU3VRBFL._AC_SL1080_.jpg',
+      'marca': 'Sidral Mundet'
     },
     {
       'clave_producto': '116',
@@ -131,7 +146,8 @@ class ProductosProviders {
       'precio': '154.00',
       'familia_prod': '2020',
       'imagen':
-          'https://images-na.ssl-images-amazon.com/images/I/41l46ydVwzL._AC_.jpg'
+          'https://images-na.ssl-images-amazon.com/images/I/41l46ydVwzL._AC_.jpg',
+      'marca': 'Coca-Cola'
     }
   ];
 

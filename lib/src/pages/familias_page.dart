@@ -18,14 +18,13 @@ class FamiliaPage extends StatefulWidget {
 
 class _FamiliaPageState extends State<FamiliaPage> {
   List productos;
+  List marcas = [];
   ProductosProviders providers = ProductosProviders();
   ScrollController _rrectController = ScrollController();
   @override
   void initState() {
     super.initState();
-    var familia = widget.familia;
-    productos = productos = providers.buscarFamilia(familia);
-    print(' Familia es: ' + familia);
+    _cargarProductos();
   }
 
   @override
@@ -54,6 +53,19 @@ class _FamiliaPageState extends State<FamiliaPage> {
         ),
       ),
     );
+  }
+
+  _cargarProductos() {
+    var familia = widget.familia;
+
+    productos = providers.buscarFamilia(familia);
+    print(' Familia es: ' + familia);
+
+    productos.forEach((element) {
+      if (marcas.indexOf(element['marca']) == -1) {
+        marcas.add(element['marca']);
+      }
+    });
   }
 
   Widget _cuerpoVacio() {
@@ -224,12 +236,8 @@ class _FamiliaPageState extends State<FamiliaPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SideBar(
-            titulo: "Categorías",
-            contenido: ["Cemento", "Aceros"],
-          ),
-          SideBar(
             titulo: "Marcas",
-            contenido: ["Bronco", "Anclo"],
+            contenido: marcas,
           ),
         ],
       ),
