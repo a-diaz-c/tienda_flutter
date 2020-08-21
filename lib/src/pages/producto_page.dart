@@ -46,12 +46,14 @@ class _ProductoPageState extends State<ProductoPage> {
                 Navbar(),
                 LayoutBuilder(builder: (context, constraints) {
                   if (MediaQuery.of(context).size.width > 900) {
-                    return _cardProducto(_anchoPantalla * 0.75);
+                    return _cardProducto(_anchoPantalla * 0.60);
                   } else {
                     return _cardProductoMovil(_anchoPantalla * 0.90);
                   }
                 }),
-                _cardCalificacion(_anchoPantalla * 0.75),
+                _cardCalificacion(MediaQuery.of(context).size.width > 900
+                    ? _anchoPantalla * 0.60
+                    : _anchoPantalla * 0.90),
                 footer(),
               ],
             )
@@ -78,7 +80,8 @@ class _ProductoPageState extends State<ProductoPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _imagenProducto(anchoImagen, altoIamgen),
-                    _textosProducto(35.0),
+                    SizedBox(width: 20),
+                    _textosProducto(25.0),
                   ],
                 ),
                 Container(
@@ -124,7 +127,7 @@ class _ProductoPageState extends State<ProductoPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _imagenProducto(ancho * 0.80, ancho * 0.80),
+                    _imagenProducto(ancho * 0.60, ancho * 0.60),
                   ],
                 ),
                 Row(
