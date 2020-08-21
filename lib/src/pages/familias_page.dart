@@ -4,24 +4,28 @@ import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 import 'package:tienda/src/components/sideBar.dart';
-
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+
+class FamiliaPage extends StatefulWidget {
+  String familia;
+  FamiliaPage({Key key, this.familia}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  _FamiliaPageState createState() => _FamiliaPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _FamiliaPageState extends State<FamiliaPage> {
   List productos;
   ProductosProviders providers = ProductosProviders();
   ScrollController _rrectController = ScrollController();
   @override
   void initState() {
     super.initState();
-    productos = providers.jsonProductos();
+    var familia = widget.familia;
+    productos = productos = providers.buscarFamilia(familia);
+    print(' Familia es: ' + familia);
   }
 
   @override

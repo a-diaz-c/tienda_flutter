@@ -613,7 +613,8 @@ class _ListarMenuState extends State<ListarMenu> {
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/$familia');
+              Navigator.pushNamed(context, '/productos/$familia');
+              print(familia);
               setState(() {});
             },
           ),
