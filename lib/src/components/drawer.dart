@@ -19,11 +19,9 @@ class _DrawerComponentState extends State<DrawerComponent> {
     {'id': '30', 'nombre': 'Ferreteria'},
     {'id': '3010', 'nombre': 'Tornillos'},
     {'id': '3020', 'nombre': 'Herramientas'},
+    {'id': '302010', 'nombre': 'Electricidad'},
+    {'id': '302020', 'nombre': 'Accesorio de Herramientas'},
     {'id': '2020', 'nombre': 'Refresco'},
-    {'id': '202010', 'nombre': 'Azucar'},
-    {'id': '202020', 'nombre': 'Sin Azucar'},
-    {'id': '302010', 'nombre': 'Taladros'},
-    {'id': '302020', 'nombre': 'Mecanicos'},
   ];
   String _usuario = '';
   @override
@@ -140,6 +138,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
   List<Widget> _listarCategorias(List datos) {
     List<Widget> todo = [];
     datos.forEach((element) {
+      var familia = element.id;
       if (element.hijos.length != 0) {
         todo.add(ExpansionTile(
           title: Text(element.nombre),
@@ -148,7 +147,11 @@ class _DrawerComponentState extends State<DrawerComponent> {
       } else {
         todo.add(ListTile(
           title: Text(element.nombre),
-          onTap: () => print(element.id),
+          onTap: () {
+            Navigator.pushNamed(context, '/productos/$familia');
+            print(familia);
+            setState(() {});
+          },
         ));
       }
     });

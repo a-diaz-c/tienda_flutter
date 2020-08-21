@@ -45,12 +45,26 @@ class _FamiliaPageState extends State<FamiliaPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Navbar(),
-                  _cuerpo(),
+                  productos.isEmpty ? _cuerpoVacio() : _cuerpo(),
                   footer(),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _cuerpoVacio() {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.only(top: 20.0),
+        width: MediaQuery.of(context).size.width * 0.50,
+        height: MediaQuery.of(context).size.width * 0.80,
+        child: Text(
+          'No se encontro producto',
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );
