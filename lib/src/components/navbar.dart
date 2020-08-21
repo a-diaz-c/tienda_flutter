@@ -287,7 +287,6 @@ class _NavbarState extends State<Navbar> {
   Widget _menu() {
     return Container(
       child: Row(
-        //children: _addCategoriasMenu(),
         children: _addCategoriasMenu(),
       ),
     );
@@ -533,7 +532,10 @@ class _ListarMenuState extends State<ListarMenu> {
             });
           },
           child: Material(
-            color: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            color: Colors.blueAccent,
             textStyle: Theme.of(context).textTheme.subtitle1,
             elevation: widget.rootMenu ? 2.0 : 0.0,
             child: Padding(
