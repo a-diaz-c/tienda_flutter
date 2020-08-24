@@ -18,13 +18,17 @@ class FamiliaPage extends StatefulWidget {
 
 class _FamiliaPageState extends State<FamiliaPage> {
   List productos;
-  List marcas = [];
+  List<String> marcas = [];
+  List<bool> _checkbox;
+  List<String> filtro = [];
   ProductosProviders providers = ProductosProviders();
   ScrollController _rrectController = ScrollController();
   @override
   void initState() {
     super.initState();
     _cargarProductos();
+    _cargarMarcas();
+    _checkbox = List.filled(marcas.length, false);
   }
 
   @override
@@ -59,8 +63,9 @@ class _FamiliaPageState extends State<FamiliaPage> {
     var familia = widget.familia;
 
     productos = providers.buscarFamilia(familia);
-    print(' Familia es: ' + familia);
+  }
 
+  _cargarMarcas() {
     productos.forEach((element) {
       if (marcas.indexOf(element['marca']) == -1) {
         marcas.add(element['marca']);
@@ -98,7 +103,7 @@ class _FamiliaPageState extends State<FamiliaPage> {
                 width: anchoContendorProductos,
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15.0),
                 child: Column(
-                  children: _mostrarProductos(anchoContendorProductos, 4),
+                  children: _mostrarProductos(anchoContendorProductos, 5),
                 ),
               )
             ],
@@ -159,15 +164,22 @@ class _FamiliaPageState extends State<FamiliaPage> {
   }
 
   List<Widget> _mostrarProductos(double ancho, int cantidadFila) {
-    double anchoCard = ancho / 4;
+    Map<int, int> maxNombre = {
+      5: 75,
+      3: 80,
+      2: 100,
+    };
+    double anchoCard = ancho / cantidadFila;
     List<Widget> widgetProductos = [];
     List<Widget> row = [];
     for (int i = 0; i < productos.length; i++) {
+      String nuevoNombre =
+          _recortarTexto(productos[i]['nombre'], maxNombre[cantidadFila]);
       if ((i + 1) % cantidadFila == 0) {
         row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: productos[i]['nombre'],
+            nombre: nuevoNombre,
             precio: double.parse(productos[i]['precio']),
             imagen: productos[i]['imagen'],
             id: productos[i]['clave_producto'],
@@ -186,7 +198,7 @@ class _FamiliaPageState extends State<FamiliaPage> {
         row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: productos[i]['nombre'],
+            nombre: nuevoNombre,
             precio: double.parse(productos[i]['precio']),
             imagen: productos[i]['imagen'],
             id: productos[i]['clave_producto'],
@@ -229,18 +241,82 @@ class _FamiliaPageState extends State<FamiliaPage> {
     return widgetProductos;
   }
 
+  String _recortarTexto(String texto, int maximo) {
+    String nuevoTexto;
+    if (texto.length > maximo) {
+      nuevoTexto = texto.substring(0, maximo) + '...';
+      return nuevoTexto;
+    }
+    return texto;
+  }
+
   Widget _menuLateral() {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.15,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SideBar(
-            titulo: "Marcas",
-            contenido: marcas,
+          Row(
+            children: [
+              Text(
+                "Marcas",
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+          SizedBox(height: 10.0),
+          ..._crearElementos(),
+          /*SizedBox(height: 10.0),
+          InkWell(
+            child: Text("Ver más..."),
+            onTap: () {},
+          )*/
         ],
       ),
     );
+  }
+
+  List<Widget> _crearElementos() {
+    List<Widget> elementos = [];
+
+    for (var i = 0; i < marcas.length; i++) {
+      elementos.add(Container(
+        padding: EdgeInsets.all(0),
+        height: 25.0,
+        child: Row(
+          children: [
+            Checkbox(
+                value: _checkbox[i],
+                onChanged: (bool value) {
+                  setState(() {
+                    _checkbox[i] = value;
+                    value ? filtro.add(marcas[i]) : filtro.remove(marcas[i]);
+                    if (filtro.length != 0) {
+                      productos = providers.buscarPorMarcas(filtro);
+                    } else {
+                      productos = providers.buscarFamilia(widget.familia);
+                    }
+                    //print(productos);
+                  });
+                }),
+            //InkWell(
+            //child:
+            Text(
+              marcas[i],
+              style: TextStyle(color: Colors.grey[800]),
+            ),
+            /*onTap: () {
+                _checkbox[i] = _checkbox[i] == true ? false : true;
+
+                setState(() {});
+                print('value');
+              },*/
+            //)
+          ],
+        ),
+      ));
+    }
+
+    return elementos;
   }
 }

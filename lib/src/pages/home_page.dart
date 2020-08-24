@@ -16,12 +16,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List productos;
+  List<String> marcas = [];
+  List<bool> _checkbox;
+  List<String> filtro = [];
+
   ProductosProviders providers = ProductosProviders();
   ScrollController _rrectController = ScrollController();
   @override
   void initState() {
     super.initState();
-    productos = providers.jsonProductos();
+    _cargarProductos();
+    _cargarMarcas();
+    _checkbox = List.filled(marcas.length, false);
   }
 
   @override
@@ -50,6 +56,18 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  _cargarProductos() {
+    productos = providers.jsonProductos();
+  }
+
+  _cargarMarcas() {
+    productos.forEach((element) {
+      if (marcas.indexOf(element['marca']) == -1) {
+        marcas.add(element['marca']);
+      }
+    });
   }
 
   Widget _cuerpo() {
@@ -130,8 +148,8 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _mostrarProductos(double ancho, int cantidadFila) {
     Map<int, int> maxNombre = {
-      5: 120,
-      3: 100,
+      5: 75,
+      3: 80,
       2: 100,
     };
     double anchoCard = ancho / cantidadFila;
@@ -218,16 +236,71 @@ class _HomePageState extends State<HomePage> {
 
   Widget _menuLateral() {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.15,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SideBar(
-            titulo: "Marcas",
-            contenido: ["Bronco", "Anclo"],
+          Row(
+            children: [
+              Text(
+                "Marcas",
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+          SizedBox(height: 10.0),
+          ..._crearElementos(),
+          /*SizedBox(height: 10.0),
+          InkWell(
+            child: Text("Ver más..."),
+            onTap: () {},
+          )*/
         ],
       ),
     );
+  }
+
+  List<Widget> _crearElementos() {
+    List<Widget> elementos = [];
+
+    for (var i = 0; i < marcas.length; i++) {
+      elementos.add(Container(
+        padding: EdgeInsets.all(0),
+        height: 25.0,
+        child: Row(
+          children: [
+            Checkbox(
+                value: _checkbox[i],
+                onChanged: (bool value) {
+                  setState(() {
+                    _checkbox[i] = value;
+                    value ? filtro.add(marcas[i]) : filtro.remove(marcas[i]);
+                    if (filtro.length != 0) {
+                      productos = providers.buscarPorMarcas(filtro);
+                    } else {
+                      productos = providers.jsonProductos();
+                    }
+                    //print(productos);
+                  });
+                }),
+            //InkWell(
+            //child:
+            Text(
+              marcas[i],
+              style: TextStyle(color: Colors.grey[800]),
+            ),
+            /*onTap: () {
+                _checkbox[i] = _checkbox[i] == true ? false : true;
+
+                setState(() {});
+                print('value');
+              },*/
+            //)
+          ],
+        ),
+      ));
+    }
+
+    return elementos;
   }
 }

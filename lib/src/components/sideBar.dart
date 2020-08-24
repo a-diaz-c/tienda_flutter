@@ -60,19 +60,22 @@ class _SideBarState extends State<SideBar> {
                 onChanged: (bool value) {
                   setState(() {
                     _checkbox[i] = value;
+                    print(value);
                   });
                 }),
-            InkWell(
-              child: Text(
-                widget.contenido[i],
-                style: TextStyle(color: Colors.grey[800]),
-              ),
-              onTap: () {
+            //InkWell(
+            //child:
+            Text(
+              widget.contenido[i],
+              style: TextStyle(color: Colors.grey[800]),
+            ),
+            /*onTap: () {
                 _checkbox[i] = _checkbox[i] == true ? false : true;
 
                 setState(() {});
-              },
-            )
+                print('value');
+              },*/
+            //)
           ],
         ),
       ));

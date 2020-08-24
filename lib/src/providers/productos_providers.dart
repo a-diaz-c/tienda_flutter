@@ -166,4 +166,14 @@ class ProductosProviders {
         productos.where((element) => element['familia_prod'] == familia);
     return productosCategorias.toList();
   }
+
+  buscarPorMarcas(List marcas) {
+    var productosMarcas = [];
+    marcas.forEach((marca) {
+      print("Esta buscando $marca");
+      var busqueda = productos.where((element) => element['marca'] == marca);
+      productosMarcas.addAll(busqueda);
+    });
+    return productosMarcas;
+  }
 }

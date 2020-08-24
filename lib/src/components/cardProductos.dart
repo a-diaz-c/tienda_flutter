@@ -36,7 +36,7 @@ class _CardProductoState extends State<CardProducto> {
 
     return Container(
       width: widget.ancho - 10,
-      height: widget.ancho * 1.2,
+      height: widget.ancho * 1.3,
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(

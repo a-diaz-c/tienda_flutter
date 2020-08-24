@@ -40,6 +40,21 @@ class _DrawerComponentState extends State<DrawerComponent> {
     return ListView(padding: EdgeInsets.zero, children: _crearItemsMenu());
   }
 
+  List<Widget> _crearItemsMenu() {
+    return [
+      _headerDrawer(),
+      /*_itemDrawer('Iniciar Sesion', Icons.perm_identity),
+      _itemDrawer('Profile', Icons.account_circle),
+      _itemDrawer('Settings', Icons.settings),*/
+      /* _itemCategoria('Cemento', ['Cemento Blanco', 'Cemento Extra']),
+      _itemCategoria(
+          'Acero', ['Alambre y alambron', 'Castillo', 'Malla Electrosoldada']),
+      _itemCategoria('Otro Materiales', ['Cemento Blanco', 'Cemento Extra']),
+      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra']),*/
+      ..._listarCategorias(lista),
+    ];
+  }
+
   DrawerHeader _headerDrawer() {
     return DrawerHeader(
       decoration: BoxDecoration(
@@ -118,21 +133,6 @@ class _DrawerComponentState extends State<DrawerComponent> {
       title: Text(texto),
       onTap: ontap,
     );
-  }
-
-  List<Widget> _crearItemsMenu() {
-    return [
-      _headerDrawer(),
-      /*_itemDrawer('Iniciar Sesion', Icons.perm_identity),
-      _itemDrawer('Profile', Icons.account_circle),
-      _itemDrawer('Settings', Icons.settings),*/
-      /* _itemCategoria('Cemento', ['Cemento Blanco', 'Cemento Extra']),
-      _itemCategoria(
-          'Acero', ['Alambre y alambron', 'Castillo', 'Malla Electrosoldada']),
-      _itemCategoria('Otro Materiales', ['Cemento Blanco', 'Cemento Extra']),
-      _itemCategoria('Acabados', ['Cemento Blanco', 'Cemento Extra']),*/
-      ..._listarCategorias(lista),
-    ];
   }
 
   List<Widget> _listarCategorias(List datos) {
