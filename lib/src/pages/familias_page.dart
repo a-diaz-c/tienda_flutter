@@ -31,34 +31,6 @@ class _FamiliaPageState extends State<FamiliaPage> {
     _checkbox = List.filled(marcas.length, false);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: DrawerComponent(),
-      body: DraggableScrollbar.rrect(
-        alwaysVisibleScrollThumb: true,
-        controller: _rrectController,
-        backgroundColor: Colors.grey[300],
-        child: ListView(
-          controller: _rrectController,
-          children: [
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Navbar(),
-                  productos.isEmpty ? _cuerpoVacio() : _cuerpo(),
-                  footer(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   _cargarProductos() {
     var familia = widget.familia;
 
@@ -71,6 +43,74 @@ class _FamiliaPageState extends State<FamiliaPage> {
         marcas.add(element['marca']);
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: DrawerComponent(),
+      body: MediaQuery.of(context).size.width > 900 ? _escritrio() : _movil(),
+    );
+  }
+
+  Widget _escritrio() {
+    return DraggableScrollbar.rrect(
+      alwaysVisibleScrollThumb: true,
+      controller: _rrectController,
+      backgroundColor: Colors.grey[300],
+      child: ListView(
+        controller: _rrectController,
+        children: [
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Navbar(),
+                productos.isEmpty ? _cuerpoVacio() : _cuerpo(),
+                footer(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _movil() {
+    return ListView(
+      controller: _rrectController,
+      children: [
+        Navbar(),
+        Container(
+          padding: EdgeInsets.only(top: 5.0, left: 5.0),
+          child: Text(
+            "Marcas",
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(right: 10.0),
+          width: MediaQuery.of(context).size.width,
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            physics: ScrollPhysics(), // to disable GridView's scrolling
+            shrinkWrap: true,
+            children: _crearElementos(),
+          ),
+        ),
+        Divider(
+          color: Colors.black,
+          height: 8,
+          thickness: 2,
+          indent: 0,
+          endIndent: 0,
+        ),
+        _cuerpo(),
+        footer(),
+      ],
+    );
   }
 
   Widget _cuerpoVacio() {
@@ -120,6 +160,7 @@ class _FamiliaPageState extends State<FamiliaPage> {
             children: [
               Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _mostrarProductos(anchoContendorProductos, 3),
                 ),
               )
@@ -137,6 +178,7 @@ class _FamiliaPageState extends State<FamiliaPage> {
             children: [
               Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _mostrarProductos(anchoContendorProductos, 2),
                 ),
               )
