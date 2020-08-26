@@ -3,7 +3,6 @@ import 'package:tienda/src/components/cardProductos.dart';
 import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
-import 'package:tienda/src/components/sideBar.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
