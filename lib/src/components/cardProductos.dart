@@ -180,6 +180,7 @@ class _CardProductoState extends State<CardProducto> {
         ),
         onPressed: () {
           Map<String, dynamic> producto = {
+            'id': widget.id,
             'nombre': widget.nombre,
             'precio': widget.precio,
             'imagen': widget.imagen,

@@ -1,3 +1,5 @@
+import 'package:localstorage/localstorage.dart';
+
 class ProductosProviders {
   List<Map> productos = [
     {
@@ -150,7 +152,7 @@ class ProductosProviders {
       'marca': 'Coca-Cola'
     }
   ];
-
+  final LocalStorage storage = new LocalStorage('user_app');
   List jsonProductos() {
     return productos;
   }
@@ -177,5 +179,35 @@ class ProductosProviders {
     return productosMarcas;
   }
 
-  addProductoCarrito(dynamic producto) async {}
+  addProductoCarrito(Map<String, dynamic> producto) async {
+    List items = storage.getItem('productos');
+
+    if (items == null) {
+      items = [];
+      items.add(producto);
+    } else {
+      var index =
+          items.indexWhere((element) => element['id'] == producto['id']);
+      if (index == -1)
+        items.add(producto);
+      else {
+        items[index]['cantidad'] += producto['cantidad'];
+      }
+    }
+    storage.setItem('productos', items);
+  }
+
+  Map sizeCarrito() {
+    List items = storage.getItem('productos');
+    Map<String, dynamic> resultado = {'cantidad': 0, 'total': 0};
+
+    if (items != null) {
+      resultado['cantidad'] = items.length;
+      items.forEach((element) {
+        resultado['total'] += (element['candiad'] * element['precio']);
+      });
+      print(resultado);
+    }
+    return resultado;
+  }
 }
