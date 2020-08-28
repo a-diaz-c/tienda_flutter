@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:tienda/src/models/categoria.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
@@ -24,6 +24,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
     {'id': '2020', 'nombre': 'Refresco'},
   ];
   String _usuario = '';
+  final LocalStorage storage = new LocalStorage('user_app');
   @override
   void initState() {
     super.initState();
@@ -434,8 +435,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
   }
 
   _nombreUsuario() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _usuario = prefs.getString('usuario');
+    _usuario = storage.getItem('usuario');
     if (_usuario == null) {
       _usuario = 'Iniciar Sesion';
     }
@@ -443,14 +443,12 @@ class _DrawerComponentState extends State<DrawerComponent> {
   }
 
   _guardarUsuario(String usuario) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('usuario', usuario);
+    await storage.setItem('usuario', usuario);
     _nombreUsuario();
   }
 
   _borrarUsuario() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('usuario');
+    await storage.clear();
     _nombreUsuario();
   }
 }

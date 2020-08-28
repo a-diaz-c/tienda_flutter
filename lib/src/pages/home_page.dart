@@ -189,13 +189,11 @@ class _HomePageState extends State<HomePage> {
     List<Widget> widgetProductos = [];
     List<Widget> row = [];
     for (int i = 0; i < productos.length; i++) {
-      String nuevoNombre =
-          _recortarTexto(productos[i]['nombre'], maxNombre[cantidadFila]);
       if ((i + 1) % cantidadFila == 0) {
         row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: nuevoNombre,
+            nombre: productos[i]['nombre'],
             precio: double.parse(productos[i]['precio']),
             imagen: productos[i]['imagen'],
             id: productos[i]['clave_producto'],
@@ -214,7 +212,7 @@ class _HomePageState extends State<HomePage> {
         row.add(
           CardProducto(
             ancho: anchoCard,
-            nombre: nuevoNombre,
+            nombre: productos[i]['nombre'],
             precio: double.parse(productos[i]['precio']),
             imagen: productos[i]['imagen'],
             id: productos[i]['clave_producto'],

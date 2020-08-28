@@ -176,4 +176,6 @@ class ProductosProviders {
     });
     return productosMarcas;
   }
+
+  addProductoCarrito(dynamic producto) async {}
 }

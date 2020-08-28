@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 
 class CardProducto extends StatefulWidget {
   String imagen;
@@ -79,10 +80,11 @@ class _CardProductoState extends State<CardProducto> {
   }
 
   Widget _nombre() {
+    String nuevonombre = _recortarTexto(widget.nombre);
     return Container(
       padding: EdgeInsets.all(5.0),
       child: Text(
-        widget.nombre,
+        nuevonombre,
         style:
             TextStyle(fontWeight: FontWeight.normal, color: Colors.blue[800]),
       ),
@@ -177,9 +179,25 @@ class _CardProductoState extends State<CardProducto> {
           ],
         ),
         onPressed: () {
-          print("Total de productos $_conteo por $_total");
+          Map<String, dynamic> producto = {
+            'nombre': widget.nombre,
+            'precio': widget.precio,
+            'imagen': widget.imagen,
+            'cantidad': _conteo,
+          };
+          ProductosProviders providers = ProductosProviders();
+          providers.addProductoCarrito(producto);
         },
       ),
     );
+  }
+
+  String _recortarTexto(String texto) {
+    String nuevoTexto;
+    if (texto.length > 75) {
+      nuevoTexto = texto.substring(0, 75) + '...';
+      return nuevoTexto;
+    }
+    return texto;
   }
 }
