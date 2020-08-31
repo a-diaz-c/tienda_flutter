@@ -153,12 +153,13 @@ class ProductosProviders {
     }
   ];
   final LocalStorage storage = new LocalStorage('user_app');
+
   List jsonProductos() {
     return productos;
   }
 
   buscarProducto(String id) {
-    var producto =
+    Map producto =
         productos.firstWhere((element) => element['clave_producto'] == id);
     return producto;
   }
@@ -197,6 +198,16 @@ class ProductosProviders {
     storage.setItem('productos', items);
   }
 
+  removeProductoCarrito(String id) {
+    List items = storage.getItem('productos');
+
+    print('Elminando $id');
+
+    items.removeWhere((element) => element['id'] == id);
+
+    storage.setItem('productos', items);
+  }
+
   Map sizeCarrito() {
     List items = storage.getItem('productos');
     Map<String, dynamic> resultado = {'cantidad': 0, 'total': 0};
@@ -209,5 +220,11 @@ class ProductosProviders {
       print(resultado);
     }
     return resultado;
+  }
+
+  List getProductosCarrito() {
+    print('Cargando carrito...');
+    List items = storage.getItem('productos');
+    return items;
   }
 }

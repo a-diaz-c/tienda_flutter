@@ -19,7 +19,7 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
   ScrollController _rrectController = ScrollController();
   ProductosProviders providers = ProductosProviders();
-  dynamic producto;
+  Map producto;
 
   @override
   void initState() {
@@ -325,7 +325,16 @@ class _ProductoPageState extends State<ProductoPage> {
         style: TextStyle(color: Colors.blue, fontSize: 15.0),
       ),
       color: Colors.white,
-      onPressed: () {},
+      onPressed: () {
+        Map<String, dynamic> nuevo = {
+          'id': producto['clave_producto'],
+          'nombre': producto['nombre'],
+          'precio': double.parse(producto['precio']),
+          'imagen': producto['imagen'],
+          'cantidad': 1,
+        };
+        providers.addProductoCarrito(nuevo);
+      },
     );
   }
 

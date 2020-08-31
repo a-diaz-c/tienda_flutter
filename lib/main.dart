@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tienda/src/routes/fluro.dart';
-import 'package:fluro/fluro.dart';
+import 'package:fluro/fluro.dart' as fluro;
 
 void main() {
   FluroRouter.setupRouter();
@@ -8,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final router = Router();
+  final router = fluro.Router();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

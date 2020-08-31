@@ -109,33 +109,6 @@ class _DrawerComponentState extends State<DrawerComponent> {
     }
   }
 
-  ExpansionTile _itemCategoria(String categoria, List<dynamic> subcategorias) {
-    return ExpansionTile(
-      title: Text(categoria),
-      children: _itemsSubcategoria(subcategorias),
-    );
-  }
-
-  List<Widget> _itemsSubcategoria(List<Categoria> subcategorias) {
-    List<Widget> lista = [];
-
-    subcategorias.forEach((element) {
-      lista.add(ListTile(
-        title: Text(element.nombre),
-      ));
-    });
-
-    return lista;
-  }
-
-  ListTile _itemDrawer(String texto, IconData icono, {Function ontap}) {
-    return ListTile(
-      leading: Icon(icono),
-      title: Text(texto),
-      onTap: ontap,
-    );
-  }
-
   List<Widget> _listarCategorias(List datos) {
     List<Widget> todo = [];
     datos.forEach((element) {
@@ -373,65 +346,6 @@ class _DrawerComponentState extends State<DrawerComponent> {
         );
       },
     );
-  }
-
-  _listaCategorias() {
-    List<Map<dynamic, dynamic>> datos = [];
-
-    List<Widget> items = [];
-    categorias.forEach((element) {
-      var division = element['id'].toString().split('0');
-      if (division.length <= 2)
-        lista.add(new Categoria.fromJson(element));
-      else {
-        switch (division.length) {
-          case 3:
-            {
-              var index = lista.indexWhere((e) => e.id == division[0] + '0');
-
-              if (index != -1) {
-                print('Encontro ' + lista[index].nombre);
-                print('hijo ' + element['nombre']);
-                lista[index].addHijo(new Categoria.fromJson(element));
-              }
-            }
-            break;
-          case 4:
-            {
-              var index = lista.indexWhere((e) => e.id == division[0] + '0');
-              var index2 = lista.indexWhere((e) => e.id == division[1] + '0');
-
-              if (index != -1 && index2 != -1) {
-                print('Encontro ' + lista[index].nombre);
-                print('Hijo de ' + lista[index].hijos[index2].nombre);
-                print('hijo ' + element['nombre']);
-                lista[index]
-                    .hijos[index2]
-                    .addHijo(new Categoria.fromJson(element));
-              }
-            }
-            break;
-          default:
-        }
-
-        /*var index = lista.indexWhere((e) => e.id == division[0] + '0');
-
-        if (index != -1) {
-          print('Encontro ' + lista[index].nombre);
-          print('hijo ' + element['nombre']);
-          lista[index].addHijo(new Categoria.fromJson(element));
-        }*/
-      }
-    });
-    _mostrarElementos(lista);
-  }
-
-  _mostrarElementos(List<Categoria> lista) {
-    lista.forEach((element) {
-      print(element.nombre);
-
-      _mostrarElementos(element.hijos);
-    });
   }
 
   _nombreUsuario() async {

@@ -70,31 +70,6 @@ class _HomePageState extends State<HomePage> {
       controller: _rrectController,
       children: [
         Navbar(),
-        Container(
-          padding: EdgeInsets.only(top: 5.0, left: 5.0),
-          child: Text(
-            "Marcas",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.only(right: 10.0),
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            physics: ScrollPhysics(), // to disable GridView's scrolling
-            shrinkWrap: true,
-            children: _crearElementos(),
-          ),
-        ),
-        Divider(
-          color: Colors.black,
-          height: 8,
-          thickness: 2,
-          indent: 0,
-          endIndent: 0,
-        ),
         _cuerpo(),
         footer(),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:tienda/src/models/categoria.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
 class Navbar extends StatefulWidget {
@@ -11,6 +12,7 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
+  ProductosProviders productosProviders = ProductosProviders();
   List<Categoria> lista = [];
   List<Map<String, dynamic>> categorias = [
     {'id': '10', 'nombre': 'Alimento'},
@@ -32,6 +34,7 @@ class _NavbarState extends State<Navbar> {
     super.initState();
     _nombreUsuario();
     _ordenarCategorias();
+    _cargarCarrito();
   }
 
   @override
@@ -283,6 +286,10 @@ class _NavbarState extends State<Navbar> {
     } else {
       categoria.add(new Categoria.fromJson(nuevaCategoria));
     }
+  }
+
+  _cargarCarrito() {
+    //print(productosProviders.sizeCarrito());
   }
 
   Widget _menu() {

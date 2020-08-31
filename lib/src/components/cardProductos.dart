@@ -137,6 +137,7 @@ class _CardProductoState extends State<CardProducto> {
                   fontSize: 12.0,
                 ),
                 inputFormatters: [
+                  // ignore: deprecated_member_use
                   WhitelistingTextInputFormatter.digitsOnly,
                 ],
                 onChanged: (texto) {

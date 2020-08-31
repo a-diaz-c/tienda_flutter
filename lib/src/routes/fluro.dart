@@ -1,4 +1,4 @@
-import 'package:fluro/fluro.Dart';
+import 'package:fluro/fluro.Dart' as fluro;
 import 'package:flutter/material.Dart';
 import 'package:tienda/src/pages/carrito_page.dart';
 import 'package:tienda/src/pages/familias_page.dart';
@@ -6,22 +6,22 @@ import 'package:tienda/src/pages/home_page.dart';
 import 'package:tienda/src/pages/producto_page.dart';
 
 class FluroRouter {
-  static Router router = Router();
-  static Handler _storyhandler = Handler(
+  static fluro.Router router = fluro.Router();
+  static fluro.Handler _storyhandler = fluro.Handler(
     handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
         ProductoPage(id: params['id'][0]),
   );
-  static Handler _homehandler = Handler(
+  static fluro.Handler _homehandler = fluro.Handler(
     handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
         HomePage(),
   );
-  static Handler _familiahandler = Handler(
+  static fluro.Handler _familiahandler = fluro.Handler(
     handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
         FamiliaPage(
       familia: params['familia'][0],
     ),
   );
-  static Handler _carritohandler = Handler(
+  static fluro.Handler _carritohandler = fluro.Handler(
     handlerFunc: (BuildContext context, Map<String, dynamic> parameters) =>
         CarritoPage(),
   );

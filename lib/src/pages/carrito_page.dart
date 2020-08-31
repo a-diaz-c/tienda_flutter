@@ -5,6 +5,7 @@ import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 
 class CarritoPage extends StatefulWidget {
   CarritoPage({Key key}) : super(key: key);
@@ -15,33 +16,25 @@ class CarritoPage extends StatefulWidget {
 
 class _CarritoPageState extends State<CarritoPage> {
   ScrollController _rrectController = ScrollController();
+  ProductosProviders productosProviders = ProductosProviders();
+  List datos = [];
   double subTotal;
   int cantidadProductos;
-  List<Map<String, dynamic>> datos = [
-    {
-      "imagen":
-          "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
-      "nombre": 'Truper, Clavo Negro 2" Para Concreto, Kilogramos',
-      "precio": 36.00,
-      "cantidad": 2,
-    },
-    {
-      "imagen":
-          "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
-      "nombre": 'Truper, Clavo Negro 1" Para Concreto, Kilogramos',
-      "precio": 36.00,
-      "cantidad": 2,
-    },
-    {
-      "imagen":
-          "https://www.construrama.com/medias/?context=bWFzdGVyfGltYWdlc3w0NDcyN3xpbWFnZS9qcGVnfGltYWdlcy9oYmEvaGI1Lzg4NTQ0OTExNjg3OTguanBnfDE4ZjIzY2ZkMmZhNjUxZDZmYTZiOGM1ZGU1ZDI4YTliMDc0ZGIwMzcxZTAwOWY3Mjc5MmVjZmJlMTA3NjlhNWE",
-      "nombre": 'Truper, Clavo Negro 3" Para Concreto, Kilogramos',
-      "precio": 36.00,
-      "cantidad": 1,
-    }
-  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarCarrito();
+  }
+
+  _cargarCarrito() {
+    datos = productosProviders.getProductosCarrito();
+    if (datos == null) datos = [];
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('Construyendo pagina');
     return Container(
       child: Scaffold(
         drawer: DrawerComponent(),
@@ -301,7 +294,10 @@ class _CarritoPageState extends State<CarritoPage> {
                     ),
                     color: Colors.white,
                     onPressed: () {
-                      datos.removeAt(index);
+                      print('Datos del producto' + datos[index]['id']);
+                      productosProviders
+                          .removeProductoCarrito(datos[index]['id']);
+                      //_cargarCarrito();
                       setState(() {});
                     },
                   ),
@@ -416,7 +412,9 @@ class _CarritoPageState extends State<CarritoPage> {
                     ),
                     color: Colors.white,
                     onPressed: () {
-                      datos.removeAt(index);
+                      productosProviders
+                          .removeProductoCarrito(datos[index]['id']);
+                      _cargarCarrito();
                       setState(() {});
                     },
                   ),
