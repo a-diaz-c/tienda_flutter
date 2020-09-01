@@ -570,7 +570,8 @@ class _ProductoPageState extends State<ProductoPage>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _puntiacion(MainAxisAlignment.start, 50.0),
+                              _puntiacion(MainAxisAlignment.start,
+                                  (ancho * 0.5) * 0.12),
                               _totalCalificaciones(MainAxisAlignment.start),
                               _puntuajePorEstrella(
                                   5, 0.8, 10, MainAxisAlignment.start, 100),
@@ -592,20 +593,21 @@ class _ProductoPageState extends State<ProductoPage>
                   } else {
                     return Column(
                       children: [
-                        _puntiacion(MainAxisAlignment.center, 25.0),
+                        _puntiacion(
+                            MainAxisAlignment.center, (ancho * 0.5) * 0.15),
                         _totalCalificaciones(
                           MainAxisAlignment.center,
                         ),
+                        _puntuajePorEstrella(5, 0.8, 10,
+                            MainAxisAlignment.center, (ancho * 0.7)),
                         _puntuajePorEstrella(
-                            5, 0.8, 10, MainAxisAlignment.center, 100),
+                            4, 0.2, 2, MainAxisAlignment.center, (ancho * 0.7)),
                         _puntuajePorEstrella(
-                            4, 0.2, 2, MainAxisAlignment.center, 100),
+                            3, 0.0, 0, MainAxisAlignment.center, (ancho * 0.7)),
                         _puntuajePorEstrella(
-                            3, 0.0, 0, MainAxisAlignment.center, 100),
+                            2, 0, 0, MainAxisAlignment.center, (ancho * 0.7)),
                         _puntuajePorEstrella(
-                            2, 0, 0, MainAxisAlignment.center, 100),
-                        _puntuajePorEstrella(
-                            1, 0, 0, MainAxisAlignment.center, 100),
+                            1, 0, 0, MainAxisAlignment.center, (ancho * 0.7)),
                         InkWell(
                           child: Text(
                             "Ver todos los comentarios",
