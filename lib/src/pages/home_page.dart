@@ -222,7 +222,7 @@ class _HomePageState extends State<HomePage> {
               nombre: nuevoNombre,
               precio: double.parse(element['precio']),
               imagen: element['imagen'],
-              id: element['id'],
+              id: element['clave_producto'],
             ),
           ],
         ),

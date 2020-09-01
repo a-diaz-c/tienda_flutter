@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tienda/src/components/drawer.dart';
 
@@ -16,15 +17,25 @@ class ProductoPage extends StatefulWidget {
   _ProductoPageState createState() => _ProductoPageState();
 }
 
-class _ProductoPageState extends State<ProductoPage> {
+class _ProductoPageState extends State<ProductoPage>
+    with SingleTickerProviderStateMixin {
   ScrollController _rrectController = ScrollController();
   ProductosProviders providers = ProductosProviders();
   Map producto;
+  TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     producto = providers.buscarProducto(widget.id);
+    _tabController = new TabController(length: 4, vsync: this);
+    _tabController.addListener(_handleTabSelection);
+  }
+
+  _handleTabSelection() {
+    if (_tabController.indexIsChanging) {
+      setState(() {});
+    }
   }
 
   @override
@@ -39,24 +50,18 @@ class _ProductoPageState extends State<ProductoPage> {
         child: ListView(
           controller: _rrectController,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Navbar(),
-                LayoutBuilder(builder: (context, constraints) {
-                  if (MediaQuery.of(context).size.width > 900) {
-                    return _cardProducto(_anchoPantalla * 0.60);
-                  } else {
-                    return _cardProductoMovil(_anchoPantalla * 0.90);
-                  }
-                }),
-                _cardCalificacion(MediaQuery.of(context).size.width > 900
-                    ? _anchoPantalla * 0.60
-                    : _anchoPantalla * 0.90),
-                footer(),
-              ],
-            )
+            Navbar(),
+            LayoutBuilder(builder: (context, constraints) {
+              if (MediaQuery.of(context).size.width > 900) {
+                return _cardProducto(_anchoPantalla * 0.60);
+              } else {
+                return _cardProductoMovil(_anchoPantalla * 0.90);
+              }
+            }),
+            _tabs(MediaQuery.of(context).size.width > 900
+                ? _anchoPantalla * 0.60
+                : _anchoPantalla * 0.90),
+            footer(),
           ],
         ),
       ),
@@ -84,7 +89,7 @@ class _ProductoPageState extends State<ProductoPage> {
                     _textosProducto(25.0),
                   ],
                 ),
-                Container(
+                /* Container(
                   padding: EdgeInsets.all(10.0),
                   child: Row(
                     children: [
@@ -104,7 +109,48 @@ class _ProductoPageState extends State<ProductoPage> {
                       ),
                     ],
                   ),
-                ),
+                ), */
+
+                /* Container(
+                  child: Flexible(
+                    child: Column(
+                      children: [
+                        TabBar(
+                          unselectedLabelColor: Colors.white,
+                          labelColor: Colors.amber,
+                          tabs: [
+                            new Tab(
+                              icon: new Icon(Icons.call),
+                            ),
+                            new Tab(
+                              icon: new Icon(Icons.chat),
+                            ),
+                            new Tab(
+                              icon: new Icon(Icons.notifications),
+                            ),
+                            new Tab(
+                              icon: new Icon(Icons.verified_user),
+                            ),
+                          ],
+                          controller: _tabController,
+                          indicatorColor: Colors.white,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                        ),
+                        Container(
+                          child: TabBarView(
+                            children: [
+                              new Text("This is call Tab View"),
+                              new Text("This is chat Tab View"),
+                              new Text("This is notification Tab View"),
+                              new Text("This is notification Tab View"),
+                            ],
+                            controller: _tabController,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ), */
               ],
             ),
           ),
@@ -135,7 +181,6 @@ class _ProductoPageState extends State<ProductoPage> {
                     _textosProducto(20.0),
                   ],
                 ),
-                _tablaTecnicaMovil(),
               ],
             ),
           ),
@@ -411,13 +456,95 @@ class _ProductoPageState extends State<ProductoPage> {
     ];
   }
 
+  Widget _tabs(double ancho) {
+    return Center(
+      child: Container(
+        width: ancho,
+        padding: EdgeInsets.only(bottom: 20.0),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              height: 40.0,
+              child: TabBar(
+                tabs: [
+                  Tab(
+                    child: Container(
+                      height: 25,
+                      child: Text(
+                        "Descripcion",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Container(
+                      height: 25,
+                      child: Text(
+                        "Especificaciones",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Container(
+                      height: 25,
+                      child: Text(
+                        "Calificaciones",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Container(
+                      height: 25,
+                      child: Text(
+                        "Adjuntos",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                ],
+                controller: _tabController,
+                indicatorColor: Colors.blue,
+                indicatorSize: TabBarIndicatorSize.tab,
+              ),
+            ),
+            Center(
+              child: [
+                _decripcion(),
+                MediaQuery.of(context).size.width > 900
+                    ? _tablaTecnica()
+                    : _tablaTecnicaMovil(),
+                _cardCalificacion(ancho),
+                Text("This is notification Tab View")
+              ][_tabController.index],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _decripcion() {
+    return Html(
+      data: """<p>&nbsp;</p>
+<h3 style="text-align: center; color: #3f7320;"><span style="border-bottom: 4px solid #c82828;">Haga click aqu&iacute; </span> para editar este texto o pegarlo aqu&iacute; para convertirlo a HTML 😁</h3>
+<!-- Este comentario es visible solo en el editor fuente -->
+<p><strong>Este demo le permite probar las caracter&iacute;sticas de este editor. Escriba algo en uno de los campos y vea el otro cambiando en tiempo real. </strong></p>
+<p><strong>Configure las opciones de limpieza y haga clic&nbsp;</strong></p>
+<p>Trabaje con cualquiera de los editores y vea el otro cambiando en tiempo real:</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Revisa <a target="_blank" rel="nofollow noopener" href="https://geekprank.com/">GeekPrank</a> para buenas bromas en l&iacute;nea.</p>""",
+    );
+  }
+
   Widget _cardCalificacion(double ancho) {
     return Center(
       child: Container(
         width: ancho,
         padding: EdgeInsets.only(bottom: 20.0),
         child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 20.0),
           child: Container(
             padding: EdgeInsets.all(10.0),
             child: Column(
