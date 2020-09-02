@@ -14,6 +14,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   ProductosProviders productosProviders = ProductosProviders();
   List<Categoria> lista = [];
+  Map _datosCarrito;
   List<Map<String, dynamic>> categorias = [
     {'id': '10', 'nombre': 'Alimento'},
     {'id': '20', 'nombre': 'Bedidas'},
@@ -34,11 +35,11 @@ class _NavbarState extends State<Navbar> {
     super.initState();
     _nombreUsuario();
     _ordenarCategorias();
-    _cargarCarrito();
   }
 
   @override
   Widget build(BuildContext context) {
+    _cargarCarrito();
     return LayoutBuilder(builder: (context, constraints) {
       double anchoPantalla = MediaQuery.of(context).size.width;
       if (anchoPantalla > 900) {
@@ -212,11 +213,11 @@ class _NavbarState extends State<Navbar> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "0 Artículos",
+                _datosCarrito['cantidad'].toString() + " Artículos",
                 style: TextStyle(fontSize: 10.0, color: Colors.white),
               ),
               Text(
-                "\$ 0.00",
+                "\$ " + _datosCarrito['total'].toString(),
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
             ],
@@ -289,7 +290,7 @@ class _NavbarState extends State<Navbar> {
   }
 
   _cargarCarrito() {
-    //print(productosProviders.sizeCarrito());
+    _datosCarrito = productosProviders.sizeCarrito();
   }
 
   Widget _menu() {

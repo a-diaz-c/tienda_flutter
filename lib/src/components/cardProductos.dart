@@ -34,7 +34,6 @@ class _CardProductoState extends State<CardProducto> {
   @override
   Widget build(BuildContext context) {
     var clave = widget.id;
-
     return Container(
       width: widget.ancho - 10,
       height: widget.ancho * 1.3,
@@ -189,6 +188,7 @@ class _CardProductoState extends State<CardProducto> {
           };
           ProductosProviders providers = ProductosProviders();
           providers.addProductoCarrito(producto);
+          setState(() {});
         },
       ),
     );

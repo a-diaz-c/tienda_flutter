@@ -34,7 +34,6 @@ class _CarritoPageState extends State<CarritoPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('Construyendo pagina');
     return Container(
       child: Scaffold(
         drawer: DrawerComponent(),
@@ -294,7 +293,6 @@ class _CarritoPageState extends State<CarritoPage> {
                     ),
                     color: Colors.white,
                     onPressed: () {
-                      print('Datos del producto' + datos[index]['id']);
                       productosProviders
                           .removeProductoCarrito(datos[index]['id']);
                       //_cargarCarrito();
