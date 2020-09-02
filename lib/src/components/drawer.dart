@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:tienda/src/models/categoria.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 import 'package:tienda/src/providers/usuarios_providers.dart';
 
 class DrawerComponent extends StatefulWidget {
@@ -10,6 +11,8 @@ class DrawerComponent extends StatefulWidget {
 
 class _DrawerComponentState extends State<DrawerComponent> {
   List<Categoria> lista = [];
+  ProductosProviders productosProviders = ProductosProviders();
+  Map _datosCarrito;
   List<Map<String, dynamic>> categorias = [
     {'id': '10', 'nombre': 'Alimento'},
     {'id': '20', 'nombre': 'Bedidas'},
@@ -32,8 +35,13 @@ class _DrawerComponentState extends State<DrawerComponent> {
     _ordenarCategorias();
   }
 
+  _cargarCarrito() {
+    _datosCarrito = productosProviders.sizeCarrito();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _cargarCarrito();
     return Drawer(child: contenidoMenu());
   }
 
@@ -169,11 +177,11 @@ class _DrawerComponentState extends State<DrawerComponent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "0 Artículos",
+                _datosCarrito['cantidad'].toString() + " Artículos",
                 style: TextStyle(fontSize: 10.0, color: Colors.white),
               ),
               Text(
-                "\$ 0.00",
+                "\$ " + _datosCarrito['total'].toStringAsFixed(2),
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
             ],

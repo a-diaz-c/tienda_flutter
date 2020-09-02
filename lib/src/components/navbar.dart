@@ -217,7 +217,7 @@ class _NavbarState extends State<Navbar> {
                 style: TextStyle(fontSize: 10.0, color: Colors.white),
               ),
               Text(
-                "\$ " + _datosCarrito['total'].toString(),
+                "\$ " + _datosCarrito['total'].toStringAsFixed(2),
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
             ],
