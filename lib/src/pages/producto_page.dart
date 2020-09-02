@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:tienda/src/components/drawer.dart';
+import 'package:toast/toast.dart';
 
+import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
@@ -23,6 +25,7 @@ class _ProductoPageState extends State<ProductoPage>
   ProductosProviders providers = ProductosProviders();
   Map producto;
   TabController _tabController;
+  TextEditingController _myController = TextEditingController()..text = "1";
 
   @override
   void initState() {
@@ -291,7 +294,14 @@ class _ProductoPageState extends State<ProductoPage>
           SizedBox(height: sizeTitulo * 1.14),
           _caracteristicasProducto(sizeTitulo),
           SizedBox(height: sizeTitulo * 1.14),
-          _botonCarrito(),
+          Row(
+            children: [
+              _botonCarrito(),
+              SizedBox(width: 10.0),
+              Text('Cantidad '),
+              _cantidaCarrito(),
+            ],
+          ),
           SizedBox(height: 10.0),
           //_botonComprar()
         ],
@@ -376,10 +386,57 @@ class _ProductoPageState extends State<ProductoPage>
           'nombre': producto['nombre'],
           'precio': double.parse(producto['precio']),
           'imagen': producto['imagen'],
-          'cantidad': 1,
+          'cantidad': int.parse(_myController.text),
         };
         providers.addProductoCarrito(nuevo);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Agregado al carrito'),
+                content: Text('¿Ir al carrito?'),
+                actions: [
+                  FlatButton(
+                      child: Text('Si'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/carrito');
+                      }),
+                  FlatButton(
+                      child: Text('No'),
+                      onPressed: () => Navigator.of(context).pop())
+                ],
+              );
+            });
       },
+    );
+  }
+
+  Widget _cantidaCarrito() {
+    return Container(
+      width: 40,
+      height: 25,
+      child: TextField(
+        controller: _myController,
+        maxLength: 5,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 5.0,
+            horizontal: 5.0,
+          ),
+          counterText: '',
+        ),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 12.0,
+        ),
+        inputFormatters: [
+          WhitelistingTextInputFormatter.digitsOnly,
+        ],
+        onChanged: (texto) {
+          setState(() {});
+        },
+      ),
     );
   }
 

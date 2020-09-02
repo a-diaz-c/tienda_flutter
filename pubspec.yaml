@@ -33,6 +33,7 @@ dependencies:
   localstorage: ^3.0.0
   fluro: "^1.6.3"
   flutter_html: ^1.0.0
+  toast: ^0.1.5
 
 dev_dependencies:
   flutter_test:

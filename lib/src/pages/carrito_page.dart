@@ -6,6 +6,7 @@ import 'package:tienda/src/components/navbar.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
+import 'package:toast/toast.dart';
 
 class CarritoPage extends StatefulWidget {
   CarritoPage({Key key}) : super(key: key);
@@ -413,6 +414,7 @@ class _CarritoPageState extends State<CarritoPage> {
                       productosProviders
                           .removeProductoCarrito(datos[index]['id']);
                       _cargarCarrito();
+
                       setState(() {});
                     },
                   ),
