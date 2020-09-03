@@ -25,7 +25,7 @@ class CardProducto extends StatefulWidget {
 class _CardProductoState extends State<CardProducto> {
   int _conteo = 1;
   double _total = 0;
-  TextEditingController _myController = TextEditingController()..text = "1";
+  TextEditingController _controller = TextEditingController()..text = "1";
 
   _CardProductoState({
     Key key,
@@ -55,7 +55,7 @@ class _CardProductoState extends State<CardProducto> {
               },
             ),
             _precio(),
-            _cantidad(),
+            //_cantidad(),
             _botonAgregar(),
           ],
         ),
@@ -99,7 +99,7 @@ class _CardProductoState extends State<CardProducto> {
     );
   }
 
-  Widget _cantidad() {
+  /* Widget _cantidad() {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -164,32 +164,130 @@ class _CardProductoState extends State<CardProducto> {
         ],
       ),
     );
-  }
+  } */
 
   Widget _botonAgregar() {
     return Container(
       width: 200,
-      height: 20,
-      child: RaisedButton(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Agregar $_conteo"),
-            Text("\$$_total"),
-          ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _inputCantidad(),
+          SizedBox(width: 5.0),
+          RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.shopping_cart,
+                  size: 14.0,
+                ),
+                Text(" Agregar", style: TextStyle(fontSize: 13.0)),
+              ],
+            ),
+            onPressed: () {
+              Map<String, dynamic> producto = {
+                'id': widget.id,
+                'nombre': widget.nombre,
+                'precio': widget.precio,
+                'imagen': widget.imagen,
+                'cantidad': int.parse(_controller.text),
+              };
+              ProductosProviders providers = ProductosProviders();
+              providers.addProductoCarrito(producto);
+              setState(() {});
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _inputCantidad() {
+    return Container(
+      width: 40.0,
+      height: 30.0,
+      foregroundDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        border: Border.all(
+          color: Colors.blueGrey,
+          width: 1.0,
         ),
-        onPressed: () {
-          Map<String, dynamic> producto = {
-            'id': widget.id,
-            'nombre': widget.nombre,
-            'precio': widget.precio,
-            'imagen': widget.imagen,
-            'cantidad': _conteo,
-          };
-          ProductosProviders providers = ProductosProviders();
-          providers.addProductoCarrito(producto);
-          setState(() {});
-        },
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: TextFormField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(5.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+              style: TextStyle(
+                fontSize: 12.0,
+              ),
+              controller: _controller,
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: false,
+                signed: true,
+              ),
+              inputFormatters: <TextInputFormatter>[
+                WhitelistingTextInputFormatter.digitsOnly
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(0.0),
+            height: 25.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: InkWell(
+                    child: Icon(
+                      Icons.arrow_drop_up,
+                      size: 10.0,
+                    ),
+                    onTap: () {
+                      int currentValue = int.parse(_controller.text);
+                      setState(() {
+                        currentValue++;
+                        _controller.text =
+                            (currentValue).toString(); // incrementing value
+                      });
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    size: 10.0,
+                  ),
+                  onTap: () {
+                    int currentValue = int.parse(_controller.text);
+                    setState(() {
+                      currentValue--;
+                      _controller.text = (currentValue > 0 ? currentValue : 0)
+                          .toString(); // decrementing value
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
