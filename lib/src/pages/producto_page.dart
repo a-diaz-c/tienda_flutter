@@ -89,7 +89,7 @@ class _ProductoPageState extends State<ProductoPage>
                   children: [
                     _imagenProducto(anchoImagen, altoIamgen),
                     SizedBox(width: 20),
-                    _textosProducto(25.0),
+                    _textosProducto(20.0),
                   ],
                 ),
                 /* Container(
@@ -312,9 +312,9 @@ class _ProductoPageState extends State<ProductoPage>
   Widget _nombreProducto(double size) {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
-      child: Text(
+      child: SelectableText(
         producto['nombre'],
-        style: TextStyle(fontSize: size, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: size, fontWeight: FontWeight.normal),
       ),
     );
   }
@@ -324,14 +324,14 @@ class _ProductoPageState extends State<ProductoPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: Text(
+          child: SelectableText(
             'Características',
             style: TextStyle(
                 fontSize: sizeTexto * 0.571, fontWeight: FontWeight.bold),
           ),
         ),
         Container(
-          child: Text(
+          child: SelectableText(
             'Clavo negro para concreto de 2 pulgadas (50.8 Mm). Fabricado en acero al carbono. Con cuerpo rolado especial que facilita la penetración y proporciona mayor resistencia.',
             style: TextStyle(fontSize: sizeTexto * 0.50),
           ),

@@ -333,7 +333,7 @@ class _CarritoPageState extends State<CarritoPage> {
                   child: Text(
                     datos[index]['nombre'],
                     style: TextStyle(
-                        fontSize: sizeText, fontWeight: FontWeight.bold),
+                        fontSize: sizeText, fontWeight: FontWeight.normal),
                   ),
                 ),
                 Container(

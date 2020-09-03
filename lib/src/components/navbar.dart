@@ -44,7 +44,7 @@ class _NavbarState extends State<Navbar> {
       double anchoPantalla = MediaQuery.of(context).size.width;
       if (anchoPantalla > 900) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          //padding: EdgeInsets.symmetric(horizontal: 10.0),
           color: Colors.blue,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +113,7 @@ class _NavbarState extends State<Navbar> {
 
   Widget _textoNavBar() {
     return Container(
-      padding: EdgeInsets.only(top: 10.0),
+      padding: EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
       child: Text(
         "¿Tienes alguna duda? Llámanos  (744) 484.9493",
         style: TextStyle(fontSize: 10.0, color: Colors.white),
@@ -123,6 +123,7 @@ class _NavbarState extends State<Navbar> {
 
   Widget _fieldBuscar(double anchoPantalla, BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -295,6 +296,7 @@ class _NavbarState extends State<Navbar> {
 
   Widget _menu() {
     return Container(
+      color: Colors.blue[800],
       child: Row(
         children: _addCategoriasMenu(),
       ),
@@ -507,6 +509,8 @@ class ListarMenu extends StatefulWidget {
 }
 
 class _ListarMenuState extends State<ListarMenu> {
+  Color fondoMenu = Colors.blue[800];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -528,7 +532,7 @@ class _ListarMenuState extends State<ListarMenu> {
               offset & overlay.size,
             );
             showMenu(
-                    color: Colors.blue,
+                    color: fondoMenu,
                     context: context,
                     position: position,
                     items: _generarItem())
@@ -541,14 +545,14 @@ class _ListarMenuState extends State<ListarMenu> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            color: Colors.blueAccent,
+            color: fondoMenu,
             textStyle: Theme.of(context).textTheme.subtitle1,
             elevation: widget.rootMenu ? 2.0 : 0.0,
             child: Padding(
               padding:
                   widget.rootMenu ? EdgeInsets.all(8.0) : EdgeInsets.all(0.0),
               child: Container(
-                color: Colors.blue,
+                color: fondoMenu,
                 child: Row(
                   children: [
                     Container(

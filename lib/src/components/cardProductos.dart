@@ -25,7 +25,7 @@ class CardProducto extends StatefulWidget {
 class _CardProductoState extends State<CardProducto> {
   int _conteo = 1;
   double _total = 0;
-  TextEditingController _controller = TextEditingController()..text = "1";
+  TextEditingController _controller = TextEditingController()..text = "0";
 
   _CardProductoState({
     Key key,
@@ -40,7 +40,7 @@ class _CardProductoState extends State<CardProducto> {
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             InkWell(
               child: _imagen(widget.ancho - 10),
@@ -195,9 +195,11 @@ class _CardProductoState extends State<CardProducto> {
                 'imagen': widget.imagen,
                 'cantidad': int.parse(_controller.text),
               };
-              ProductosProviders providers = ProductosProviders();
-              providers.addProductoCarrito(producto);
-              setState(() {});
+              if (_controller.text != '0') {
+                ProductosProviders providers = ProductosProviders();
+                providers.addProductoCarrito(producto);
+                setState(() {});
+              }
             },
           ),
         ],
