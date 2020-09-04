@@ -41,6 +41,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  _actilizarProductos(String datos, bool value) {
+    value ? filtro.add(datos) : filtro.remove(datos);
+    print(filtro);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,13 +71,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _movil() {
-    return ListView(
+    return DraggableScrollbar.rrect(
+      alwaysVisibleScrollThumb: true,
       controller: _rrectController,
-      children: [
-        Navbar(),
-        _cuerpo(),
-        footer(),
-      ],
+      backgroundColor: Colors.grey[300],
+      child: ListView(
+        controller: _rrectController,
+        children: [
+          Navbar(),
+          _cuerpo(),
+          footer(),
+        ],
+      ),
     );
   }
 
@@ -110,7 +120,10 @@ class _HomePageState extends State<HomePage> {
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _mostrarProductos(anchoContendorProductos, 3),
+                  children: [
+                    _filtrosMovil(),
+                    ..._mostrarProductos(anchoContendorProductos, 3)
+                  ],
                 ),
               )
             ],
@@ -128,7 +141,10 @@ class _HomePageState extends State<HomePage> {
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _mostrarProductos(anchoContendorProductos, 2),
+                  children: [
+                    _filtrosMovil(),
+                    ..._mostrarProductos(anchoContendorProductos, 2)
+                  ],
                 ),
               )
             ],
@@ -144,7 +160,10 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 child: Column(
-                  children: _filaProductoExtraChica(anchoContendorProductos),
+                  children: [
+                    _filtrosMovil(),
+                    ..._filaProductoExtraChica(anchoContendorProductos)
+                  ],
                 ),
               )
             ],
@@ -286,6 +305,7 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       productos = providers.jsonProductos();
                     }
+
                     //print(productos);
                   });
                 }),
@@ -302,6 +322,105 @@ class _HomePageState extends State<HomePage> {
                 print('value');
               },*/
             //)
+          ],
+        ),
+      ));
+    }
+
+    return elementos;
+  }
+
+  Widget _filtrosMovil() {
+    return RaisedButton(
+      child: Row(
+        children: [
+          Icon(Icons.filter_list),
+          Text('Filtros'),
+        ],
+      ),
+      onPressed: () {
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Buscar'),
+                content: SingleChildScrollView(
+                  child: ContentDialog(
+                    marcas: marcas,
+                    parentAction: _actilizarProductos,
+                    checkbox: _checkbox,
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text('Buscar'),
+                    onPressed: () {
+                      if (filtro.length != 0) {
+                        productos = providers.buscarPorMarcas(filtro);
+                      } else {
+                        productos = providers.jsonProductos();
+                      }
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    },
+                  ),
+                ],
+              );
+            });
+      },
+    );
+  }
+}
+
+class ContentDialog extends StatefulWidget {
+  final void Function(String marca, bool value) parentAction;
+  final List marcas;
+  final List<bool> checkbox;
+
+  ContentDialog(
+      {Key key, @required this.marcas, this.parentAction, this.checkbox})
+      : super(key: key);
+  @override
+  _ContentDialogState createState() => _ContentDialogState();
+}
+
+class _ContentDialogState extends State<ContentDialog> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      title: Text('Marca'),
+      children: _crearElementos(),
+    );
+  }
+
+  List<Widget> _crearElementos() {
+    List<Widget> elementos = [];
+
+    for (var i = 0; i < widget.marcas.length; i++) {
+      elementos.add(Container(
+        padding: EdgeInsets.all(0),
+        height: 25.0,
+        child: Row(
+          children: [
+            Checkbox(
+                value: widget.checkbox[i],
+                onChanged: (bool value) {
+                  setState(() {
+                    widget.checkbox[i] = value;
+
+                    widget.parentAction(widget.marcas[i], value);
+                  });
+                }),
+            Text(
+              widget.marcas[i],
+              style: TextStyle(color: Colors.grey[800]),
+            ),
           ],
         ),
       ));

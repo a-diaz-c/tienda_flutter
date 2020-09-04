@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:toast/toast.dart';
 
 import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
