@@ -209,17 +209,14 @@ class ProductosProviders {
   }
 
   Map sizeCarrito() {
-    print('Contando...');
     List items = storage.getItem('productos');
     Map<String, dynamic> resultado = {'cantidad': 0, 'total': 0};
 
     if (items != null) {
       items.forEach((element) {
-        print(element);
         resultado['cantidad'] += element['cantidad'];
         resultado['total'] += (element['cantidad'] * element['precio']);
       });
-      print(resultado);
     }
     return resultado;
   }

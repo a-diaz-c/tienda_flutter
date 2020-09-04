@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
 
 class CardProducto extends StatefulWidget {
+  final void Function() parentAction;
+
   String imagen;
   String nombre;
   double precio;
@@ -16,6 +18,7 @@ class CardProducto extends StatefulWidget {
     @required this.precio,
     @required this.id,
     this.ancho = 250,
+    this.parentAction,
   });
 
   @override
@@ -198,7 +201,8 @@ class _CardProductoState extends State<CardProducto> {
               if (_controller.text != '0') {
                 ProductosProviders providers = ProductosProviders();
                 providers.addProductoCarrito(producto);
-                setState(() {});
+                widget.parentAction();
+                //setState(() {});
               }
             },
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tienda/src/components/cardProductos.dart';
+import 'package:tienda/src/components/contentDialogFiltro.dart';
 import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
@@ -45,6 +46,11 @@ class _FamiliaPageState extends State<FamiliaPage> {
     });
   }
 
+  _actilizarProductos(String datos, bool value) {
+    value ? filtro.add(datos) : filtro.remove(datos);
+    print(filtro);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,31 +88,6 @@ class _FamiliaPageState extends State<FamiliaPage> {
       controller: _rrectController,
       children: [
         Navbar(),
-        Container(
-          padding: EdgeInsets.only(top: 5.0, left: 5.0),
-          child: Text(
-            "Marcas",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.only(right: 10.0),
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            physics: ScrollPhysics(), // to disable GridView's scrolling
-            shrinkWrap: true,
-            children: _crearElementos(),
-          ),
-        ),
-        Divider(
-          color: Colors.black,
-          height: 8,
-          thickness: 2,
-          indent: 0,
-          endIndent: 0,
-        ),
         _cuerpo(),
         footer(),
       ],
@@ -161,7 +142,10 @@ class _FamiliaPageState extends State<FamiliaPage> {
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _mostrarProductos(anchoContendorProductos, 3),
+                  children: [
+                    _filtrosMovil(),
+                    ..._mostrarProductos(anchoContendorProductos, 3)
+                  ],
                 ),
               )
             ],
@@ -179,7 +163,10 @@ class _FamiliaPageState extends State<FamiliaPage> {
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _mostrarProductos(anchoContendorProductos, 2),
+                  children: [
+                    _filtrosMovil(),
+                    ..._mostrarProductos(anchoContendorProductos, 2)
+                  ],
                 ),
               )
             ],
@@ -195,7 +182,10 @@ class _FamiliaPageState extends State<FamiliaPage> {
             children: [
               Container(
                 child: Column(
-                  children: _filaProductoExtraChica(anchoContendorProductos),
+                  children: [
+                    _filtrosMovil(),
+                    ..._filaProductoExtraChica(anchoContendorProductos)
+                  ],
                 ),
               )
             ],
@@ -360,5 +350,47 @@ class _FamiliaPageState extends State<FamiliaPage> {
     }
 
     return elementos;
+  }
+
+  Widget _filtrosMovil() {
+    return RaisedButton(
+      child: Row(
+        children: [
+          Icon(Icons.filter_list),
+          Text('Filtros'),
+        ],
+      ),
+      onPressed: () {
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Buscar'),
+                content: SingleChildScrollView(
+                  child: ContentDialog(
+                    marcas: marcas,
+                    parentAction: _actilizarProductos,
+                    checkbox: _checkbox,
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text('Buscar'),
+                    onPressed: () {
+                      if (filtro.length != 0) {
+                        productos = providers.buscarPorMarcas(filtro);
+                      } else {
+                        productos = providers.jsonProductos();
+                      }
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    },
+                  ),
+                ],
+              );
+            });
+      },
+    );
   }
 }
