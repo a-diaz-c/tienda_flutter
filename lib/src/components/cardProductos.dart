@@ -28,7 +28,7 @@ class CardProducto extends StatefulWidget {
 class _CardProductoState extends State<CardProducto> {
   int _conteo = 1;
   double _total = 0;
-  TextEditingController _controller = TextEditingController()..text = "0";
+  TextEditingController _controller = TextEditingController()..text = "1";
 
   _CardProductoState({
     Key key,
