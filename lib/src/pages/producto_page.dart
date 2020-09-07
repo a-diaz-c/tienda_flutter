@@ -24,7 +24,7 @@ class _ProductoPageState extends State<ProductoPage>
   ProductosProviders providers = ProductosProviders();
   Map producto;
   TabController _tabController;
-  TextEditingController _myController = TextEditingController()..text = "1";
+  TextEditingController _controller = TextEditingController()..text = "1";
 
   @override
   void initState() {
@@ -297,8 +297,8 @@ class _ProductoPageState extends State<ProductoPage>
             children: [
               _botonCarrito(),
               SizedBox(width: 10.0),
-              Text('Cantidad '),
-              _cantidaCarrito(),
+              //Text('Cantidad '),
+              _inputCantidad(),
             ],
           ),
           SizedBox(height: 10.0),
@@ -385,7 +385,7 @@ class _ProductoPageState extends State<ProductoPage>
           'nombre': producto['nombre'],
           'precio': double.parse(producto['precio']),
           'imagen': producto['imagen'],
-          'cantidad': int.parse(_myController.text),
+          'cantidad': int.parse(_controller.text),
         };
         providers.addProductoCarrito(nuevo);
         showDialog(
@@ -410,31 +410,89 @@ class _ProductoPageState extends State<ProductoPage>
     );
   }
 
-  Widget _cantidaCarrito() {
+  Widget _inputCantidad() {
     return Container(
-      width: 40,
-      height: 25,
-      child: TextField(
-        controller: _myController,
-        maxLength: 5,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 5.0,
-            horizontal: 5.0,
+      width: 40.0,
+      height: 30.0,
+      foregroundDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        border: Border.all(
+          color: Colors.blueGrey,
+          width: 1.0,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: TextFormField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(5.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+              style: TextStyle(
+                fontSize: 12.0,
+              ),
+              controller: _controller,
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: false,
+                signed: true,
+              ),
+              inputFormatters: <TextInputFormatter>[
+                WhitelistingTextInputFormatter.digitsOnly
+              ],
+            ),
           ),
-          counterText: '',
-        ),
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 12.0,
-        ),
-        inputFormatters: [
-          WhitelistingTextInputFormatter.digitsOnly,
+          Container(
+            padding: EdgeInsets.all(0.0),
+            height: 25.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: InkWell(
+                    child: Icon(
+                      Icons.arrow_drop_up,
+                      size: 10.0,
+                    ),
+                    onTap: () {
+                      int currentValue = int.parse(_controller.text);
+                      setState(() {
+                        currentValue++;
+                        _controller.text =
+                            (currentValue).toString(); // incrementing value
+                      });
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    size: 10.0,
+                  ),
+                  onTap: () {
+                    int currentValue = int.parse(_controller.text);
+                    setState(() {
+                      currentValue--;
+                      _controller.text = (currentValue > 0 ? currentValue : 0)
+                          .toString(); // decrementing value
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
-        onChanged: (texto) {
-          setState(() {});
-        },
       ),
     );
   }
