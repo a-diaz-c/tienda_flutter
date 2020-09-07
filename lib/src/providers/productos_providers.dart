@@ -209,7 +209,6 @@ class ProductosProviders {
   }
 
   Map sizeCarrito() {
-    print('Cargando size...');
     List items = storage.getItem('productos');
     Map<String, dynamic> resultado = {'cantidad': 0, 'total': 0};
 

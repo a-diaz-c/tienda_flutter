@@ -119,7 +119,7 @@ Widget _servicioCliente() {
           onPressed: () {},
           color: Colors.blue,
         ),
-        Text(
+        SelectableText(
           "info@kingo.com.mx",
           style: TextStyle(fontSize: 12.0, color: Colors.white),
         )

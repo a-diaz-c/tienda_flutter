@@ -217,10 +217,16 @@ class _CarritoPageState extends State<CarritoPage> {
               children: [
                 Container(
                   padding: EdgeInsets.only(top: 10.0),
-                  child: SelectableText(
-                    datos[index]['nombre'],
-                    style: TextStyle(
-                        fontSize: sizeText, fontWeight: FontWeight.normal),
+                  child: InkWell(
+                    child: Text(
+                      datos[index]['nombre'],
+                      style: TextStyle(
+                          fontSize: sizeText, fontWeight: FontWeight.normal),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, 'producto/' + datos[index]['id']);
+                    },
                   ),
                 ),
                 Container(
