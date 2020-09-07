@@ -362,34 +362,35 @@ class _FamiliaPageState extends State<FamiliaPage> {
       ),
       onPressed: () {
         showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Buscar'),
-                content: SingleChildScrollView(
-                  child: ContentDialog(
-                    marcas: marcas,
-                    parentAction: _actilizarProductos,
-                    checkbox: _checkbox,
-                  ),
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Buscar'),
+              content: SingleChildScrollView(
+                child: ContentDialog(
+                  marcas: marcas,
+                  parentAction: _actilizarProductos,
+                  checkbox: _checkbox,
                 ),
-                actions: [
-                  FlatButton(
-                    child: Text('Buscar'),
-                    onPressed: () {
-                      if (filtro.length != 0) {
-                        productos = providers.buscarPorMarcas(filtro);
-                      } else {
-                        productos = providers.jsonProductos();
-                      }
-                      Navigator.of(context).pop();
-                      setState(() {});
-                    },
-                  ),
-                ],
-              );
-            });
+              ),
+              actions: [
+                FlatButton(
+                  child: Text('Buscar'),
+                  onPressed: () {
+                    if (filtro.length != 0) {
+                      productos = providers.buscarPorMarcas(filtro);
+                    } else {
+                      productos = providers.jsonProductos();
+                    }
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }

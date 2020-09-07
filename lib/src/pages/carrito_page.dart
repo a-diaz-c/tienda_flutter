@@ -6,7 +6,6 @@ import 'package:tienda/src/components/navbar.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
-import 'package:toast/toast.dart';
 
 class CarritoPage extends StatefulWidget {
   CarritoPage({Key key}) : super(key: key);
@@ -61,6 +60,7 @@ class _CarritoPageState extends State<CarritoPage> {
                           children: [
                             ..._titulo(),
                             ...cargarProductos(35.0),
+                            _botonActualizar(),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 20.0),
                               child: Row(
@@ -85,6 +85,7 @@ class _CarritoPageState extends State<CarritoPage> {
                           children: [
                             ..._titulo(),
                             ...cargarProductos(20.0),
+                            _botonActualizar(),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 20.0),
                               child: Row(
@@ -216,15 +217,15 @@ class _CarritoPageState extends State<CarritoPage> {
               children: [
                 Container(
                   padding: EdgeInsets.only(top: 10.0),
-                  child: Text(
+                  child: SelectableText(
                     datos[index]['nombre'],
                     style: TextStyle(
-                        fontSize: sizeText, fontWeight: FontWeight.bold),
+                        fontSize: sizeText, fontWeight: FontWeight.normal),
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 10.0),
-                  child: Text(
+                  child: SelectableText(
                     'Precio  \$ ' + precio.toStringAsFixed(2),
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -282,25 +283,7 @@ class _CarritoPageState extends State<CarritoPage> {
                         }),
                   ],
                 ),
-                Container(
-                  height: 25,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: BorderSide(color: Colors.red)),
-                    child: Text(
-                      "Eliminar",
-                      style: TextStyle(color: Colors.red, fontSize: 12.0),
-                    ),
-                    color: Colors.white,
-                    onPressed: () {
-                      productosProviders
-                          .removeProductoCarrito(datos[index]['id']);
-                      //_cargarCarrito();
-                      setState(() {});
-                    },
-                  ),
-                ),
+                _botonEliminar(index),
               ],
             ),
           ),
@@ -390,39 +373,60 @@ class _CarritoPageState extends State<CarritoPage> {
                           onPressed: () {
                             if (datos[index]['cantidad'] > 1) {
                               datos[index]['cantidad']--;
+                              _myController.text =
+                                  datos[index]['cantidad'].toString();
                             }
 
-                            _myController.text =
-                                datos[index]['cantidad'].toString();
                             setState(() {});
                           }),
                     ],
                   ),
                 ),
-                Container(
-                  height: 25,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: BorderSide(color: Colors.red)),
-                    child: Text(
-                      "Eliminar",
-                      style: TextStyle(color: Colors.red, fontSize: 12.0),
-                    ),
-                    color: Colors.white,
-                    onPressed: () {
-                      productosProviders
-                          .removeProductoCarrito(datos[index]['id']);
-                      _cargarCarrito();
-
-                      setState(() {});
-                    },
-                  ),
-                ),
+                _botonEliminar(index),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _botonEliminar(int index) {
+    return Container(
+      height: 25,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            side: BorderSide(color: Colors.red)),
+        child: Text(
+          "Eliminar",
+          style: TextStyle(color: Colors.red, fontSize: 12.0),
+        ),
+        color: Colors.white,
+        onPressed: () {
+          productosProviders.removeProductoCarrito(datos[index]['id']);
+          _cargarCarrito();
+          setState(() {});
+        },
+      ),
+    );
+  }
+
+  Widget _botonActualizar() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            side: BorderSide(color: Colors.blue)),
+        child: Text(
+          "Actualizar",
+          style: TextStyle(color: Colors.blue, fontSize: 12.0),
+        ),
+        color: Colors.white,
+        onPressed: () {
+          productosProviders.actualizarCarrito(datos);
+        },
       ),
     );
   }

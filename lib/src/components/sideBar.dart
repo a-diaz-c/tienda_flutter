@@ -36,11 +36,6 @@ class _SideBarState extends State<SideBar> {
           ),
           SizedBox(height: 10.0),
           ..._crearElementos(),
-          /*SizedBox(height: 10.0),
-          InkWell(
-            child: Text("Ver más..."),
-            onTap: () {},
-          )*/
         ],
       ),
     );
@@ -63,19 +58,10 @@ class _SideBarState extends State<SideBar> {
                     print(value);
                   });
                 }),
-            //InkWell(
-            //child:
             Text(
               widget.contenido[i],
               style: TextStyle(color: Colors.grey[800]),
             ),
-            /*onTap: () {
-                _checkbox[i] = _checkbox[i] == true ? false : true;
-
-                setState(() {});
-                print('value');
-              },*/
-            //)
           ],
         ),
       ));
