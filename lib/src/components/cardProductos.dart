@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tienda/src/components/dialogPregunta.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
 
 class CardProducto extends StatefulWidget {
@@ -39,7 +40,7 @@ class _CardProductoState extends State<CardProducto> {
     var clave = widget.id;
     return Container(
       width: widget.ancho - 10,
-      height: widget.ancho * 1.3,
+      height: widget.ancho * 1.1,
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(
@@ -102,73 +103,6 @@ class _CardProductoState extends State<CardProducto> {
     );
   }
 
-  /* Widget _cantidad() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Cant"),
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              _conteo++;
-              _myController.text = _conteo.toString();
-              _total = widget.precio * _conteo;
-              print(_total);
-              setState(() {});
-            },
-          ),
-          Flexible(
-            child: Container(
-              width: 40,
-              height: 25,
-              child: TextField(
-                controller: _myController,
-                maxLength: 5,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 5.0,
-                    horizontal: 5.0,
-                  ),
-                  counterText: '',
-                ),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12.0,
-                ),
-                inputFormatters: [
-                  // ignore: deprecated_member_use
-                  WhitelistingTextInputFormatter.digitsOnly,
-                ],
-                onChanged: (texto) {
-                  _conteo = int.parse(texto);
-                  _total = widget.precio * _conteo;
-                  setState(() {});
-                },
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.remove),
-            onPressed: () {
-              if (_conteo > 1) {
-                _conteo--;
-              }
-
-              _myController.text = _conteo.toString();
-              _total = widget.precio * _conteo;
-              print(_total);
-
-              setState(() {});
-            },
-          ),
-        ],
-      ),
-    );
-  } */
-
   Widget _botonAgregar() {
     return Container(
       width: 200,
@@ -201,6 +135,15 @@ class _CardProductoState extends State<CardProducto> {
               if (_controller.text != '0') {
                 ProductosProviders providers = ProductosProviders();
                 providers.addProductoCarrito(producto);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DialogPregunta(
+                      titulo: 'Agregado al Carrito',
+                      contenido: '¿Ir al carrito?',
+                    );
+                  },
+                );
                 widget.parentAction();
                 //setState(() {});
               }

@@ -141,7 +141,7 @@ class _CarritoPageState extends State<CarritoPage> {
                 ),
               ),
               DataCell(Container(
-                width: 400,
+                width: 300,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [Text(element['nombre'])],
@@ -200,9 +200,9 @@ class _CarritoPageState extends State<CarritoPage> {
                   ),
                 ],
               )),
-              DataCell(Text(element['precio'].toString())),
-              DataCell(
-                  Text((element['precio'] * element['cantidad']).toString())),
+              DataCell(Text(element['precio'].toStringAsFixed(2))),
+              DataCell(Text((element['precio'] * element['cantidad'])
+                  .toStringAsFixed(2))),
             ],
           ),
         );
@@ -254,27 +254,6 @@ class _CarritoPageState extends State<CarritoPage> {
       onPressed: () {
         setState(() {});
       },
-    );
-  }
-
-  Widget _botonEliminar(int index) {
-    return Container(
-      height: 25,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            side: BorderSide(color: Colors.red)),
-        child: Text(
-          "Eliminar",
-          style: TextStyle(color: Colors.red, fontSize: 12.0),
-        ),
-        color: Colors.white,
-        onPressed: () {
-          productosProviders.removeProductoCarrito(datos[index]['id']);
-          _cargarCarrito();
-          setState(() {});
-        },
-      ),
     );
   }
 }

@@ -162,7 +162,7 @@ class _NavbarState extends State<Navbar> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50.0),
             ),
-            labelText: 'Buscar Prodcucto',
+            labelText: 'Buscar Producto',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             fillColor: Colors.white,
             filled: true,

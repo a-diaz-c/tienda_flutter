@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:tienda/src/components/dialogPregunta.dart';
 
 import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
@@ -91,68 +92,6 @@ class _ProductoPageState extends State<ProductoPage>
                     _textosProducto(20.0),
                   ],
                 ),
-                /* Container(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Especificaciones técnicas",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18.0),
-                            ),
-                            SizedBox(height: 10),
-                            _tablaTecnica(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ), */
-
-                /* Container(
-                  child: Flexible(
-                    child: Column(
-                      children: [
-                        TabBar(
-                          unselectedLabelColor: Colors.white,
-                          labelColor: Colors.amber,
-                          tabs: [
-                            new Tab(
-                              icon: new Icon(Icons.call),
-                            ),
-                            new Tab(
-                              icon: new Icon(Icons.chat),
-                            ),
-                            new Tab(
-                              icon: new Icon(Icons.notifications),
-                            ),
-                            new Tab(
-                              icon: new Icon(Icons.verified_user),
-                            ),
-                          ],
-                          controller: _tabController,
-                          indicatorColor: Colors.white,
-                          indicatorSize: TabBarIndicatorSize.tab,
-                        ),
-                        Container(
-                          child: TabBarView(
-                            children: [
-                              new Text("This is call Tab View"),
-                              new Text("This is chat Tab View"),
-                              new Text("This is notification Tab View"),
-                              new Text("This is notification Tab View"),
-                            ],
-                            controller: _tabController,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ), */
               ],
             ),
           ),
@@ -389,23 +328,14 @@ class _ProductoPageState extends State<ProductoPage>
         };
         providers.addProductoCarrito(nuevo);
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Agregado al carrito'),
-                content: Text('¿Ir al carrito?'),
-                actions: [
-                  FlatButton(
-                      child: Text('Si'),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/carrito');
-                      }),
-                  FlatButton(
-                      child: Text('No'),
-                      onPressed: () => Navigator.of(context).pop())
-                ],
-              );
-            });
+          context: context,
+          builder: (BuildContext context) {
+            return DialogPregunta(
+              titulo: 'Agregado al Carrito',
+              contenido: '¿Ir al carrito?',
+            );
+          },
+        );
       },
     );
   }
