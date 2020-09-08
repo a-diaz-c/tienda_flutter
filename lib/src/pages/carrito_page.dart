@@ -101,7 +101,7 @@ class _CarritoPageState extends State<CarritoPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _subtotal(),
+                _total(),
                 _botonPago(),
               ],
             ),
@@ -140,7 +140,13 @@ class _CarritoPageState extends State<CarritoPage> {
                   ),
                 ),
               ),
-              DataCell(Text(element['nombre'])),
+              DataCell(Container(
+                width: 400,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text(element['nombre'])],
+                ),
+              )),
               DataCell(Row(
                 children: [
                   IconButton(
@@ -220,11 +226,11 @@ class _CarritoPageState extends State<CarritoPage> {
     );
   }
 
-  Widget _subtotal() {
+  Widget _total() {
     return Row(
       children: [
         Text(
-          "Subtotal ($cantidadProductos Productos) ",
+          "Total ($cantidadProductos Productos) ",
           style: TextStyle(fontSize: 18.0),
         ),
         Text(
