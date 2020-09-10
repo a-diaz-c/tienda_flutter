@@ -133,7 +133,7 @@ class _CarritoPageState extends State<CarritoPage> {
                 ),
               ),
               DataCell(Container(
-                width: 300,
+                width: 200,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [Text(element['nombre'])],
