@@ -96,16 +96,8 @@ class _CarritoPageState extends State<CarritoPage> {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _total(),
-                _botonPago(),
-              ],
-            ),
-          )
+          _total(),
+          _botonPago(),
         ],
       ),
     );
@@ -227,33 +219,39 @@ class _CarritoPageState extends State<CarritoPage> {
   }
 
   Widget _total() {
-    return Row(
-      children: [
-        Text(
-          "Total ($cantidadProductos Productos) ",
-          style: TextStyle(fontSize: 18.0),
-        ),
-        Text(
-          '\$' + subTotal.toStringAsFixed(2),
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        )
-      ],
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Row(
+        children: [
+          Text(
+            "Total ($cantidadProductos Productos) ",
+            style: TextStyle(fontSize: 18.0),
+          ),
+          Text(
+            '\$' + subTotal.toStringAsFixed(2),
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
     );
   }
 
   Widget _botonPago() {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          side: BorderSide(color: Colors.black)),
-      child: Text(
-        "Proceder al pago",
-        style: TextStyle(color: Colors.black, fontSize: 12.0),
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: Colors.black)),
+        child: Text(
+          "Proceder al pago",
+          style: TextStyle(color: Colors.black, fontSize: 12.0),
+        ),
+        color: Colors.amber[400],
+        onPressed: () {
+          setState(() {});
+        },
       ),
-      color: Colors.amber[400],
-      onPressed: () {
-        setState(() {});
-      },
     );
   }
 }

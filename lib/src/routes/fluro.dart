@@ -15,6 +15,12 @@ class FluroRouter {
     handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
         HomePage(),
   );
+  static fluro.Handler _homehandlerProducto = fluro.Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+        HomePage(
+      familia: params['familia'][0],
+    ),
+  );
   static fluro.Handler _familiahandler = fluro.Handler(
     handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
         FamiliaPage(
@@ -32,13 +38,17 @@ class FluroRouter {
       handler: _homehandler,
     );
     router.define(
+      '/productos/:familia',
+      handler: _homehandlerProducto,
+    );
+    router.define(
       '/producto/:id',
       handler: _storyhandler,
     );
-    router.define(
+/*     router.define(
       '/productos/:familia',
       handler: _familiahandler,
-    );
+    ); */
     router.define(
       '/carrito',
       handler: _carritohandler,

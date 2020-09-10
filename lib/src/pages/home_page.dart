@@ -9,7 +9,8 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  final String familia;
+  HomePage({Key key, this.familia}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -25,13 +26,19 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print('Home page');
     _cargarProductos();
     _cargarMarcas();
     _checkbox = List.filled(marcas.length, false);
   }
 
   _cargarProductos() {
-    productos = providers.jsonProductos();
+    print(widget.familia);
+    if (widget.familia != null) {
+      productos = providers.buscarFamilia(widget.familia);
+    } else {
+      productos = providers.jsonProductos();
+    }
   }
 
   _cargarMarcas() {
@@ -68,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         controller: _rrectController,
         children: [
           Navbar(),
-          _cuerpo(),
+          productos.isEmpty ? _cuerpoVacio() : _cuerpo(),
           footer(),
         ],
       ),
@@ -84,9 +91,23 @@ class _HomePageState extends State<HomePage> {
         controller: _rrectController,
         children: [
           Navbar(),
-          _cuerpo(),
+          productos.isEmpty ? _cuerpoVacio() : _cuerpo(),
           footer(),
         ],
+      ),
+    );
+  }
+
+  Widget _cuerpoVacio() {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.only(top: 20.0),
+        width: MediaQuery.of(context).size.width * 0.50,
+        height: MediaQuery.of(context).size.width * 0.80,
+        child: Text(
+          'No se encontro producto',
+          style: TextStyle(fontSize: 20),
+        ),
       ),
     );
   }
@@ -308,9 +329,12 @@ class _HomePageState extends State<HomePage> {
                     _checkbox[i] = value;
                     value ? filtro.add(marcas[i]) : filtro.remove(marcas[i]);
                     if (filtro.length != 0) {
-                      productos = providers.buscarPorMarcas(filtro);
+                      widget.familia != null
+                          ? productos = providers.buscarPorMarcasFamilias(
+                              filtro, widget.familia)
+                          : productos = providers.buscarPorMarcas(filtro);
                     } else {
-                      productos = providers.jsonProductos();
+                      _cargarProductos();
                     }
 
                     //print(productos);

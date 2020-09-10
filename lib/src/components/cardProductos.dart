@@ -40,7 +40,7 @@ class _CardProductoState extends State<CardProducto> {
     var clave = widget.id;
     return Container(
       width: widget.ancho - 10,
-      height: widget.ancho * 1.1,
+      height: widget.ancho * 1.2,
       padding: EdgeInsets.all(10.0),
       child: Card(
         child: Column(
@@ -156,8 +156,8 @@ class _CardProductoState extends State<CardProducto> {
 
   Widget _inputCantidad() {
     return Container(
-      width: 40.0,
-      height: 30.0,
+      width: 45.0,
+      height: 35.0,
       foregroundDecoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
         border: Border.all(
@@ -191,7 +191,7 @@ class _CardProductoState extends State<CardProducto> {
           ),
           Container(
             padding: EdgeInsets.all(0.0),
-            height: 25.0,
+            height: 35.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -207,7 +207,7 @@ class _CardProductoState extends State<CardProducto> {
                   child: InkWell(
                     child: Icon(
                       Icons.arrow_drop_up,
-                      size: 10.0,
+                      size: 12.0,
                     ),
                     onTap: () {
                       int currentValue = int.parse(_controller.text);
@@ -222,7 +222,7 @@ class _CardProductoState extends State<CardProducto> {
                 InkWell(
                   child: Icon(
                     Icons.arrow_drop_down,
-                    size: 10.0,
+                    size: 12.0,
                   ),
                   onTap: () {
                     int currentValue = int.parse(_controller.text);

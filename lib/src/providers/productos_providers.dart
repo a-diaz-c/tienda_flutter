@@ -173,8 +173,19 @@ class ProductosProviders {
   buscarPorMarcas(List marcas) {
     var productosMarcas = [];
     marcas.forEach((marca) {
-      print("Esta buscando $marca");
       var busqueda = productos.where((element) => element['marca'] == marca);
+      productosMarcas.addAll(busqueda);
+    });
+    return productosMarcas;
+  }
+
+  buscarPorMarcasFamilias(List marcas, String familia) {
+    var productosMarcas = [];
+    var productosFamilia = buscarFamilia(familia);
+    print(productosFamilia);
+    marcas.forEach((marca) {
+      var busqueda =
+          productosFamilia.where((element) => element['marca'] == marca);
       productosMarcas.addAll(busqueda);
     });
     return productosMarcas;
