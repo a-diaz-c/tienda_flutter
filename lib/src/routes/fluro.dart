@@ -3,6 +3,8 @@ import 'package:flutter/material.Dart';
 import 'package:tienda/src/pages/carrito_page.dart';
 import 'package:tienda/src/pages/familias_page.dart';
 import 'package:tienda/src/pages/home_page.dart';
+import 'package:tienda/src/pages/identificarse_page.dart';
+import 'package:tienda/src/pages/pago_page.dart';
 import 'package:tienda/src/pages/producto_page.dart';
 
 class FluroRouter {
@@ -31,6 +33,14 @@ class FluroRouter {
     handlerFunc: (BuildContext context, Map<String, dynamic> parameters) =>
         CarritoPage(),
   );
+  static fluro.Handler _pagohandler = fluro.Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> parameter) =>
+        PagoPage(),
+  );
+  static fluro.Handler _indentificarsehandler = fluro.Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> parameter) =>
+        IdentificarsePage(),
+  );
 
   static void setupRouter() {
     router.define(
@@ -45,13 +55,17 @@ class FluroRouter {
       '/producto/:id',
       handler: _storyhandler,
     );
-/*     router.define(
-      '/productos/:familia',
-      handler: _familiahandler,
-    ); */
     router.define(
       '/carrito',
       handler: _carritohandler,
+    );
+    router.define(
+      '/pago',
+      handler: _pagohandler,
+    );
+    router.define(
+      '/identificarse',
+      handler: _indentificarsehandler,
     );
   }
 }
