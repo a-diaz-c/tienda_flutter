@@ -38,7 +38,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
   Widget _cuerpoWeb() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      padding: EdgeInsets.symmetric(vertical: 30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,7 +51,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
 
   List<Widget> cuerpoMovil() {
     return [
-      SizedBox(height: 50),
+      SizedBox(height: 40),
       _ingresarMovil(),
       _registrarMovil(),
     ];
@@ -75,7 +75,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
           ],
         ),
         width: anchoFormulario,
-        height: 450,
+        height: 300,
         padding: EdgeInsets.only(left: 20, right: 0),
         child: Card(
           shape: RoundedRectangleBorder(
@@ -91,6 +91,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   Text('Ingresa a tu cuenta'),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -99,7 +100,12 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                         ),
                         labelText: 'Email',
                         contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                          top: 5.0,
+                          bottom: 0.0,
+                          start: 5.0,
+                          end: 5.0,
+                        ),
+                        errorStyle: TextStyle(height: 0),
                       ),
                       onChanged: (value) {
                         nombre = value;
@@ -114,6 +120,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   ),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -122,7 +129,12 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                         ),
                         labelText: 'Contraseña',
                         contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                          top: 5.0,
+                          bottom: 0.0,
+                          start: 5.0,
+                          end: 5.0,
+                        ),
+                        errorStyle: TextStyle(height: 0),
                       ),
                       obscureText: true,
                       onChanged: (value) {
@@ -138,6 +150,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   ),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -146,7 +159,12 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                         ),
                         labelText: 'Empresa',
                         contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                          top: 5.0,
+                          bottom: 0.0,
+                          start: 5.0,
+                          end: 5.0,
+                        ),
+                        errorStyle: TextStyle(height: 0),
                       ),
                       obscureText: true,
                       onChanged: (value) {
@@ -173,7 +191,8 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                       color: Colors.amber,
                       onPressed: () {
                         if (_keylogin.currentState.validate()) {
-                          _login(nombre, password, empresa);
+                          //_login(nombre, password, empresa);
+                          Navigator.pushNamed(context, '/pago');
                         }
                       },
                     ),
@@ -205,7 +224,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
           ],
         ),
         width: anchoFormulario,
-        height: 450,
+        height: 300,
         padding: EdgeInsets.only(left: 0, right: 20),
         child: Card(
           shape: RoundedRectangleBorder(
@@ -221,6 +240,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   Text('¡Registrate!'),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -234,13 +254,14 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                           start: 5.0,
                           end: 5.0,
                         ),
+                        errorStyle: TextStyle(fontSize: 9, height: 0),
                       ),
                       onChanged: (value) {
                         nombre = value;
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Ingrese Nombre';
+                          return '';
                         }
                         return null;
                       },
@@ -248,6 +269,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   ),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -256,7 +278,12 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                         ),
                         labelText: 'Email',
                         contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                          top: 5.0,
+                          bottom: 0.0,
+                          start: 5.0,
+                          end: 5.0,
+                        ),
+                        errorStyle: TextStyle(fontSize: 9, height: 0),
                       ),
                       onChanged: (value) {
                         email = value;
@@ -268,6 +295,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   ),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -276,8 +304,14 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                         ),
                         labelText: 'Contrseña',
                         contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                          top: 5.0,
+                          bottom: 0.0,
+                          start: 5.0,
+                          end: 5.0,
+                        ),
+                        errorStyle: TextStyle(fontSize: 9, height: 0),
                       ),
+                      obscureText: true,
                       onChanged: (value) {
                         password = value;
                       },
@@ -287,6 +321,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   ),
                   Container(
                     width: anchoFormulario * 0.6,
+                    height: 40,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -295,8 +330,14 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                         ),
                         labelText: 'Confirmar Contraseña',
                         contentPadding: EdgeInsetsDirectional.only(
-                            top: 5.0, bottom: 0.0, start: 5.0, end: 5.0),
+                          top: 5.0,
+                          bottom: 0.0,
+                          start: 5.0,
+                          end: 5.0,
+                        ),
+                        errorStyle: TextStyle(fontSize: 9, height: 0),
                       ),
+                      obscureText: true,
                       onChanged: (value) {
                         passwordDos = value;
                       },
@@ -317,8 +358,12 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                       color: Colors.amber,
                       onPressed: () {
                         if (_keyRegistro.currentState.validate()) {
-                          print('$nombre $email $password $passwordDos');
-                          Navigator.pushNamed(context, '/pago');
+                          if (password != passwordDos) {
+                            _alert("Las contraseñas no son iguales");
+                          } else {
+                            print('$nombre $email $password $passwordDos');
+                            Navigator.pushNamed(context, '/pago');
+                          }
                         }
                       },
                     ),
@@ -333,6 +378,10 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
   }
 
   Widget _ingresarMovil() {
+    final _keylogin = GlobalKey<FormState>();
+    String nombre = '';
+    String empresa = '';
+    String password = '';
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -340,6 +389,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
       child: Container(
         padding: EdgeInsets.all(20.0),
         child: Form(
+          key: _keylogin,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -396,7 +446,11 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   color: Colors.amber,
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_keylogin.currentState.validate()) {
+                      Navigator.pushNamed(context, '/pago');
+                    }
+                  },
                 ),
               ),
             ],
@@ -517,8 +571,12 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
                   color: Colors.amber,
                   onPressed: () {
                     if (_keyRegistro.currentState.validate()) {
-                      print('$nombre $email $password $passwordDos');
-                      Navigator.pushNamed(context, '/pago');
+                      if (password != passwordDos) {
+                        _alert("Las contraseñas son diferentes");
+                      } else {
+                        print('$nombre $email $password $passwordDos');
+                        Navigator.pushNamed(context, '/pago');
+                      }
                     }
                   },
                 ),
@@ -528,6 +586,16 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
         ),
       ),
     );
+  }
+
+  _alert(String mensaje) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(mensaje),
+          );
+        });
   }
 
   _login(String usuario, String password, String empresa) async {
