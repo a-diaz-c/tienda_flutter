@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
+import 'package:tienda/src/providers/productos_providers.dart';
 
 class PagoPage extends StatefulWidget {
   @override
@@ -13,18 +14,27 @@ class _PagoPageState extends State<PagoPage>
     with SingleTickerProviderStateMixin {
   ScrollController _rrectController = ScrollController();
   TabController _tabController;
+  ProductosProviders productosProviders = ProductosProviders();
+  double _subTotal = 0;
+  List datos = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = new TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
+    _cargarCarrito();
   }
 
   _handleTabSelection() {
     if (_tabController.indexIsChanging) {
       setState(() {});
     }
+  }
+
+  _cargarCarrito() {
+    datos = productosProviders.getProductosCarrito();
+    if (datos == null) datos = [];
   }
 
   @override
@@ -40,15 +50,43 @@ class _PagoPageState extends State<PagoPage>
             Navbar(),
             Row(
               children: [
-                _tabs(MediaQuery.of(context).size.width * 0.60),
-                Card(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text('Cariito de compras'),
-                      ),
-                    ],
+                _tabs(MediaQuery.of(context).size.width * 0.65),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.30,
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Card(
+                    color: Colors.grey[200],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text(
+                            'Carito de compras',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                          height: 1,
+                          thickness: 1,
+                        ),
+                        ..._productos(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text('Subtotal \$ $_subTotal'),
+                            Text('Costo Total \$'),
+                            const Divider(
+                              color: Colors.black,
+                              height: 1,
+                              thickness: 1,
+                            ),
+                            Text('Precio total \$'),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -106,5 +144,23 @@ class _PagoPageState extends State<PagoPage>
         ),
       ),
     );
+  }
+
+  List<Widget> _productos() {
+    List<Widget> lista = [];
+    datos.forEach((element) {
+      _subTotal += element['precio'] * element['cantidad'];
+      lista.add(
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+          child: Text(
+            element['nombre'],
+            style: TextStyle(fontWeight: FontWeight.normal),
+          ),
+        ),
+      );
+    });
+
+    return lista;
   }
 }
