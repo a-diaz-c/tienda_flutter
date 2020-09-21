@@ -18,6 +18,30 @@ class _PagoPageState extends State<PagoPage>
   double _subTotal = 0;
   List datos = [];
 
+  Map<String, dynamic> envio = {
+    'nombre': 'Hector',
+    'apelliod': 'Nunez',
+    'empresa': 'Kingo System',
+    'sexo': 'H',
+    'telefono': '7444849493',
+    'calle': 'Av. Costera Miguel Aleman',
+    'numExt': '1252',
+    'numInt': '18',
+    'referencia': 'En la torre de Acapulco',
+    'colonia': 'Club Deportivo',
+    'codigoPostal': '39690',
+    'ciudad': 'Acapulco',
+    'estado': 'Guerrero',
+    'pais': 'México',
+  };
+
+  Map<String, dynamic> factura = {
+    'nombre': 'Kingo Systems SA de CV',
+    'rfc': 'KYS010331243',
+    'email': '',
+    'usoDeCEDI': 'G03 - Gastos en general',
+  };
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +73,7 @@ class _PagoPageState extends State<PagoPage>
           children: [
             Navbar(),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _tabs(MediaQuery.of(context).size.width * 0.65),
                 Container(
@@ -136,7 +161,7 @@ class _PagoPageState extends State<PagoPage>
             ),
             Center(
               child: [
-                Text('direccion'),
+                _direcciones(ancho),
                 Text("This is notification Tab View")
               ][_tabController.index],
             ),
@@ -146,7 +171,142 @@ class _PagoPageState extends State<PagoPage>
     );
   }
 
+  Widget _direcciones(double ancho) {
+    return Column(
+      children: [
+        Card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                child: Text(
+                  'Direccion de envio',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                child: Text('Verifique sus direccion de envio'),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 250,
+                    width: ancho * 0.70,
+                    child: Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(envio['nombre']),
+                            subtitle: Text(envio['empresa']),
+                          ),
+                          Text(envio['calle'] +
+                              ' ' +
+                              envio['numExt'] +
+                              ' ' +
+                              envio['numInt']),
+                          Text(envio['referencia']),
+                          Text(envio['colonia']),
+                          Text(envio['codigoPostal'] + ', ' + envio['ciudad']),
+                          Text(envio['estado'] + ', ' + envio['pais']),
+                          SizedBox(height: 10),
+                          Text('Tel, ' + envio['telefono'])
+                        ],
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      RaisedButton(
+                        child: Row(
+                          children: [
+                            Icon(Icons.edit),
+                            Text('Editar Direccion'),
+                          ],
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/direcciones/1');
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+        Card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                child: Text(
+                  'Direccion de facturacion',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  child: Text('Verifique sus de facturacion')),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 200,
+                    width: ancho * 0.70,
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Razon social o nombre',
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          Text(factura['nombre']),
+                          SizedBox(height: 5),
+                          Text(
+                            'RFC',
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          Text(factura['rfc']),
+                          SizedBox(height: 5),
+                          Text(
+                            'Uso de CFDI',
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          Text(factura['usoDeCEDI'])
+                        ],
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      RaisedButton(
+                        child: Row(
+                          children: [
+                            Icon(Icons.edit),
+                            Text('Editar Direccion'),
+                          ],
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/direcciones/2');
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
   List<Widget> _productos() {
+    _subTotal = 0;
     List<Widget> lista = [];
     datos.forEach((element) {
       _subTotal += element['precio'] * element['cantidad'];

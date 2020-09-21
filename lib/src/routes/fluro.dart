@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.Dart' as fluro;
 import 'package:flutter/material.Dart';
 import 'package:tienda/src/pages/carrito_page.dart';
+import 'package:tienda/src/pages/direcciones_page.dart';
 import 'package:tienda/src/pages/familias_page.dart';
 import 'package:tienda/src/pages/home_page.dart';
 import 'package:tienda/src/pages/identificarse_page.dart';
@@ -41,6 +42,12 @@ class FluroRouter {
     handlerFunc: (BuildContext context, Map<String, dynamic> parameter) =>
         IdentificarsePage(),
   );
+  static fluro.Handler _direccioneshndler = fluro.Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> parameter) =>
+        DireccionesPage(
+      tipo: parameter['tipo'][0],
+    ),
+  );
 
   static void setupRouter() {
     router.define(
@@ -66,6 +73,10 @@ class FluroRouter {
     router.define(
       '/identificarse',
       handler: _indentificarsehandler,
+    );
+    router.define(
+      '/direcciones/:tipo',
+      handler: _direccioneshndler,
     );
   }
 }
