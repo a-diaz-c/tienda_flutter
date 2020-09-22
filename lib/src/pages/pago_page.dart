@@ -16,6 +16,13 @@ class _PagoPageState extends State<PagoPage>
   TabController _tabController;
   ProductosProviders productosProviders = ProductosProviders();
   double _subTotal = 0;
+  double _costoEnvio = 0;
+  double _total;
+  double _ancho;
+  bool _estafeta = false;
+  bool _ups = false;
+  bool _paypal = false;
+  bool _tarjeta = false;
   List datos = [];
 
   Map<String, dynamic> envio = {
@@ -76,42 +83,25 @@ class _PagoPageState extends State<PagoPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _tabs(MediaQuery.of(context).size.width * 0.65),
+                _tablaProductos(),
+              ],
+            ),
+            Row(
+              children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.30,
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Card(
-                    color: Colors.grey[200],
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(15.0),
-                          child: Text(
-                            'Carito de compras',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          height: 1,
-                          thickness: 1,
-                        ),
-                        ..._productos(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text('Subtotal \$ $_subTotal'),
-                            Text('Costo Total \$'),
-                            const Divider(
-                              color: Colors.black,
-                              height: 1,
-                              thickness: 1,
-                            ),
-                            Text('Precio total \$'),
-                          ],
-                        )
-                      ],
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: RaisedButton(
+                    child: Text(
+                      "Siguiente Paso",
+                      style: TextStyle(),
                     ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    color: Colors.blue,
+                    onPressed: () {
+                      _tabController.animateTo(_tabController.index + 1);
+                    },
                   ),
                 ),
               ],
@@ -161,10 +151,51 @@ class _PagoPageState extends State<PagoPage>
             ),
             Center(
               child: [
-                _direcciones(ancho),
-                Text("This is notification Tab View")
+                _direcciones(ancho * 0.70),
+                _envioPago(ancho)
               ][_tabController.index],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _tablaProductos() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.30,
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Card(
+        color: Colors.grey[200],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Carito de compras',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            const Divider(
+              color: Colors.black,
+              height: 1,
+              thickness: 1,
+            ),
+            ..._productos(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('Subtotal \$ ' + _subTotal.toStringAsFixed(2)),
+                Text('Costo Total \$ ' + _costoEnvio.toStringAsFixed(2)),
+                const Divider(
+                  color: Colors.black,
+                  height: 1,
+                  thickness: 1,
+                ),
+                Text('Precio total \$ ' + _total.toStringAsFixed(2)),
+              ],
+            )
           ],
         ),
       ),
@@ -194,7 +225,7 @@ class _PagoPageState extends State<PagoPage>
                 children: [
                   Container(
                     height: 250,
-                    width: ancho * 0.70,
+                    width: ancho,
                     child: Card(
                       child: Column(
                         children: [
@@ -256,7 +287,7 @@ class _PagoPageState extends State<PagoPage>
                 children: [
                   Container(
                     height: 200,
-                    width: ancho * 0.70,
+                    width: ancho,
                     child: Card(
                       child: Column(
                         children: [
@@ -320,7 +351,170 @@ class _PagoPageState extends State<PagoPage>
         ),
       );
     });
-
+    _total = _subTotal + _costoEnvio;
     return lista;
+  }
+
+  Widget _envioPago(double ancho) {
+    return Column(
+      children: [
+        _opcionesEnvio(ancho),
+        _opcionesPago(ancho),
+      ],
+    );
+  }
+
+  Widget _opcionesEnvio(double ancho) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            child: Text(
+              'Forma de envío',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          Container(
+            height: 100,
+            width: ancho,
+            child: Card(
+              color: Colors.grey[300],
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: _estafeta,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _estafeta = value;
+                        _ups = false;
+                        _costoEnvio = value ? 99 : 0;
+                      });
+                    },
+                  ),
+                  Expanded(child: Text('Estafeta Terrestre')),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Text('\$ 99.00'),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 100,
+            width: ancho,
+            child: Card(
+              color: Colors.grey[300],
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: _ups,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _ups = value;
+                        _estafeta = false;
+                        _costoEnvio = value ? 159 : 0;
+                      });
+                    },
+                  ),
+                  Expanded(child: Text('UPS Terrestre')),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Text('\$ 159.00'),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _opcionesPago(double ancho) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            child: Text(
+              'Forma de envío',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          Container(
+            height: 125,
+            width: ancho,
+            child: Card(
+              color: Colors.grey[300],
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _paypal,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _paypal = value;
+                          });
+                        },
+                      ),
+                      Text('Paypal')
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Image(
+                          image: AssetImage('images/paypal.png'),
+                          height: 50,
+                        ),
+                        Image(
+                          image: AssetImage('images/paypal_tarjetas.png'),
+                          height: 60,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 125,
+            width: ancho,
+            child: Card(
+              color: Colors.grey[300],
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _tarjeta,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _tarjeta = value;
+                          });
+                        },
+                      ),
+                      Text('Tarjeta de débito/crédito')
+                    ],
+                  ),
+                  Image(
+                    image: AssetImage('images/tarjetas.png'),
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
