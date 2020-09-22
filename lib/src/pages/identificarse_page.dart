@@ -26,8 +26,10 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
           controller: _rrectController,
           children: [
             Navbar(),
-            _cuerpoWeb(),
-            //...cuerpoMovil(),
+            if (MediaQuery.of(context).size.width > 900)
+              _cuerpoWeb()
+            else
+              ...cuerpoMovil(),
             footer(),
           ],
         ),
@@ -88,7 +90,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Ingresa a tu cuenta'),
+                  _titulo('Ingresa a tu cuenta'),
                   Container(
                     width: anchoFormulario * 0.6,
                     height: 40,
@@ -237,7 +239,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('¡Registrate!'),
+                  _titulo('¡Registrate!'),
                   Container(
                     width: anchoFormulario * 0.6,
                     height: 40,
@@ -393,7 +395,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Ingresa a tu cuenta'),
+              _titulo('Ingresa a tu cuenta'),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: TextFormField(
@@ -477,7 +479,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('¡Registrate!'),
+              _titulo('¡Registrate!'),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: TextFormField(
@@ -584,6 +586,19 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _titulo(String texto) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        texto,
+        style: TextStyle(
+            color: Colors.blue[900],
+            fontSize: 20.0,
+            fontWeight: FontWeight.w500),
       ),
     );
   }
