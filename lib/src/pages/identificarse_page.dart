@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
@@ -18,6 +19,7 @@ class _IdentificarsePageState extends State<IdentificarsePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerComponent(),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,

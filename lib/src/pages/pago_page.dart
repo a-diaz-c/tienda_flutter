@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 import 'package:tienda/src/providers/productos_providers.dart';
@@ -71,6 +72,7 @@ class _PagoPageState extends State<PagoPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerComponent(),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,
@@ -79,13 +81,9 @@ class _PagoPageState extends State<PagoPage>
           controller: _rrectController,
           children: [
             Navbar(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _tabs(MediaQuery.of(context).size.width * 0.65),
-                _tablaProductos(),
-              ],
-            ),
+            if (MediaQuery.of(context).size.width > 900)
+              _cuerpoWeb()
+            else ...[_cuerpoMovil(), _tablaProductos()],
             Row(
               children: [
                 Container(
@@ -100,7 +98,9 @@ class _PagoPageState extends State<PagoPage>
                     ),
                     color: Colors.blue,
                     onPressed: () {
-                      _tabController.animateTo(_tabController.index + 1);
+                      if (_tabController.index < _tabController.length - 1) {
+                        _tabController.animateTo(_tabController.index + 1);
+                      }
                     },
                   ),
                 ),
@@ -111,6 +111,20 @@ class _PagoPageState extends State<PagoPage>
         ),
       ),
     );
+  }
+
+  Widget _cuerpoWeb() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _tabs(MediaQuery.of(context).size.width * 0.65),
+        _tablaProductos(),
+      ],
+    );
+  }
+
+  Widget _cuerpoMovil() {
+    return _tabs(MediaQuery.of(context).size.width * 0.95);
   }
 
   Widget _tabs(double ancho) {
@@ -151,7 +165,9 @@ class _PagoPageState extends State<PagoPage>
             ),
             Center(
               child: [
-                _direcciones(ancho * 0.70),
+                _direcciones(MediaQuery.of(context).size.width > 900
+                    ? ancho * 0.70
+                    : ancho),
                 _envioPago(ancho)
               ][_tabController.index],
             ),
@@ -164,7 +180,7 @@ class _PagoPageState extends State<PagoPage>
   Widget _tablaProductos() {
     return Container(
       width: MediaQuery.of(context).size.width * 0.30,
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Card(
         color: Colors.grey[200],
         child: Column(
@@ -187,7 +203,7 @@ class _PagoPageState extends State<PagoPage>
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text('Subtotal \$ ' + _subTotal.toStringAsFixed(2)),
-                Text('Costo Total \$ ' + _costoEnvio.toStringAsFixed(2)),
+                Text('Costo de envío \$ ' + _costoEnvio.toStringAsFixed(2)),
                 const Divider(
                   color: Colors.black,
                   height: 1,
@@ -220,51 +236,10 @@ class _PagoPageState extends State<PagoPage>
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Text('Verifique sus direccion de envio'),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 250,
-                    width: ancho,
-                    child: Card(
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(envio['nombre']),
-                            subtitle: Text(envio['empresa']),
-                          ),
-                          Text(envio['calle'] +
-                              ' ' +
-                              envio['numExt'] +
-                              ' ' +
-                              envio['numInt']),
-                          Text(envio['referencia']),
-                          Text(envio['colonia']),
-                          Text(envio['codigoPostal'] + ', ' + envio['ciudad']),
-                          Text(envio['estado'] + ', ' + envio['pais']),
-                          SizedBox(height: 10),
-                          Text('Tel, ' + envio['telefono'])
-                        ],
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      RaisedButton(
-                        child: Row(
-                          children: [
-                            Icon(Icons.edit),
-                            Text('Editar Direccion'),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/direcciones/1');
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              if (MediaQuery.of(context).size.width > 900)
+                _direccionEnvioWeb(ancho)
+              else
+                ..._direccionEnvioMovil(ancho)
             ],
           ),
         ),
@@ -280,59 +255,125 @@ class _PagoPageState extends State<PagoPage>
                 ),
               ),
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: Text('Verifique sus de facturacion')),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 200,
-                    width: ancho,
-                    child: Card(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Razon social o nombre',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          Text(factura['nombre']),
-                          SizedBox(height: 5),
-                          Text(
-                            'RFC',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          Text(factura['rfc']),
-                          SizedBox(height: 5),
-                          Text(
-                            'Uso de CFDI',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          Text(factura['usoDeCEDI'])
-                        ],
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      RaisedButton(
-                        child: Row(
-                          children: [
-                            Icon(Icons.edit),
-                            Text('Editar Direccion'),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/direcciones/2');
-                        },
-                      ),
-                    ],
-                  )
-                ],
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                child: Text('Verifique sus de facturacion'),
               ),
+              if (MediaQuery.of(context).size.width > 900)
+                _direccionFacturaWeb(ancho)
+              else
+                ..._direccionFacturaMovil(ancho),
             ],
           ),
         )
       ],
+    );
+  }
+
+  Widget _direccionEnvioWeb(double ancho) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _cardEnvio(ancho),
+        Column(
+          children: [_botonEditar('/direcciones/1')],
+        )
+      ],
+    );
+  }
+
+  List<Widget> _direccionEnvioMovil(double ancho) {
+    return [
+      _cardEnvio(ancho),
+      _botonEditar('/direcciones/1'),
+    ];
+  }
+
+  Widget _cardEnvio(double ancho) {
+    return Container(
+      height: 250,
+      width: ancho,
+      child: Card(
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(envio['nombre']),
+              subtitle: Text(envio['empresa']),
+            ),
+            Text(
+                envio['calle'] + ' ' + envio['numExt'] + ' ' + envio['numInt']),
+            Text(envio['referencia']),
+            Text(envio['colonia']),
+            Text(envio['codigoPostal'] + ', ' + envio['ciudad']),
+            Text(envio['estado'] + ', ' + envio['pais']),
+            SizedBox(height: 10),
+            Text('Tel, ' + envio['telefono'])
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _direccionFacturaWeb(double ancho) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _cardFactura(ancho),
+        _botonEditar('/direcciones/2'),
+      ],
+    );
+  }
+
+  List<Widget> _direccionFacturaMovil(double ancho) {
+    return [
+      _cardFactura(ancho),
+      _botonEditar('/direcciones/2'),
+    ];
+  }
+
+  Widget _cardFactura(double ancho) {
+    return Container(
+      height: 200,
+      width: ancho,
+      child: Card(
+        child: Column(
+          children: [
+            Text(
+              'Razon social o nombre',
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            Text(factura['nombre']),
+            SizedBox(height: 5),
+            Text(
+              'RFC',
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            Text(factura['rfc']),
+            SizedBox(height: 5),
+            Text(
+              'Uso de CFDI',
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            Text(factura['usoDeCEDI'])
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _botonEditar(String ruta) {
+    return Container(
+      width: 160,
+      child: RaisedButton(
+        child: Row(
+          children: [
+            Icon(Icons.edit),
+            Text('Editar Direccion'),
+          ],
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, ruta);
+        },
+      ),
     );
   }
 
@@ -459,6 +500,7 @@ class _PagoPageState extends State<PagoPage>
                         onChanged: (bool value) {
                           setState(() {
                             _paypal = value;
+                            _tarjeta = false;
                           });
                         },
                       ),
@@ -474,10 +516,11 @@ class _PagoPageState extends State<PagoPage>
                           image: AssetImage('images/paypal.png'),
                           height: 50,
                         ),
-                        Image(
-                          image: AssetImage('images/paypal_tarjetas.png'),
-                          height: 60,
-                        ),
+                        if (MediaQuery.of(context).size.width > 900)
+                          Image(
+                            image: AssetImage('images/paypal_tarjetas.png'),
+                            height: 60,
+                          ),
                       ],
                     ),
                   )
@@ -499,6 +542,7 @@ class _PagoPageState extends State<PagoPage>
                         onChanged: (bool value) {
                           setState(() {
                             _tarjeta = value;
+                            _paypal = false;
                           });
                         },
                       ),

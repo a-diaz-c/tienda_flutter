@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:tienda/src/components/drawer.dart';
 import 'package:tienda/src/components/footer.dart';
 import 'package:tienda/src/components/navbar.dart';
 
@@ -24,6 +25,7 @@ class _DireccionesPageState extends State<DireccionesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerComponent(),
       body: DraggableScrollbar.rrect(
         alwaysVisibleScrollThumb: true,
         controller: _rrectController,
