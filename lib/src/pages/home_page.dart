@@ -257,7 +257,6 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _filaProductoExtraChica(double ancho) {
     List<Widget> widgetProductos = [];
     productos.forEach((element) {
-      String nuevoNombre = _recortarTexto(element['nombre'], 120);
       widgetProductos.add(Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -265,7 +264,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             CardProducto(
               ancho: ancho,
-              nombre: nuevoNombre,
+              nombre: element['nombre'],
               precio: double.parse(element['precio']),
               imagen: element['imagen'],
               id: element['clave_producto'],
@@ -276,15 +275,6 @@ class _HomePageState extends State<HomePage> {
       ));
     });
     return widgetProductos;
-  }
-
-  String _recortarTexto(String texto, int maximo) {
-    String nuevoTexto;
-    if (texto.length > maximo) {
-      nuevoTexto = texto.substring(0, maximo) + '...';
-      return nuevoTexto;
-    }
-    return texto;
   }
 
   Widget _menuLateral() {
@@ -371,34 +361,35 @@ class _HomePageState extends State<HomePage> {
       ),
       onPressed: () {
         showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Buscar'),
-                content: SingleChildScrollView(
-                  child: ContentDialog(
-                    marcas: marcas,
-                    parentAction: _actilizarProductos,
-                    checkbox: _checkbox,
-                  ),
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Buscar'),
+              content: SingleChildScrollView(
+                child: ContentDialog(
+                  marcas: marcas,
+                  parentAction: _actilizarProductos,
+                  checkbox: _checkbox,
                 ),
-                actions: [
-                  FlatButton(
-                    child: Text('Buscar'),
-                    onPressed: () {
-                      if (filtro.length != 0) {
-                        productos = providers.buscarPorMarcas(filtro);
-                      } else {
-                        productos = providers.jsonProductos();
-                      }
-                      Navigator.of(context).pop();
-                      setState(() {});
-                    },
-                  ),
-                ],
-              );
-            });
+              ),
+              actions: [
+                FlatButton(
+                  child: Text('Buscar'),
+                  onPressed: () {
+                    if (filtro.length != 0) {
+                      productos = providers.buscarPorMarcas(filtro);
+                    } else {
+                      productos = providers.jsonProductos();
+                    }
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }
